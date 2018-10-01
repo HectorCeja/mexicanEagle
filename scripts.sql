@@ -1,5 +1,5 @@
-drop table usuarios;
-CREATE TABLE `usuarios` (
+drop table user;
+CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(250) NOT NULL DEFAULT '',
   `apellido` varchar(250) NOT NULL DEFAULT '',

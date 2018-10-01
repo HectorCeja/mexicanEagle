@@ -40,7 +40,7 @@ AppAsset::register($this);
         ['label' => 'Inicio', 'url' => ['/site/index']],
         ['label' => 'Acerca de', 'url' => ['/site/about']],
         ['label' => 'Conctáctanos', 'url' => ['/site/contact']],
-        Yii::$app->user->isGuest ? (
+        Yii::$app->User->isGuest ? (
             ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
         ) : (
             '<li>'
@@ -52,8 +52,8 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>'
         )];
-        
-    if(Yii::$app->user->isGuest){
+
+    if(Yii::$app->User->isGuest){
         $items[] = ['label' => 'Registrarse', 'url' => ['/site/register']];
     }
 
@@ -76,7 +76,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; RopaLinda <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
