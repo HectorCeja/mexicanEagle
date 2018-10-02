@@ -47,7 +47,7 @@ class CaptchaValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = Yii::t('yii', 'The verification code is incorrect.');
+            $this->message = Yii::t('yii', 'El código de verificación es incorrecto.');
         }
     }
 
