@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -16,24 +17,8 @@ class SiteController extends Controller
      * {@inheritdoc}
      */
 
-    public function actionFormulario($carrera = null){
-
-        return $this->render("formulario",["carrera" => $carrera]);
-    }
-
     public function actionRequest(){
 
-        $carrera = null;
-        if(isset($_REQUEST["carrera"])){
-
-            $result = \Yii::$app->db->createCommand("CALL aumentar_folio(:carrera, @error);") 
-                      ->bindValue(':carrera' ,$_REQUEST["carrera"])
-                      ->queryAll();
-            $query[] = $result;
-            $carrera = "El folio obtenido es ". $query[0][0]['folio'];
-
-        }
-        $this->redirect(["site/formulario", "carrera" => $carrera]);
     }
 
     public function behaviors()
@@ -101,7 +86,6 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -145,5 +129,25 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionRegister(){
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new User();
+        if ($model->load(Yii::$app->request->post())){
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
+            if($model->validate()){
+                $model->save();
+                Yii::$app->session->setFlash('success','Has sido registrado.');
+                return $this->redirect(['site/login']);
+            }
+        }
+        return $this->render('signup',[
+            'model' => $model,
+        ]);
+
     }
 }

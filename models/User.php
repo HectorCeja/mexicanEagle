@@ -2,31 +2,37 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    public static function tableName()
+    {
+        return 'user';
+    }
 
+    public function rules()
+    {
+            return [
+                [['username','password'], 'required'],
+                [['email'], 'email'],
+                [['username'], 'unique','targetClass'=>'\app\models\User','message' => 'usuario ya registrado.'],
+                [['email'], 'unique','targetClass'=>'\app\models\User','message' => 'correo ya registrado.'],
+                [['phone_number','nombre','apellido'],'string','max' => 30],
+                [['username','password'], 'string', 'max' => 250],
+                [['email'], 'string', 'max' => 500]           
+            ];
+    }
+
+
+    public function attributeLabels(){
+        return[ 
+            'id' => 'ID',
+            'username' => 'Username',
+            'password' => 'Password',
+            'nombre' => 'Nombre',
+            'apellido' => 'Apellido'
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -50,21 +56,9 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         return null;
     }
 
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['username' => $username]);
     }
 
     /**
@@ -73,6 +67,20 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = \Yii::$app->security->generatePasswordHash($password);
+    }
+
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    public function generateAuthKey(){
+        $this->authKey = \Yii::$app->security->generateRandomString();
     }
 
     /**
@@ -99,6 +107,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return \Yii::$app->security->validatePassword($password,$this->password);
     }
 }
