@@ -5,53 +5,104 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Inicio';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = 'Inicio';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+<div class="site-index mainContainer">
+  <img src="/images/autumn-winter_season.jpg" />
+  <div class="content-container">
+    <div class="sub-header">Ofertas de temporada</div>
+    <section class="items-list">
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/basica_blanca_manga_corta.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/basica_gris_manga_corta.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/basica_navy_manga_corta.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/basica_roja_manga_corta.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/basica_tinto_manga_corta.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/tres_cuartos_morada_basica.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/tres_cuartos_negra_basica.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/tres_cuartos_negra_strangerthings.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+      <a href="" class="item">
+        <figure class="item-image">
+          <img src="/images/tres_cuartos_roja_basica.jpg" alt="">
+        </figure>
+        <span class="item-overlay">
+          <p>
+            <span class="item-price">$100.00</span>
+          </p>
+        </span>
+      </a>
+    </section>
+  </div>
 </div>

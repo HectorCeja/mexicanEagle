@@ -8,10 +8,11 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+    background-color: #f2f2f2;
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 51px 0px 20px;
 }
 
 .footer {
@@ -112,4 +113,81 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.mainContainer {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.content-container {
+  padding-top: 20px;
+}
+
+.items-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 293px));
+  grid-gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.item {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  border-radius: 8px;
+}
+
+.item-image {
+  margin: 0;
+}
+.item-image img {
+  width: 100%;
+  vertical-align: top;
+  border-radius: 8px;
+}
+
+.item-overlay {
+  background: rgba(0,0,0, .4);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.item:hover .item-overlay {
+  display: flex;
+}
+
+.item-price {
+  width: 80px;
+  margin: 5px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+}
+
+img {
+  width: 100%;
+}
+
+.sub-header {
+  font-size: 26px;
+  font-weight: 300;
+  margin: 0 0 0 8px;
+  color: #666;
+}
+
+@media screen and (max-width: 768px) {
+  .items-list {
+    grid-gap: 3px;
+  }
 }
