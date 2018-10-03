@@ -14,14 +14,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Por favor ingrese los datos que se piden a continuación:</p>
-
+    
     <div class="row">
         <div class="col-lg-5">
         <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
         <?= $form->field($model, 'nombre')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'apellidoPaterno')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'apellidoMaterno')->textInput(['autofocus' => true]) ?>
 
-        <?= $form->field($model, 'apellido')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'pais')->textInput(['autofocus' => true]) ?>
+
+        <?= $form->field($model, 'ciudad')->textInput(['autofocus' => true]) ?>
+
+        <?= $form->field($model, 'phone_number')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 

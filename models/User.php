@@ -17,7 +17,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 [['email'], 'email'],
                 [['username'], 'unique','targetClass'=>'\app\models\User','message' => 'usuario ya registrado.'],
                 [['email'], 'unique','targetClass'=>'\app\models\User','message' => 'correo ya registrado.'],
-                [['phone_number','nombre','apellido'],'string','max' => 30],
+                [['phone_number','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],
                 [['username','password'], 'string', 'max' => 250],
                 [['email'], 'string', 'max' => 500]           
             ];
@@ -30,7 +30,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Username',
             'password' => 'Password',
             'nombre' => 'Nombre',
-            'apellido' => 'Apellido'
+            'apellidoPaterno' => 'Apellido paterno',
+            'apellidoMaterno' => 'Apellido materno',
+            'pais' => 'Pais',
+            'ciudad' => 'Ciudad'
         ];
     }
 
@@ -39,7 +42,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne(['id' => $id]);
     }
 
     /**
