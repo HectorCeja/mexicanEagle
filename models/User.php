@@ -1,13 +1,14 @@
 <?php
 
 namespace app\models;
+use app\models\entities\EntityUser;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
     public static function tableName()
     {
-        return 'user';
+        return EntityUser::tableName();
     }
 
     public function rules()
@@ -27,8 +28,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels(){
         return[ 
             'id' => 'ID',
-            'username' => 'Username',
-            'password' => 'Password',
+            'username' => 'Usuario',
+            'password' => 'Contraseña',
             'nombre' => 'Nombre',
             'apellidoPaterno' => 'Apellido paterno',
             'apellidoMaterno' => 'Apellido materno',
