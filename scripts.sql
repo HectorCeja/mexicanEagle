@@ -1,4 +1,4 @@
-drop table user;
+create schema ropalindaDB;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(250) NOT NULL DEFAULT '',
