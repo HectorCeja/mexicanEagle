@@ -31,10 +31,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Usuario',
             'password' => 'Contraseña',
             'nombre' => 'Nombre',
+            'email' => 'Correo electrónico',
             'apellidoPaterno' => 'Apellido paterno',
             'apellidoMaterno' => 'Apellido materno',
             'pais' => 'Pais',
-            'ciudad' => 'Ciudad'
+            'ciudad' => 'Ciudad',
+            'phone_number' => 'Teléfono'
         ];
     }
 
