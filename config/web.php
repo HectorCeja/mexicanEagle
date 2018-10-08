@@ -28,12 +28,12 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
+            'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
 				'host' => 'smtp.gmail.com',
-				'username' => 'miguel.forsake9610@gmail.com',
-				'password' => 'xxxxxxxxxx',
+				'username' => 'comunicacion.ropalinda@gmail.com',
+				'password' => 'IngenieriaWeb',
 				'port' => 465,
                 'encryption' => 'ssl',
             ],
