@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=example',
+    'dsn' => 'mysql:host=localhost;dbname=ropalindaDB',
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',
