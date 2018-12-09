@@ -13,6 +13,10 @@ use app\models\Prenda;
 use app\models\User;
 use app\models\Categorias;
 use app\models\SubCategoria;
+use app\models\entities\EntitySubCategoria;
+use app\models\entities\EntityCategoria;
+use app\models\entities\EntityTemporadas;
+
 use app\models\Prospectos;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -145,10 +149,10 @@ class SiteController extends Controller
     public function actionAgregar(){
         $model = new Prenda();
         $categorias = Categorias::obtenerCategorias();
-        $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
+       $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
         $subCategorias = SubCategoria::obtenerSubCategorias();
         $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
-        return $this->render('agregarPrenda',['model'=>$model,'categorias'=>$listCategorias,'subCategorias'=>$listSubCategorias]);
+        return $this->render('agregarPrenda',['model'=>$model/*,'categorias'=>$listCategorias,'subCategorias'=>$listSubCategorias*/]);
     }
     public function actionAceptacion()
     {

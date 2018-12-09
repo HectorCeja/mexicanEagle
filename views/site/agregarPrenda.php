@@ -21,10 +21,7 @@ use yii\widgets\ActiveForm;
                     <div class="form-group">
                         <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
-
                 <?php ActiveForm::end(); ?>
-
             </div>
         </div>
-
 </div>
