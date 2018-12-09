@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$this->title = 'Prospectos';
 ?> 
 <h1>Lista de Prospectos de Usuario</h1>
 <?php if($tipo==1): ?>
@@ -31,10 +32,10 @@ use yii\widgets\ActiveForm;
         <td><?= $row->email ?></td>
         <td><?= $row->pais ?></td>
         <td><?= $row->ciudad ?></td>
-        <td><a href="<?= Url::toRoute(["site/aceptar", "id" => $row->id]) ?>">Aceptar</a></td>
+        <td><a href="<?= Url::toRoute(["prospecto/aceptar", "id" => $row->id]) ?>">Aceptar</a></td>
         <td>
-            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->nombre ?>">Eliminar</a>
-            <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->nombre ?>">
+            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->id ?>">Eliminar</a>
+            <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->id ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -45,7 +46,7 @@ use yii\widgets\ActiveForm;
                                     <p>¿Realmente deseas eliminar al prospecto <?= $row->nombre ?>?</p>
                               </div>
                               <div class="modal-footer">
-                              <?= Html::beginForm(Url::toRoute("site/delete"), "POST") ?>
+                              <?= Html::beginForm(Url::toRoute("prospecto/delete"), "POST") ?>
                                     <input type="hidden" name="id" value="<?= $row->id ?>">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Eliminar</button>
