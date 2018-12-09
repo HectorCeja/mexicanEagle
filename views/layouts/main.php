@@ -54,7 +54,7 @@ AppAsset::register($this);
         )];
 
                         if(Yii::$app->User->isGuest){
-                            $items[] = ['label' => 'Registrarse', 'url' => ['/site/register']];
+                            $items[] = ['label' => 'Registrarse', 'url' => ['/prospecto/register']];
                         }
 
                         echo Nav::widget([
