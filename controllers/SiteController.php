@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Prenda;
+use app\models\Componente;
 use app\models\User;
 use app\models\Prospectos;
 use yii\helpers\Html;
@@ -140,6 +141,13 @@ class SiteController extends Controller
     public function actionAgregar(){
         $model = new Prenda();
         return $this->render('agregarPrenda',['model'=>$model]);
+    }
+    public function actionComponentes(){
+        return $this->render('componentes');
+    }
+    public function actionAgregarcomponente(){
+        $model = new Componente();
+        return $this->render('agregarComponente',['model'=>$model]);
     }
     public function actionAceptacion()
     {
