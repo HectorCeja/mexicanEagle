@@ -33,8 +33,8 @@ use yii\widgets\ActiveForm;
         <td><?= $row->ciudad ?></td>
         <td><a href="<?= Url::toRoute(["prospecto/aceptar", "id" => $row->id]) ?>">Aceptar</a></td>
         <td>
-            <a href="#" data-toggle="modal" data-target="#id_nombre<?= $row->nombre ?>">Eliminar</a>
-            <div class="modal fade" role="dialog" aria-hidden="true" id="id_nombre<?= $row->nombre ?>">
+            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->id ?>">Eliminar</a>
+            <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->id ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
