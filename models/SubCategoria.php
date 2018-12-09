@@ -7,7 +7,6 @@ use yii\base\Model;
 use app\models\entities\EntitySubCategoria;
 
 class SubCategoria extends \yii\db\ActiveRecord{
-
     public static function tableName()
     {
         return EntitySubCategoria::tableName();

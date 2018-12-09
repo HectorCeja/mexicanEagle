@@ -4,22 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\entities\EntityComponentes;
 
 class Componente extends \yii\db\ActiveRecord {
-    public $id;
-    public $nombre;
-    public $descripcion;
-    public $precio;
-    public $idPrenda;
-    public $urlImagen;
-    public $urlImagenMiniatura;
-    public $fechaAlta;
-    public $created_at;
-    public $updated_at;
-
-
-
     public static function tableName()
     {
         return EntityComponentes::tableName();
@@ -45,7 +32,7 @@ class Componente extends \yii\db\ActiveRecord {
             'descripcion' => 'Descripcion',
             'urlImagen' => 'Imagen',
             'urlImagenMiniatura' => 'Imagen Miniatura',
-            'idPrenda' => 'Prena',
+            'idPrenda' => 'Prenda',
         ];
     }
 }

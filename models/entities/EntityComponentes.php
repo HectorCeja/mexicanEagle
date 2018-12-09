@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\entities;
+namespace App\models\entities;
 
-class EntityPrendas extends \yii\db\ActiveRecord
+class EntityComponentes extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'compoenentes';
+        return 'componentes';
     }
 }
