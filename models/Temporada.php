@@ -4,13 +4,14 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\entities\EntitySubCategoria;
+use app\models\entities\EntityTemporada;
 
-class SubCategoria extends \yii\db\ActiveRecord{
+class Temporada extends \yii\db\ActiveRecord{
+
 
     public static function tableName()
     {
-        return EntitySubCategoria::tableName();
+        return EntityTemporada::tableName();
     }
 
      /**
@@ -20,7 +21,7 @@ class SubCategoria extends \yii\db\ActiveRecord{
     {
         return [
             // name, email, subject and body are required
-            ['descripcion', 'required'],
+            ['tipoTemporada', 'required'],
         ];
     }
 
@@ -30,14 +31,13 @@ class SubCategoria extends \yii\db\ActiveRecord{
     public function attributeLabels()
     {
         return [
-            'descripcion' => 'Descripcion'
+            'id'=>'ID',
+            'tipoTemporada' => 'Temporada'
         ];
     }
 
-    public static function obtenerSubCategorias()
+    public static function obtenerTemporadas()
     {
         return static::find()->all();
     }
-
-
 }

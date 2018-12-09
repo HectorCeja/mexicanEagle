@@ -4,23 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\entities\EntityPrendas;
 
 class Prenda extends \yii\db\ActiveRecord {
-    public $id;
-    public $nombre;
-    public $descripcion;
-    public $precio;
-    public $tipoPrenda;
-    public $idTemporada;
-    public $urlImagen;
-    public $urlImagenMiniatura;
-    public $idCategoria;
-    public $idSubCategoria;
-    public $fechaAlta;
-    public $created_at;
-    public $updated_at;
-
 
 
     public static function tableName()
