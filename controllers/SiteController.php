@@ -11,16 +11,12 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Prenda;
 use app\models\User;
-<<<<<<< HEAD
 use app\models\Cliente;
-=======
 use app\models\Categorias;
 use app\models\SubCategoria;
 use app\models\entities\EntitySubCategoria;
 use app\models\entities\EntityCategoria;
 use app\models\entities\EntityTemporadas;
-
->>>>>>> 6e84a9d30e139dd86b16d1641d808f0d73e0b4a4
 use app\models\Prospectos;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
