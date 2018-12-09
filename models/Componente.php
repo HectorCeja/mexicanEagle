@@ -18,7 +18,7 @@ class Componente extends \yii\db\ActiveRecord {
     {
         return [
             // name, email, subject and body are required
-            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','idPrenda'], 'required'],
+            [['nombre', 'descripcion', 'precio', 'urlImagen', 'urlImagenMiniatura'], 'required'],
         ];
     }
 
@@ -32,7 +32,6 @@ class Componente extends \yii\db\ActiveRecord {
             'descripcion' => 'Descripcion',
             'urlImagen' => 'Imagen',
             'urlImagenMiniatura' => 'Imagen Miniatura',
-            'idPrenda' => 'Prenda',
         ];
     }
 }

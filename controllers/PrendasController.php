@@ -11,6 +11,7 @@ use app\models\Prenda;
 use app\models\Categoria;
 use app\models\SubCategoria;
 use app\models\Temporada;
+use app\models\Componente;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -20,6 +21,9 @@ class PrendasController extends Controller
     
     public function actionPrendas(){
         return $this->render('prendas');
+    }
+    public function actionComponentes(){
+        return $this->render('componentes');
     }
     public function actionAgregar(){
         $model = new Prenda();
@@ -35,6 +39,11 @@ class PrendasController extends Controller
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
                                                 'msg'=>$msg]);
+    }
+    public function actionAgregarcomponente(){
+        $model = new Componente();
+        $msg="";
+        return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
     }
     public function actionGuardarprenda(){
         $model = new Prenda();
@@ -69,6 +78,24 @@ class PrendasController extends Controller
                                                 'msg'=>$msg]);    
             }
         }
+    }
+    public function actionGuardarcomponente(){
+        $model = new Componente();
+        if(Yii::$app->request->get("idPrenda")){
+            if ($model->load(Yii::$app->request->post())){
+                $idPrenda = Html::encode($_GET["idPrenda"]);
+                $fechaAlta = date("Y-m-d");
+                $model->fechaAlta = $fechaAlta;
+                if($model->save(false)){
+                    $msg="Componente guardado correctamente.";
+                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
+                }else{
+                    $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
+                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
+                }
+            }
+        }
+    }
         /*if(Yii::$app->request->post()){
             $email = Html::encode($_POST["nombre"]);
             $password = Html::encode($_POST["tipoPrenda"]);
@@ -86,8 +113,3 @@ class PrendasController extends Controller
             }
         }*/
     }
-
-    
-
-   
-}
