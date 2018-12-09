@@ -65,4 +65,25 @@ class ContactForm extends Model
         }
         return false;
     }
+    public function contactProspect($emailSender, $emailTo, $username)
+    {
+        $link = "http://localhost:8080/index.php?r=site%2Fingresar";
+
+        $mensaje =  "Enhorabuena " .$username. "! has sido aceptado por el personal ";
+        $mensaje .= "de Ropalinda para terminar con el proceso, ingresa correo y contraseña ";
+        $mensaje .= "en el siguiente link " . $link; 
+        
+        if(Yii::$app->mailer->compose()
+            ->setTo($emailTo)
+            ->setFrom([$emailSender])
+            ->setSubject("Cliente RopaLinda")
+            ->setTextBody(
+                $mensaje
+            )
+            ->send()){
+                return true;
+            }
+
+        return false;
+    }
 }

@@ -36,6 +36,24 @@ AppAsset::register($this);
                             ],
                         ]);
 
+<<<<<<< HEAD
+    $items = [
+        ['label' => 'Inicio', 'url' => ['/site/index']],
+        ['label' => 'Conócenos', 'url' => ['/site/about']],
+        ['label' => 'Contáctanos', 'url' => ['/site/contact']],
+        Yii::$app->User->isGuest ? (
+            ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
+        ) : (
+            '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                'Salir (' . Yii::$app->user->identity->email . ')',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>'
+        )];
+=======
                         $items = [
                             ['label' => 'Inicio', 'url' => ['/site/index']],
                             ['label' => 'Conócenos', 'url' => ['/site/about']],
@@ -52,6 +70,7 @@ AppAsset::register($this);
                                 . Html::endForm()
                                 . '</li>'
                             )];
+>>>>>>> 6e84a9d30e139dd86b16d1641d808f0d73e0b4a4
 
                         if(Yii::$app->User->isGuest){
                             $items[] = ['label' => 'Registrarse', 'url' => ['/site/register']];
