@@ -103,7 +103,7 @@ class ProspectoController extends Controller
                 $prospecto = Prospectos::findOne($idProspect);
                 $user = new User();
                 $user->email=$prospecto->email;
-                $user->password="";
+                $user->setPassword("_");
                 $user->activo = 1;
                 $user->idPerfil = 1;
 
@@ -146,11 +146,9 @@ class ProspectoController extends Controller
         }
         $model = new Prospectos();
         if ($model->load(Yii::$app->request->post())){
-            //$model->setPassword($model->password);
-            //$model->generateAuthKey();
             if($model->validate()){
                 $model->save();
-                Yii::$app->session->setFlash('success','Has sido registrado.');
+                Yii::$app->session->setFlash('success','Has sido registrado como prospecto, espere un correo de aceptación.');
                 return $this->redirect(['site/login']);
             }
         }

@@ -67,10 +67,10 @@ class ContactForm extends Model
     }
     public function contactProspect($emailSender, $emailTo, $username)
     {
-        $link = "http://localhost:8080/index.php?r=site%2Fingresar";
+        $link = "http://localhost:8080/index.php?r=site/ingresar";
 
         $mensaje =  "Enhorabuena " .$username. "! has sido aceptado por el personal ";
-        $mensaje .= "de Ropalinda para terminar con el proceso, ingresa correo y contraseña ";
+        $mensaje .= "de Ropalinda, para terminar con el proceso ingresa correo y contraseña ";
         $mensaje .= "en el siguiente link " . $link; 
         
         if(Yii::$app->mailer->compose()
