@@ -9,7 +9,8 @@ $this->title = 'Inicio';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index mainContainer">
-  <?php $images=['<img src="/images/autumn-winter_season.jpg"/>','<img src="/images/segunda.jpg"/>'];
+  <?php 
+    $images=['<img src="/images/autumn-winter_season.jpg"/>','<img src="/images/segunda.jpg"/>'];
     echo yii\bootstrap\Carousel::widget(['items'=>$images]);
   ?>
   <div class="content-container">
