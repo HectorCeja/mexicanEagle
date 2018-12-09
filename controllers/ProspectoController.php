@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\Prospectos;
 use yii\helpers\Html;
+use app\models\Cliente;
 
 class ProspectoController extends Controller
 {
@@ -75,19 +76,19 @@ class ProspectoController extends Controller
             $id = Html::encode($_POST["id"]);
             if((int)$id){
                 $prospect=Prospectos::findOne($id);
-                $prospect->estatus=3;
+                $prospect->estatus='RECHAZADO';
                 if($prospect->update()){
-                    $model = Prospectos::find()->where(['estatus'=>1])->all();
+                    $model = Prospectos::obtenerEnEspera();
                     $msg="Prospecto borrado correctamente";
                     $tipo=1;
                     return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
                 }else{
-                    $model = Prospectos::find()->where(['estatus'=>1])->all();
+                    $model = Prospectos::obtenerEnEspera();
                     $msg="Prospecto no pudo ser borrado";
                     return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
                 }
             }else{
-                $model = Prospectos::find()->where(['estatus'=>1])->all();
+                $model = Prospectos::obtenerEnEspera();
                 $msg="Prospecto no pudo ser borrado";
                 return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
             }
@@ -99,35 +100,41 @@ class ProspectoController extends Controller
         if(Yii::$app->request->get("id")){
               $idProspect = Html::encode($_GET["id"]);
               if((int)$idProspect){
-                  $prospecto = Prospectos::findOne($idProspect);
-              $user = new User();
-              $user->nombre = $prospecto->nombre;
-              $user->apellidoPaterno = $prospecto->apellidoPaterno;
-              $user->apellidoMaterno = $prospecto->apellidoMaterno;
-              $user->phone_number = $prospecto->phone_number;
-              $user->pais= $prospecto->pais;
-              $user->ciudad= $prospecto->ciudad;
-              $user->username= $prospecto->username;
-              $user->email=$prospecto->email;
-              $user->password=$prospecto->password;
-              $user->authKey= $prospecto->authKey;
-              $prospecto->estatus=2;
-              $prospecto->update();
-              if($user->validate()){
-                  $user->save();
-                  $tipo=1;              
-                  $model = Prospectos::find()->where(['estatus'=>1])->all();
-                  $msg="Prospecto fue aceptado";
-                  return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
-              }
-              else{
-                $model = Prospectos::find()->where(['estatus'=>1])->all();
-                $msg="Ocurrio un error al aceptar prospecto";
-                return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
-              }
+                $prospecto = Prospectos::findOne($idProspect);
+                $user = new User();
+                $user->email=$prospecto->email;
+                $user->password="";
+                $user->activo = 1;
+                $user->idPerfil = 1;
+
+                $cliente = new Cliente();
+                $cliente->nombre = $prospecto->nombre;
+                $cliente->apellidoPaterno = $prospecto->apellidoPaterno;
+                $cliente->apellidoMaterno = $prospecto->apellidoMaterno;
+                $cliente->numeroTelefono = $prospecto->numeroTelefono;
+                $cliente->pais= $prospecto->pais;
+                $cliente->ciudad= $prospecto->ciudad;
+                $cliente->rfc= $prospecto->rfc;
+                $cliente->fechaNacimiento= $prospecto->fechaNacimiento;
+
+                $user->save(false);
+                
+                $cliente->idUsuario=$user->id;
+                $cliente->save(false);
+
+                $prospecto->estatus='ACEPTADO';
+                $prospecto->update();
+
+                $contact = new ContactForm();
+
+                ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
+
+                $model = Prospectos::obtenerEnEspera();
+                $msg="Prospecto fue aceptado ";
+                return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>1]);
             }
         }else{
-            $model = Prospectos::find()->where(['estatus'=>1])->all();
+            $model = Prospectos::find()->obtenerEnEspera();
             $msg="Entro por otro lado";
             return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
         }      
@@ -155,7 +162,7 @@ class ProspectoController extends Controller
 
     public function actionAceptacion()
     {
-        $model= Prospectos::find()->where(['estatus'=>1])->all();
+        $model= Prospectos::obtenerEnEspera();
         $msg=null;
         $tipo=3;
         return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);

@@ -166,13 +166,34 @@ class SiteController extends Controller
     public function actionGuardarprenda(){
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
+            $fechaAlta = date("Y-m-d");
+            $model->fechaAlta = $fechaAlta;
             if($model->save(false)){
-                $msg="Te has registrado correctamente.";
-                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias,'msg'=>$msg]);
+                $msg="Prenda guardada correctamente.";
+                $categorias = Categoria::obtenerCategorias();
+                $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
+                $subCategorias = SubCategoria::obtenerSubCategorias();
+                $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
+                $temporadas = Temporada::obtenerTemporadas();
+                $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
+                return $this->render('agregarPrenda',['model'=>$model,
+                                                'listCategorias'=>$listCategorias,
+                                                'listSubCategorias'=>$listSubCategorias,
+                                                'listTemporadas'=>$listTemporadas, 
+                                                'msg'=>$msg]);
             }else{
-
-                $msg="Ocurrió un problema, vuelva a intentarlo.";
-                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias,'msg'=>$msg]);
+                $categorias = Categoria::obtenerCategorias();
+                $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
+                $subCategorias = SubCategoria::obtenerSubCategorias();
+                $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
+                $temporadas = Temporada::obtenerTemporadas();
+                $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
+                $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
+                return $this->render('agregarPrenda',['model'=>$model,
+                                                'listCategorias'=>$listCategorias,
+                                                'listSubCategorias'=>$listSubCategorias,
+                                                'listTemporadas'=>$listTemporadas, 
+                                                'msg'=>$msg]);    
             }
         }
         /*if(Yii::$app->request->post()){
