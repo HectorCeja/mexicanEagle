@@ -14,13 +14,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
             return [
-                [['username','password'], 'required'],
+                [['email','password'], 'required'],
                 [['email'], 'email'],
-                [['username'], 'unique','targetClass'=>'\app\models\User','message' => 'usuario ya registrado.'],
                 [['email'], 'unique','targetClass'=>'\app\models\User','message' => 'correo ya registrado.'],
-                [['phone_number','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],
-                [['username','password'], 'string', 'max' => 250],
-                [['email'], 'string', 'max' => 500]           
+                [['password'], 'string', 'max' => 50],
+                [['email'], 'string', 'max' => 50]           
             ];
     }
 
@@ -28,15 +26,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels(){
         return[ 
             'id' => 'ID',
-            'username' => 'Usuario',
             'password' => 'Contraseña',
-            'nombre' => 'Nombre',
             'email' => 'Correo electrónico',
-            'apellidoPaterno' => 'Apellido paterno',
-            'apellidoMaterno' => 'Apellido materno',
-            'pais' => 'Pais',
-            'ciudad' => 'Ciudad',
-            'phone_number' => 'Teléfono'
         ];
     }
 
@@ -62,9 +53,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return null;
     }
 
-    public static function findByUsername($username)
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username]);
+        return static::findOne(['email' => $email]);
     }
 
     /**

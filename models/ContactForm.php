@@ -51,7 +51,7 @@ class ContactForm extends Model
      * @param string $email the target email address
      * @return bool whether the model passes validation
      */
-    public function contact($email = 'jomigo096@gmail.com')
+    public function contact($email)
     {
         if ($this->validate()) {
             Yii::$app->mailer->compose()
@@ -63,6 +63,27 @@ class ContactForm extends Model
 
             return true;
         }
+        return false;
+    }
+    public function contactProspect($emailSender, $emailTo, $username)
+    {
+        $link = "http://localhost:8080/index.php?r=site%2Fingresar";
+
+        $mensaje =  "Enhorabuena " .$username. "! has sido aceptado por el personal ";
+        $mensaje .= "de Ropalinda para terminar con el proceso, ingresa correo y contraseña ";
+        $mensaje .= "en el siguiente link " . $link; 
+        
+        if(Yii::$app->mailer->compose()
+            ->setTo($emailTo)
+            ->setFrom([$emailSender])
+            ->setSubject("Cliente RopaLinda")
+            ->setTextBody(
+                $mensaje
+            )
+            ->send()){
+                return true;
+            }
+
         return false;
     }
 }
