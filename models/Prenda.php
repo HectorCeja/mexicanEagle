@@ -4,23 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\entities\EntityPrendas;
 
 class Prenda extends \yii\db\ActiveRecord {
-    public $id;
-    public $nombre;
-    public $descripcion;
-    public $precio;
-    public $tipoPrenda;
-    public $idTemporada;
-    public $urlImagen;
-    public $urlImagenMiniatura;
-    public $idCategoria;
-    public $idSubCategoria;
-    public $fechaAlta;
-    public $created_at;
-    public $updated_at;
-
 
 
     public static function tableName()
@@ -34,7 +20,7 @@ class Prenda extends \yii\db\ActiveRecord {
     {
         return [
             // name, email, subject and body are required
-            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','tipoPrenda','idCategoria','idSubCategoria'], 'required'],
+            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','tipoPrenda','idCategoria','idSubCategoria','idTemporada'], 'required'],
             
         ];
     }
@@ -45,13 +31,14 @@ class Prenda extends \yii\db\ActiveRecord {
     public function attributeLabels()
     {
         return [
-            'nombre' => 'Nombre',
-            'descripcion' => 'Descripcion',
-            'tipoPrenda' => 'Tipo de Prenda',
-            'urlImagen' => 'Imagen',
-            'urlImagenMiniatura' => 'Imagen Miniatura',
-            'idCategoria' => 'Categoria',
-            'idSubCategoria'=>'SubCategoria'
+            'nombre' => 'Ingrese nombre de la prenda',
+            'descripcion' => 'Ingrese descripcion',
+            'tipoPrenda' => 'Selecciones tipo de Prenda',
+            'urlImagen' => 'Seleccione imagen de prenda',
+            'urlImagenMiniatura' => 'Seleccione imagen miniatura de prenda',
+            'idCategoria' => 'Seleccione categoria',
+            'idTemporada' => 'Seleccione temporada',
+            'idSubCategoria'=>'Seleccione sub categoria'
         ];
     }
 }
