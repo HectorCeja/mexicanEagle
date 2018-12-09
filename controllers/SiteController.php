@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use app\models\User;
 
 
 
@@ -88,9 +89,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
+        $msg="";
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model,'msg'=>$msg
         ]);
     }
 
@@ -149,16 +150,24 @@ class SiteController extends Controller
             $password = Html::encode($_POST["password"]);
 
             $user=User::findByEmail($email);
-            $user->setPassword($password);
-            if($user->update(false)){
-                $msg="Te has registrado correctamente.";
-                return $this->render('ingresarcontrasenia',['msg'=>$msg]);
-            }else{
+            if($user!=null){
+                $user->setPassword($password);
+                if($user->update(false)){
+                    $msg="Te has registrado correctamente.";
+                    $model = new LoginForm();
+                    return $this->render('login',['model'=>$model,'msg'=>$msg]);
+                }else{
 
+                    $msg="Ocurrió un problema, vuelva a intentarlo.";
+                    $model = new LoginForm(); 
+                    return $this->render('ingresarcontrasenia',['msg'=>$msg]);
+                }
+            }else{
                 $msg="Ocurrió un problema, vuelva a intentarlo.";
                 $model = new LoginForm(); 
                 return $this->render('ingresarcontrasenia',['msg'=>$msg]);
             }
+            
         }
     }
 

@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+$this->title = 'Prendas';
 ?>
 <div class="prendas-agregar"> 
 <h1 class="titulo">Nueva Prenda Basica </h1>
