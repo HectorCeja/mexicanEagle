@@ -2,11 +2,10 @@
 
 namespace app\models\entities;
 
-class EntityUser extends \yii\db\ActiveRecord
-{
+class EntityCategoria extends \yii\db\ActiveRecord{
 
     public static function tableName()
     {
-        return 'usuarios';
+        return 'categorias';
     }
 }

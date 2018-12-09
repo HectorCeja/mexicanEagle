@@ -1,23 +1,20 @@
 <?php
 
 namespace app\models;
-use app\models\entities\EntityProspectos;
+use app\models\entities\EntityCliente;
 
-class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class Cliente extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
     public static function tableName()
     {
-        return EntityProspectos::tableName();
+        return EntityCliente::tableName();
     }
 
     public function rules()
     {
             return [
-                [['email','rfc','numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad','fechaNacimiento'], 'required'],
-                [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'usuario ya registrado.'],
-                [['numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],
-                [['email'], 'string', 'max' => 50]           
+                [['numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],      
             ];
     }
 
@@ -26,13 +23,11 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
         return[ 
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'email' => 'Correo electrónico',
             'apellidoPaterno' => 'Apellido paterno',
             'apellidoMaterno' => 'Apellido materno',
             'pais' => 'Pais',
             'ciudad' => 'Ciudad',
-            'numeroTelefono' => 'Teléfono',
-            'fechaNacimiento' => 'Fecha de Nacimiento'
+            'numeroTelefono' => 'Teléfono'
         ];
     }
 
@@ -42,11 +37,6 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id]);
-    }
-
-    public static function obtenerEnEspera()
-    {
-        return static::find()->where(['estatus'=>'ESPERA'])->all();
     }
 
     /**
@@ -106,6 +96,12 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
         return $this->authKey === $authKey;
     }
 
+    /**
+     * Validates password
+     *
+     * @param string $password password to validate
+     * @return bool if password provided is valid for current user
+     */
     public function validatePassword($password)
     {
         return \Yii::$app->security->validatePassword($password,$this->password);

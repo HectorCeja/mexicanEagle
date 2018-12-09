@@ -27,14 +27,14 @@ use yii\widgets\ActiveForm;
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= $row->nombre  ?><?= " "?><?= $row->apellidoPaterno  ?><?= " "?><?= $row->apellidoMaterno  ?></td>
-        <td><?= $row->phone_number ?> </td>
+        <td><?= $row->numeroTelefono ?> </td>
         <td><?= $row->email ?></td>
         <td><?= $row->pais ?></td>
         <td><?= $row->ciudad ?></td>
         <td><a href="<?= Url::toRoute(["site/aceptar", "id" => $row->id]) ?>">Aceptar</a></td>
         <td>
-            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->username ?>">Eliminar</a>
-            <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->username ?>">
+            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->nombre ?>">Eliminar</a>
+            <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->nombre ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
                                     <h4 class="modal-title">Eliminar Prospecto</h4>
                               </div>
                               <div class="modal-body">
-                                    <p>¿Realmente deseas eliminar al prospecto <?= $row->username ?>?</p>
+                                    <p>¿Realmente deseas eliminar al prospecto <?= $row->nombre ?>?</p>
                               </div>
                               <div class="modal-footer">
                               <?= Html::beginForm(Url::toRoute("site/delete"), "POST") ?>

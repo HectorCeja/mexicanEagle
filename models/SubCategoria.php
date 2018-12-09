@@ -4,8 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\entities\EntitySubCategoria;
 
-class Categoria extends \yii\db\ActiveRecord{
+class SubCategoria extends \yii\db\ActiveRecord{
 
     public $id;
     public $descripcion;
@@ -15,7 +16,7 @@ class Categoria extends \yii\db\ActiveRecord{
 
     public static function tableName()
     {
-        return EntityCategorias::tableName();
+        return EntitySubCategoria::tableName();
     }
 
      /**
@@ -37,6 +38,11 @@ class Categoria extends \yii\db\ActiveRecord{
         return [
             'descripcion' => 'Descripcion'
         ];
+    }
+
+    public static function obtenerSubCategorias()
+    {
+        return static::find()->where('id>0')->all();
     }
 
 

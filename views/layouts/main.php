@@ -14,28 +14,29 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
+    <html lang="<?= Yii::$app->language ?>">
+        <head>
+            <meta charset="<?= Yii::$app->charset ?>">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <?= Html::csrfMetaTags() ?>
+            <title><?= Html::encode($this->title) ?></title>
+            <?php $this->head() ?>
+        </head>
+        <body>
+            <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'RopaLinda',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
+                <div class="wrap">
+                    <?php
+                        NavBar::begin([
+                            'brandLabel' => 'RopaLinda',
+                            'brandUrl' => Yii::$app->homeUrl,
+                            'options' => [
+                                'class' => 'navbar-inverse navbar-fixed-top',
+                            ],
+                        ]);
 
+<<<<<<< HEAD
     $items = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
         ['label' => 'Conócenos', 'url' => ['/site/about']],
@@ -46,42 +47,59 @@ AppAsset::register($this);
             '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Salir (' . Yii::$app->user->identity->username . ')',
+                'Salir (' . Yii::$app->user->identity->email . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
             . '</li>'
         )];
+=======
+                        $items = [
+                            ['label' => 'Inicio', 'url' => ['/site/index']],
+                            ['label' => 'Conócenos', 'url' => ['/site/about']],
+                            ['label' => 'Conctáctanos', 'url' => ['/site/contact']],
+                            Yii::$app->User->isGuest ? (
+                                ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
+                            ) : (
+                                '<li>'
+                                . Html::beginForm(['/site/logout'], 'post')
+                                . Html::submitButton(
+                                    'Salir (' . Yii::$app->user->identity->username . ')',
+                                    ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                                . '</li>'
+                            )];
+>>>>>>> 6e84a9d30e139dd86b16d1641d808f0d73e0b4a4
 
-    if(Yii::$app->User->isGuest){
-        $items[] = ['label' => 'Registrarse', 'url' => ['/site/register']];
-    }
+                        if(Yii::$app->User->isGuest){
+                            $items[] = ['label' => 'Registrarse', 'url' => ['/site/register']];
+                        }
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $items,
-    ]);
-    
-    NavBar::end();
-    ?>
+                        echo Nav::widget([
+                            'options' => ['class' => 'navbar-nav navbar-right'],
+                            'items' => $items,
+                        ]);
+                        
+                        NavBar::end();
+                    ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
+                    <div class="container">
+                        <?= Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
+                        <?= Alert::widget() ?>
+                        <?= $content ?>
+                    </div>
+                </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; Ropalinda <?= date('Y') ?></p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+                <footer class="footer">
+                    <div class="container">
+                        <p class="pull-left">&copy; Ropalinda <?= date('Y') ?></p>
+                    </div>
+                </footer>
 
-<?php $this->endBody() ?>
-</body>
-</html>
+            <?php $this->endBody() ?>
+        </body>
+    </html>
 <?php $this->endPage() ?>

@@ -27,13 +27,13 @@ $this->title = 'Registrarse';
 
         <?= $form->field($model, 'ciudad')->textInput(['autofocus' => true]) ?>
 
-        <?= $form->field($model, 'phone_number')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'numeroTelefono')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'fechaNacimiento')->textInput(['autofocus' => true]) ?>
+    
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'rfc')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'email')->input('email') ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
 
         <div class="form-group">
             <?= Html::submitButton('Registrarse', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
