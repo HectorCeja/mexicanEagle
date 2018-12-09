@@ -1,0 +1,12 @@
+
+.titulo {
+    text-align: center;
+}
+
+.divagregar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
