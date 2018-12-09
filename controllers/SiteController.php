@@ -13,12 +13,12 @@ use app\models\Prenda;
 use app\models\Componente;
 use app\models\User;
 use app\models\Cliente;
-use app\models\Categorias;
+use app\models\Categoria;
 use app\models\SubCategoria;
+use app\models\Temporada;
 use app\models\entities\EntitySubCategoria;
 use app\models\entities\EntityCategoria;
 use app\models\entities\EntityTemporadas;
-
 use app\models\Prospectos;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -150,11 +150,47 @@ class SiteController extends Controller
     }
     public function actionAgregar(){
         $model = new Prenda();
-        $categorias = Categorias::obtenerCategorias();
-       $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
+        $categorias = Categoria::obtenerCategorias();
+        $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
         $subCategorias = SubCategoria::obtenerSubCategorias();
         $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
-        return $this->render('agregarPrenda',['model'=>$model/*,'categorias'=>$listCategorias,'subCategorias'=>$listSubCategorias*/]);
+        $temporadas = Temporada::obtenerTemporadas();
+        $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
+        $msg="";
+        return $this->render('agregarPrenda',['model'=>$model,
+                                                'listCategorias'=>$listCategorias,
+                                                'listSubCategorias'=>$listSubCategorias,
+                                                'listTemporadas'=>$listTemporadas, 
+                                                'msg'=>$msg]);
+    }
+    public function actionGuardarprenda(){
+        $model = new Prenda();
+        if ($model->load(Yii::$app->request->post())){
+            if($model->save(false)){
+                $msg="Te has registrado correctamente.";
+                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias,'msg'=>$msg]);
+            }else{
+
+                $msg="Ocurrió un problema, vuelva a intentarlo.";
+                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias,'msg'=>$msg]);
+            }
+        }
+        /*if(Yii::$app->request->post()){
+            $email = Html::encode($_POST["nombre"]);
+            $password = Html::encode($_POST["tipoPrenda"]);
+
+            $user=User::findByEmail($email);
+            $user->setPassword($password);
+            if($user->update(false)){
+                $msg="Te has registrado correctamente.";
+                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
+            }else{
+
+                $msg="Ocurrió un problema, vuelva a intentarlo.";
+                $model = new LoginForm(); 
+                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
+            }
+        }*/
     }
     public function actionComponentes(){
         return $this->render('componentes');

@@ -6,12 +6,7 @@ use Yii;
 use yii\base\Model;
 use app\models\entities\EntityCategoria;
 
-class Categorias extends \yii\db\ActiveRecord{
-
-    public $id;
-    public $descripcion;
-    public $created_at;
-    public $updated_at;
+class Categoria extends \yii\db\ActiveRecord{
 
 
     public static function tableName()
