@@ -12,10 +12,9 @@ use yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin([
                     'id' => 'componente',
                     'method' => 'post',
-                    'action' => ['prendas/guardarcomponente'],]); ?>
+                    'action' => ['prendas/componentes'],]); ?>
                 <?= $form->field($model, 'nombre')->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
-                <?= $form->field($model, 'precio')->textInput(['type' => 'number']) ?>
                 <div class="form-group">
                     <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>

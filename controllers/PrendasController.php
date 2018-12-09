@@ -81,10 +81,11 @@ class PrendasController extends Controller
     }
     public function actionGuardarcomponente(){
         $model = new Componente();
-        if(Yii::$app->request->get("idPrenda")){
-            if ($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())){
+            if(Yii::$app->request->get("idPrenda")){
                 $idPrenda = Html::encode($_GET["idPrenda"]);
                 $fechaAlta = date("Y-m-d");
+                $precio = 0;
                 $model->fechaAlta = $fechaAlta;
                 if($model->save(false)){
                     $msg="Componente guardado correctamente.";
