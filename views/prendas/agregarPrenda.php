@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
-<div class="site-agregar"> 
+<div class="prendas-agregar"> 
 <h1 class="titulo">Nueva Prenda Basica </h1>
 <h4 ><?= $msg ?></h4>
 <div class="row">
@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
                 <?php $form = ActiveForm::begin([
                     'id' => 'prenda',
                     'method' => 'post',
-                    'action' => ['site/guardarprenda'],]); ?>
+                    'action' => ['prendas/guardarprenda'],]); ?>
 
                     <?= $form->field($model, 'nombre')->textInput() ?>
                     <?= $form->field($model,'tipoPrenda')->dropDownList(['BASICA' => 'BASICA', 'DISEÑADOR'=>'DISEÑADOR']); ?>
