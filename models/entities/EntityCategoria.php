@@ -2,7 +2,7 @@
 
 namespace app\models\entities;
 
-class EntityCategorias extends \yii\db\ActiveRecord{
+class EntityCategoria extends \yii\db\ActiveRecord{
 
     public static function tableName()
     {
