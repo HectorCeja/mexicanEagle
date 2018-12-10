@@ -113,6 +113,7 @@ class PrendasController extends Controller
             $idPrenda = Html::encode($_GET["id"]);
             if((int)$idPrenda){
                 $msg="";
+                Yii::$app->session['idPrenda'] = $idPrenda;
                 return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$idPrenda]);
             }else{
                 $model = Prenda::findOne($idPrenda);
@@ -164,6 +165,7 @@ class PrendasController extends Controller
                 $model->fechaAlta = $fechaAlta;
                 $model->precio = $precio;
                 $model->urlImagen = "";
+                $model->idPrenda=Yii::$app->session['idPrenda'];
                 $model->urlImagenMiniatura = "";
                 if($model->save(false)){
                     $msg="Componente guardado correctamente.";
