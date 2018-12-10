@@ -155,8 +155,6 @@ class PrendasController extends Controller
             }
         }
     }
-
-}
     public function actionGuardarcomponente(){
         $model = new Componente();
         if ($model->load(Yii::$app->request->post())){
@@ -191,4 +189,4 @@ class PrendasController extends Controller
                 return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
             }
         }*/
-    }
+}
