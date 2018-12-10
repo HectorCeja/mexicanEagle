@@ -19,9 +19,7 @@ class Prenda extends \yii\db\ActiveRecord {
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','tipoPrenda','idCategoria','idSubCategoria','idTemporada'], 'required'],
-            
+            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','tipoPrenda','idCategoria','idSubCategoria','idTemporada'], 'required'], 
         ];
     }
 
