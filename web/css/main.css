@@ -14,3 +14,9 @@
     grid-template-columns: auto auto;
     grid-column-gap: 25px;
 }
+
+.filter {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+}

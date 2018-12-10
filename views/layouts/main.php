@@ -37,6 +37,9 @@ AppAsset::register($this);
                         ]);
 
                         $items = [];
+                        $items[] = (
+                            '<li><input type="text" class="filter" /></li>'
+                        );
                         if(Yii::$app->User->isGuest){
                             $items = [
                                 ['label' => 'Inicio', 'url' => ['/site/index']],
