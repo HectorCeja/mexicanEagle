@@ -22,12 +22,11 @@ $this->title = 'Prendas';
                     <?= $form->field($model, 'idSubCategoria')->dropDownList($listSubCategorias, ['prompt'=>'Selecciona SubCategoria'] );?>
                     <?= $form->field($model, 'idTemporada')->dropDownList($listTemporadas, ['prompt'=>'Selecciona Temporada'] );?>
                     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'urlImagen')->fileInput() ?>
-                    <?= $form->field($model, 'urlImagenMiniatura')->fileInput() ?>
                     <div class="form-group">
                         <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
+    </div>
 </div>
