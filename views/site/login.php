@@ -12,7 +12,10 @@ $this->title = 'Iniciar Sesión';
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
-    <h4><?=$msg?></h4>
+
+     <div class="alert alert-success">
+     <?= nl2br(Html::encode($msg)) ?>
+        </div>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',

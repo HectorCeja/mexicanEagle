@@ -141,7 +141,8 @@ class SiteController extends Controller
     public function actionIngresar()
     {
         $msg = "";
-        return $this->render('ingresarcontrasenia',['msg'=>$msg]);
+        $tipo= 0;
+        return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
     }
 
     public function actionCambiar(){
@@ -157,17 +158,17 @@ class SiteController extends Controller
                     $model = new LoginForm();
                     return $this->render('login',['model'=>$model,'msg'=>$msg]);
                 }else{
-
-                    $msg="Ocurrió un problema, vuelva a intentarlo.";
+                    $msg="Correo no registrado";
                     $model = new LoginForm(); 
-                    return $this->render('ingresarcontrasenia',['msg'=>$msg]);
+                    $tipo=1;
+                    return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
                 }
             }else{
-                $msg="Ocurrió un problema, vuelva a intentarlo.";
+                $msg="Correo no registrado";
                 $model = new LoginForm(); 
-                return $this->render('ingresarcontrasenia',['msg'=>$msg]);
-            }
-            
+                $tipo=1;
+                return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
+            }      
         }
     }
 

@@ -13,13 +13,33 @@ use app\models\SubCategoria;
 use app\models\Temporada;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 
 class PrendasController extends Controller
 {
     
     public function actionPrendas(){
-        return $this->render('prendas');
+        $prendas = Prenda::obtenerPrendas();
+        $urlbase=Url::base(true);
+        return $this->render('prendas',['model'=>$prendas,'urlbase'=>$urlbase]);
+    }
+
+    public function actionMostrardetalle(){
+        if(Yii::$app->request->get("id")){
+            $idPrenda = Html::encode($_GET["id"]);
+            if((int)$idPrenda){
+             $model = Prenda::findOne($idPrenda);
+             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+             return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
+             ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
+            }
+        }else{
+             $prendas = Prenda::obtenerPrendas();
+             return $this->render('prendas',['model'=>$prendas]);
+        }
     }
     public function actionAgregar(){
         $model = new Prenda();

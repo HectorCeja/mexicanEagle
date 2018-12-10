@@ -7,7 +7,11 @@ $this->title = 'Contraseña';
 ?> 
 <div class="site-cambiarcontrasenia">
     <h1>Ingresar datos:</h1>
-    <h4 ><?= $msg ?></h4>
+    <?php if($tipo==1): ?>
+    <div class="alert alert-danger">
+        <?= nl2br(Html::encode($msg)) ?>
+    </div>
+    <?php endif; ?>
     <?= Html::beginForm(Url::toRoute("site/cambiar"), "POST") ?>
         <div class="form-group">
         Correo: <input type="text" name="email" required>
