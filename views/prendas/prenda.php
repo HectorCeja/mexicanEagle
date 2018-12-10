@@ -9,8 +9,7 @@ use yii\widgets\ActiveForm;
 
 <div class="infoContainer">
     <div class="imageContainer">
-        <?php $extension= '.jpg';?>
-        <?php $urlfinal = Url::base(true).$model->urlImagen.$extension; ?>
+        <?php $urlfinal = Url::base(true).$model->urlImagen ?>
         <img src=<?=$urlfinal ?> alt="Imagen de la Prenda" />
     </div>
     <div class="infoPrenda">
@@ -50,12 +49,33 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </div>
-
+<div class="botones">
+    <?= Html::beginForm(Url::toRoute(['prendas/prendas'])) ?>
+       <button type="submit" class="btn btn-primary botonprendas">Ir a Prendas</button>
+    <?= Html::endForm() ?>
+    <?= Html::beginForm(Url::toRoute(['prendas/agregarcomponente','id' => $model->id])) ?>
+       <button type="submit" class="btn btn-primary botonagregarcomponente">Agregar Componente</button>
+    <?= Html::endForm() ?>
+</div>
+<?php if (count($componentes)>0): ?>
 <h1 class="titulo">Componentes</h1>
 
-     <div class="boton">
-        <?= Html::beginForm(Url::toRoute(['prendas/agregarcomponente','id' => $model->id])) ?>
-       <button type="submit" class="btn btn-primary">Agregar Componente</button>
-     <?= Html::endForm() ?>
-</div>
+   <table class="table table-bordered">
+    <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Descripcion</th>
+    </tr>
+    <?php foreach($componentes as $row): ?>
+    <tr>
+        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
+        <td><?= $row->nombre ?> </td>
+        <td><?= $row->precio ?></td>
+        <td><?= $row->descripcion?></td>
+    </tr>
+    <?php endforeach ?>
+</table>     
+<?php endif; ?>
    
