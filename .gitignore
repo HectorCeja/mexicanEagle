@@ -1,3 +1,4 @@
 /config/db.php
 /vendor
 .vscode
+/web/files/*
