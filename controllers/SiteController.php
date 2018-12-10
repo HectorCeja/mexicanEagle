@@ -9,11 +9,11 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\PerfilOpcion;
+use app\models\Opcion;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use app\models\User;
-
-
 
 class SiteController extends Controller
 {
@@ -86,12 +86,23 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        $modelPerfilOpcion = new PerfilOpcion();
+        $modelOpcion = new Opcion();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $user = $model->getUser();
+            $opcionesPorPerfil = $modelPerfilOpcion->obtenerOpcionesPorPerfil($user->idPerfil);
+            $listOpcionesPorPerfil = ArrayHelper::map($opcionesPorPerfil, 'idOpcion', 'idOpcion');
+            $opciones = $modelOpcion->obtenerOpciones($listOpcionesPorPerfil);
+            $listOpciones = ArrayHelper::map($opciones, 'descripcion', 'url');
+            Yii::$app->session['opciones'] = $listOpciones;
+            return $this->render('index', [
+                'model' => $model
+            ]);
         }
-        $msg="";
+        
         return $this->render('login', [
-            'model' => $model,'msg'=>$msg
+            'model' => $model, 
+            'msg' => ""
         ]);
     }
 

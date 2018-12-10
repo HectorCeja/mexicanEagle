@@ -36,25 +36,29 @@ AppAsset::register($this);
                             ],
                         ]);
 
-    $items = [
-        ['label' => 'Inicio', 'url' => ['/site/index']],
-        ['label' => 'Conócenos', 'url' => ['/site/about']],
-        ['label' => 'Contáctanos', 'url' => ['/site/contact']],
-        Yii::$app->User->isGuest ? (
-            ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
-        ) : (
-            '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Salir (' . Yii::$app->user->identity->email . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>'
-        )];
-
+                        $items = [];
                         if(Yii::$app->User->isGuest){
-                            $items[] = ['label' => 'Registrarse', 'url' => ['/prospecto/register']];
+                            $items = [
+                                ['label' => 'Inicio', 'url' => ['/site/index']],
+                                ['label' => 'Conócenos', 'url' => ['/site/about']],
+                                ['label' => 'Conctáctanos', 'url' => ['/site/contact']],
+                                ['label' => 'Iniciar Sesión', 'url' => ['/site/login']],
+                                ['label' => 'Registrarse', 'url' => ['/prospecto/register']]
+                            ];
+                        } else {
+                            foreach(Yii::$app->session['opciones'] as $key => $value) {
+                                $items[] = ['label' => $key, 'url' => [$value]];
+                            }
+                            $items[] = (
+                                '<li>'
+                                . Html::beginForm(['/site/logout'], 'post')
+                                . Html::submitButton(
+                                    'Salir (' . Yii::$app->user->identity->email . ')',
+                                    ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                                . '</li>'
+                            );
                         }
 
                         echo Nav::widget([
