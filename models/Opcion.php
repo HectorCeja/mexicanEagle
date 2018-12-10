@@ -14,7 +14,7 @@ class Opcion extends \yii\db\ActiveRecord{
         return EntityOpcion::tableName();
     }
 
-    public static function obtenerOpciones($opciones)
+    public static function obtenerOpcionesPorIds($opciones)
     {
         return static::find()
             ->where(['in', 'id', $opciones])
