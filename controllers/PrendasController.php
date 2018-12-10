@@ -121,6 +121,7 @@ class PrendasController extends Controller
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
             $fechaAlta = date("Y-m-d");
+            $model->tipoPrenda = $_POST['Prenda']['tipoPrenda'];
             $model->fechaAlta = $fechaAlta;
 
             if($model->save(false)){
