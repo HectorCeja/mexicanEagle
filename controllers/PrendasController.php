@@ -79,12 +79,12 @@ class PrendasController extends Controller
 
             $expensions= array("jpeg","jpg","png");
     
-            if(!is_dir("../files/clothes/")) {
-                mkdir("../files/clothes/", 0777);
+            if(!is_dir("../web/files/clothes/")) {
+                mkdir("../web/files/clothes/", 0777);
             }
                 
-            $urlNueva = "../files/clothes/".$file1;
-            $urlNueva2 = "../files/clothes/".$file2;
+            $urlNueva = "../web/files/clothes/".$file1;
+            $urlNueva2 = "../web/files/clothes/".$file2;
 
             move_uploaded_file($_FILES['imagenCompleta']['tmp_name'],$urlNueva);
             move_uploaded_file($_FILES['imagenMiniatura']['tmp_name'],$urlNueva2);
