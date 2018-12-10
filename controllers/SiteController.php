@@ -145,10 +145,6 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-
-   
- 
-
     public function actionIngresar()
     {
         $msg = "";
@@ -182,6 +178,4 @@ class SiteController extends Controller
             }      
         }
     }
-
-   
 }

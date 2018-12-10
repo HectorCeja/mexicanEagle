@@ -4,22 +4,21 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\entities\EntitySubCategoria;
+use app\models\entities\EntityComponentes;
 
-class SubCategoria extends \yii\db\ActiveRecord{
+class Componente extends \yii\db\ActiveRecord {
     public static function tableName()
     {
-        return EntitySubCategoria::tableName();
+        return EntityComponentes::tableName();
     }
-
-     /**
+    /**
      * @return array the validation rules.
      */
     public function rules()
     {
         return [
             // name, email, subject and body are required
-            ['descripcion', 'required'],
+            [['nombre', 'descripcion', 'precio', 'urlImagen', 'urlImagenMiniatura'], 'required'],
         ];
     }
 
@@ -29,14 +28,10 @@ class SubCategoria extends \yii\db\ActiveRecord{
     public function attributeLabels()
     {
         return [
-            'descripcion' => 'Descripcion'
+            'nombre' => 'Nombre',
+            'descripcion' => 'Descripcion',
+            'urlImagen' => 'Imagen',
+            'urlImagenMiniatura' => 'Imagen Miniatura',
         ];
     }
-
-    public static function obtenerSubCategorias()
-    {
-        return static::find()->all();
-    }
-
-
 }

@@ -19,6 +19,7 @@ $this->title = 'Prendas';
                             'action' => ['prendas/saveprenda'],
                             'options' => ['enctype' => 'multipart/form-data'],]); ?>
 
+<<<<<<< HEAD
                         <?= $form1->field($model, 'urlImagen')->fileInput(['multiple' => true,
                         'id' => 'imgInpC', 'name'=>'imagenCompleta']) ?>
                         <img id="precargaPrendaC" src="<?= $im1 ?>"/> 
@@ -54,4 +55,3 @@ $this->title = 'Prendas';
             </div>
         </div>
 </div>
-<script>
