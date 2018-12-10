@@ -42,6 +42,14 @@ use yii\widgets\ActiveForm;
                         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>
+                <?php $form2 = ActiveForm::begin([
+                        'id' => 'componente-2',
+                        'method' => 'get',
+                        'action' => ['prendas/savecomponente'],]); ?>
+                        <div class="form-group">
+                            <?= Html::submitButton('Regresar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        </div>
+                    <?php ActiveForm::end(); ?>
             <?php endif; ?>
     </div>
 </div>

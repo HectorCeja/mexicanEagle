@@ -106,6 +106,14 @@ class PrendasController extends Controller
                                                 'msg'=>"",'cargada'=>"SI",
                                                 'im1'=>$im1,
                                                 'im2'=>$im2]);
+        }elseif(Yii::$app->request->get()){
+            return $this->render('agregarPrenda',['model'=>$model,
+                                                'listCategorias'=>'',
+                                                'listSubCategorias'=>'',
+                                                'listTemporadas'=>'', 
+                                                'msg'=>"",'cargada'=>"NO",
+                                                'im1'=>'',
+                                                'im2'=>'']);
         }
     }
 
@@ -196,6 +204,14 @@ class PrendasController extends Controller
                                                       'msg'=>"",'cargada'=>"SI",
                                                       'im1'=>$im1,
                                                       'im2'=>$im2]);
+        }elseif(Yii::$app->request->get()){
+            return $this->render('agregarComponente',['model'=>$model,
+                                                'listCategorias'=>'',
+                                                'listSubCategorias'=>'',
+                                                'listTemporadas'=>'', 
+                                                'msg'=>"",'cargada'=>"NO",
+                                                'im1'=>'',
+                                                'im2'=>'']);
         }
     }
 
