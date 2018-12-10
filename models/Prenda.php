@@ -50,4 +50,11 @@ class Prenda extends \yii\db\ActiveRecord {
     {
         return static::find()->all();
     }
+
+    public static function obtenerPrendasPorIds($prendas)
+    {
+        return static::find()
+            ->where(['in', 'id', $prendas])
+            ->all();
+    }
 }

@@ -41,7 +41,7 @@ AppAsset::register($this);
                             $items = [
                                 ['label' => 'Inicio', 'url' => ['/site/index']],
                                 ['label' => 'Conócenos', 'url' => ['/site/about']],
-                                ['label' => 'Conctáctanos', 'url' => ['/site/contact']],
+                                ['label' => 'Contáctanos', 'url' => ['/site/contact']],
                                 ['label' => 'Iniciar Sesión', 'url' => ['/site/login']],
                                 ['label' => 'Registrarse', 'url' => ['/prospecto/register']]
                             ];
