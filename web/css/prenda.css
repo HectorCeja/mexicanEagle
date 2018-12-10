@@ -13,6 +13,19 @@
     padding-bottom: 16px;
 }
 
+.botones{
+    display: grid !important;
+    grid-template-columns: auto auto !important;
+}
+
+.botonprendas{
+    margin: 2%; 
+    margin-left: auto;
+}
+.botonagregarcomponente{
+    margin-left: 80%;
+}
+
 .prendaContainer input {
     width: 100%;
 }
@@ -30,7 +43,7 @@
 }
 
 .imageContainer {
-    width: 320px;
+    width: 300px;
     margin-right: 16px;
 }
 

@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
                         <div class="form-group">
                             <?= Html::submitButton('Regresar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
-                    <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             <?php endif; ?>
     </div>
 </div>
