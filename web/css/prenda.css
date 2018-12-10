@@ -1,6 +1,11 @@
+.infoContainer {
+    display: flex;
+}
+
 .infoPrenda {
     font-style: normal;
     font-weight: normal;
+    width: 100%;
 }
 
 .prendaContainer {
@@ -24,6 +29,11 @@
     display: block;
 }
 
-.imagePrenda {
-    
+.imageContainer {
+    width: 320px;
+    margin-right: 16px;
+}
+
+.imageContainer img {
+    width: 100px;
 }
