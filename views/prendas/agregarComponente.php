@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
-<div class="site-agregar">
+<div class="componentes-agregar">
     <h1 class="titulo">Nuevo Componente</h1>
     <div class="row">
         <div class="col-lg-5">
