@@ -24,22 +24,28 @@ $this->title = 'Carrito';
             <th>Nombre</th>
             <th>Tipo de Prenda</th>
             <th>Precio</th>
-            <th>Descripcion</th>
         </tr>
         <?php 
+            $totalCompra = 0.00;
             foreach($model as $row):
                 $urlfinal = $urlbase.$row->urlImagen;
+                $totalCompra += $row->precio;
         ?>
                 <tr> 
-                    <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
+                    <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:50px;height:50px;" ></td>
                     <td><?= $row->nombre  ?></td>
                     <td><?= $row->tipoPrenda ?> </td>
-                    <td><?= $row->precio ?></td>
-                    <td><?= $row->descripcion ?></td>
+                    <td>$<?= $row->precio ?></td>
                 </tr>
         <?php 
             endforeach 
         ?>
+            <tr> 
+                <td></td>
+                <td></td>
+                <td>Total: </td>
+                <td>$<?= number_format($totalCompra,2,".",","); ?> </td>
+            </tr>
     </table>
 
 <?php } else { ?>
