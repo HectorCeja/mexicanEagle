@@ -1,16 +1,17 @@
 <?php
-
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
+$this->title = 'Dirección';
+
 ?> 
 <h1 class="titulo">Prendas </h1>
 <div class="divagregar">
-<?= Html::beginForm(Url::toRoute("prendas/agregar"), "POST") ?>
-    <button type="submit" class="btn btn-primary">Agregar Prenda</button>
-<?= Html::endForm() ?>
+    <?= Html::beginForm(Url::toRoute("prendas/agregar"), "POST") ?>
+        <button type="submit" class="btn btn-primary">Agregar Prenda</button>
+    <?= Html::endForm() ?>
 </div>
 <h3><?= $msg ?> </h3>
 <table class="table table-bordered">
@@ -23,8 +24,7 @@ use kartik\file\FileInput;
         <th></th>
     </tr>
     <?php foreach($model as $row): ?>
-    <?php $extension= '.jpg';?>
-    <?php $urlfinal = $urlbase.$row->urlImagen.$extension; ?>
+    <?php $urlfinal = $urlbase.$row->urlImagenMiniatura; ?>
     <tr> 
         <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
         <td><?= $row->nombre  ?></td>
