@@ -4,6 +4,7 @@ namespace app\models;
 use app\models\entities\EntityProspectos;
 use app\models\Prospectos;
 use app\models\Cliente;
+use yii\db\ActiveRecord;
 
 class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -20,8 +21,7 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
                 [['ciudad'],'required', 'message' => 'La Ciudad no debe estar vacía.'],
                 [['fechaNacimiento'],'required', 'message' => 'La Fecha de Nacimiento no debe estar vacía.'],
                 [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'Usuario ya registrado.'],
-                [['numeroTelefono','email','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30, 'message' => 'El campo excede los 30 caracteres.'],
-                [['numeroTelefono'], 'match', 'pattern' =>'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$', 'message'=>'El teléfono es inválido.']           
+                [['numeroTelefono','email','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30, 'message' => 'El campo excede los 30 caracteres.']
             ];
     }
 
@@ -51,6 +51,14 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public static function obtenerEnEspera()
     {
         return static::find()->where(['estatus'=>'ESPERA'])->all();
+    }
+
+    public static function obtenerClientesBuscador($search){
+       // $query = 'SELECT * FROM prospectos where nombre like %'.$search.'% OR numeroTelefono like %'.$search.'$';
+       // return static::find()->findBySql($query)->all();
+
+        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','apellidoPaterno',[$search]])->orWhere(['LIKE','apellidoMaterno',[$search]])->orWhere(['LIKE','numeroTelefono',[$search]])->orWhere(['LIKE','email',[$search]])->orWhere(['LIKE','pais',[$search]])->orWhere(['LIKE','ciudad',[$search]])->all();
+          
     }
 
     /**

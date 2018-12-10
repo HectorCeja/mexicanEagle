@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
 use app\models\Prospectos;
+use app\models\FormSearch;
 use yii\helpers\Html;
 use app\models\Cliente;
 
@@ -168,6 +169,14 @@ class ProspectoController extends Controller
         $model= Prospectos::obtenerEnEspera();
         $msg=null;
         $tipo=3;
-        return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
+        $form = new FormSearch;
+        $search = null;
+        if($form->load(Yii::$app->request->get())){
+            if($form->validate()){
+                $search = Html::encode($form->q);
+                $model = Prospectos::obtenerClientesBuscador($search);   
+            }
+        }
+        return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>$tipo,'search'=>$search]);
     }
 }
