@@ -102,7 +102,8 @@ class SiteController extends Controller
         
         return $this->render('login', [
             'model' => $model, 
-            'msg' => ""
+            'msg' => "",
+            'tipo' => 0
         ]);
     }
 
@@ -147,9 +148,7 @@ class SiteController extends Controller
     }
     public function actionIngresar()
     {
-        $msg = "";
-        $tipo= 0;
-        return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
+        return $this->render('ingresarcontrasenia',['msg'=>"",'tipo'=>0]);
     }
 
     public function actionCambiar(){
@@ -161,20 +160,18 @@ class SiteController extends Controller
             if($user!=null){
                 $user->setPassword($password);
                 if($user->update(false)){
-                    $msg="Te has registrado correctamente.";
+                    $msg="Te has registrado correctamente, inicia sesión.";
                     $model = new LoginForm();
-                    return $this->render('login',['model'=>$model,'msg'=>$msg]);
+                    return $this->render('login',['model'=>$model,'msg'=>$msg,'tipo'=>1]);
                 }else{
-                    $msg="Correo no registrado";
+                    $msg="Correo no registrado, verifique sus datos.";
                     $model = new LoginForm(); 
-                    $tipo=1;
-                    return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
+                    return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>1]);
                 }
             }else{
-                $msg="Correo no registrado";
+                $msg="El correo ingresado no es correcto, verifiqe sus datos.";
                 $model = new LoginForm(); 
-                $tipo=1;
-                return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>$tipo]);
+                return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>1]);
             }      
         }
     }

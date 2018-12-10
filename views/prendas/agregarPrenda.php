@@ -25,7 +25,7 @@ $this->title = 'Prendas';
                         'id' => 'imgInpI', 'name'=>'imagenMiniatura']) ?>
                         <img id="precargaPrendaI" src="<?= $im2 ?>"/> 
                         <div class="form-group">
-                            <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                            <?= Html::submitButton('Continuar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
                     <?php ActiveForm::end();?>
                     
@@ -35,10 +35,8 @@ $this->title = 'Prendas';
                         'method' => 'post',
                         'action' => ['prendas/guardarprenda'],]); ?>
 
-                        <?= $form->field($model, 'urlImagen')->fileInput(['value'=> $im1, 'disabled' => true, 'id' => 'imgInpC']) ?>
                         <?=$form->field($model, 'urlImagen')->hiddenInput(['value'=> $im1])->label(false); ?>
                         <img id="precargaPrendaC" src="<?= $im1 ?>"/>
-                        <?= $form->field($model, 'urlImagenMiniatura')->fileInput(['value'=> $im2, 'disabled' => true, 'id' => 'imgInpI']) ?>
                         <?=$form->field($model, 'urlImagenMiniatura')->hiddenInput(['value'=> $im2])->label(false); ?>
                         <img id="precargaPrendaI" src="<?= $im2 ?>"/>
                         <?= $form->field($model, 'nombre')->textInput() ?>

@@ -33,6 +33,7 @@ class PrendasController extends Controller
             $idPrenda = Html::encode($_GET["id"]);
             if((int)$idPrenda){
              $model = Prenda::findOne($idPrenda);
+             Yii::$app->session['idPrenda'] = $idPrenda;
              $componentes = Componente::obtenerComponentesPrenda($idPrenda);
              $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
              $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
@@ -45,9 +46,7 @@ class PrendasController extends Controller
              return $this->render('prendas',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
         }
     }
-    public function actionComponentes(){
-        return $this->render('componentes');
-    }
+
     public function actionAgregar(){
         $model = new Prenda();
 
@@ -67,6 +66,7 @@ class PrendasController extends Controller
                                                 'im2'=>""]);
         
     }
+
     public function actionSaveprenda(){
         $model = new Prenda();
 
@@ -108,24 +108,7 @@ class PrendasController extends Controller
                                                 'im2'=>$im2]);
         }
     }
-    public function actionAgregarcomponente(){
-        $model = new Componente();
-        if(Yii::$app->request->get("id")){
-            $idPrenda = Html::encode($_GET["id"]);
-            if((int)$idPrenda){
-                $msg="";
-                Yii::$app->session['idPrenda'] = $idPrenda;
-                return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$idPrenda]);
-            }else{
-                $model = Prenda::findOne($idPrenda);
-                $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
-                $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
-                $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
-                return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
-                ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
-            }
-        }
-    }
+
     public function actionGuardarprenda(){
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
@@ -158,17 +141,73 @@ class PrendasController extends Controller
             }
         }
     }
+
+    public function actionAgregarcomponente(){
+        $model = new Componente();
+        if(Yii::$app->request->get("id")){
+            $idPrenda = Html::encode($_GET["id"]);
+            if((int)$idPrenda){
+                return $this->render('agregarComponente', ['model'=>$model, 
+                                                           'msg'=>"",
+                                                           'id'=>$idPrenda,
+                                                           'cargada'=>'NO',
+                                                           'im1'=>"",
+                                                           'im2'=>""]);
+            }else{
+                $model = Prenda::findOne($idPrenda);
+                $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+                $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+                $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+                return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
+                ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
+            }
+        }
+    }
+
+    public function actionSavecomponente(){
+        $model = new Componente();
+
+        if (Yii::$app->request->post()) {
+            
+            $model->urlImagen = Html::encode($_FILES["componenteCompleto"]['name']);
+            $model->urlImagenMiniatura = Html::encode($_FILES["imagenMiniatura"]['name']);
+
+            $file1 = $_FILES['componenteCompleto']['name'];
+            $file2 = $_FILES['imagenMiniatura']['name'];
+
+            $expensions= array("jpeg","jpg","png");
+    
+            if(!is_dir("../web/files/components/")) {
+                mkdir("../web/files/components/", 0777);
+            }
+                
+            $urlNueva = "../web/files/components/".$file1;
+            
+            $urlNueva2 = "../web/files/components/".$file2;
+
+            move_uploaded_file($_FILES['componenteCompleto']['tmp_name'],$urlNueva);
+            move_uploaded_file($_FILES['imagenMiniatura']['tmp_name'],$urlNueva2);
+
+            $im1 = "/files/components/".$file1;
+            $im2 = "/files/components/".$file2;
+            $idPrenda = Yii::$app->session['idPrenda'];
+            return $this->render('agregarComponente',['model'=>$model,
+                                                      'id'=>$idPrenda,
+                                                      'msg'=>"",'cargada'=>"SI",
+                                                      'im1'=>$im1,
+                                                      'im2'=>$im2]);
+        }
+    }
+
     public function actionGuardarcomponente(){
         $model = new Componente();
         if ($model->load(Yii::$app->request->post())){
                 $fechaAlta = date("Y-m-d");
-                $precio = 0;
+                $precio = 0.0;
                 $model->fechaAlta = $fechaAlta;
                 $model->precio = $precio;
-                $model->urlImagen = "";
                 $idPrenda = Yii::$app->session['idPrenda'];
                 $model->idPrenda=$idPrenda;
-                $model->urlImagenMiniatura = "";
                 if($model->save(false)){
                         $model = Prenda::findOne($idPrenda);
                         $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
@@ -179,24 +218,13 @@ class PrendasController extends Controller
                         ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes]);
                 }else{
                     $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
-                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$model->idPrenda]);
+                    return $this->render('agregarComponente', ['model'=>$model, 
+                                                               'msg'=>$msg,
+                                                               'id'=>$model->idPrenda,
+                                                               'cargada'=>'NO',
+                                                               'im1'=>"",
+                                                               'im2'=>""]);
                 }
         }
     }
-        /*if(Yii::$app->request->post()){
-            $email = Html::encode($_POST["nombre"]);
-            $password = Html::encode($_POST["tipoPrenda"]);
-
-            $user=User::findByEmail($email);
-            $user->setPassword($password);
-            if($user->update(false)){
-                $msg="Te has registrado correctamente.";
-                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
-            }else{
-
-                $msg="Ocurrió un problema, vuelva a intentarlo.";
-                $model = new LoginForm(); 
-                return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
-            }
-        }*/
 }

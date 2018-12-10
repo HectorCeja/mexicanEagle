@@ -19,19 +19,19 @@ $this->title = 'Registrarse';
         <div class="col-lg-5">
         <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-        <?= $form->field($model, 'nombre')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($model, 'apellidoPaterno')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($model, 'apellidoMaterno')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'nombre')->textInput() ?>
+        <?= $form->field($model, 'apellidoPaterno')->textInput() ?>
+        <?= $form->field($model, 'apellidoMaterno')->textInput() ?>
 
-        <?= $form->field($model, 'pais')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'pais')->textInput() ?>
 
-        <?= $form->field($model, 'ciudad')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'ciudad')->textInput() ?>
 
-        <?= $form->field($model, 'numeroTelefono')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($model, 'fechaNacimiento')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'numeroTelefono')->textInput() ?>
+        <?= $form->field($model, 'fechaNacimiento')->input('date',['value'=>'1990-02-02']) ?>
     
 
-        <?= $form->field($model, 'rfc')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'rfc')->textInput() ?>
 
         <?= $form->field($model, 'email')->input('email') ?>
 
