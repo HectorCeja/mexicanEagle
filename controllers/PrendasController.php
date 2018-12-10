@@ -15,11 +15,13 @@ use app\models\Componente;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 
 class PrendasController extends Controller
 {
-    
+
     public function actionPrendas(){
         $prendas = Prenda::obtenerPrendas();
         $urlbase=Url::base(true);
@@ -47,18 +49,63 @@ class PrendasController extends Controller
     }
     public function actionAgregar(){
         $model = new Prenda();
+
         $categorias = Categoria::obtenerCategorias();
         $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
         $subCategorias = SubCategoria::obtenerSubCategorias();
         $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
         $temporadas = Temporada::obtenerTemporadas();
         $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
-        $msg="";
+
         return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>$listCategorias,
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
-                                                'msg'=>$msg]);
+                                                'msg'=>"",'cargada'=>"NO",
+                                                'im1'=>"",
+                                                'im2'=>""]);
+        
+    }
+    public function actionSaveprenda(){
+        $model = new Prenda();
+
+        if (Yii::$app->request->post()) {
+            
+            $model->urlImagen = Html::encode($_FILES["imagenCompleta"]['name']);
+            $model->urlImagenMiniatura = Html::encode($_FILES["imagenMiniatura"]['name']);
+
+            $file1 = $_FILES['imagenCompleta']['name'];
+            $file2 = $_FILES['imagenMiniatura']['name'];
+
+            $expensions= array("jpeg","jpg","png");
+    
+            if(!is_dir("../files/clothes/")) {
+                mkdir("../files/clothes/", 0777);
+            }
+                
+            $urlNueva = "../files/clothes/".$file1;
+            $urlNueva2 = "../files/clothes/".$file2;
+
+            move_uploaded_file($_FILES['imagenCompleta']['tmp_name'],$urlNueva);
+            move_uploaded_file($_FILES['imagenMiniatura']['tmp_name'],$urlNueva2);
+
+            $categorias = Categoria::obtenerCategorias();
+            $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
+            $subCategorias = SubCategoria::obtenerSubCategorias();
+            $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
+            $temporadas = Temporada::obtenerTemporadas();
+            $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
+
+            $im1 = dirname( dirname(__FILE__) ) . "/files/clothes/".$file1;
+            $im2 = dirname( dirname(__FILE__) ) . "/files/clothes/".$file2;
+            return $this->render('agregarPrenda',['model'=>$model,
+                                                'listCategorias'=>$listCategorias,
+                                                'listSubCategorias'=>$listSubCategorias,
+                                                'listTemporadas'=>$listTemporadas, 
+                                                'msg'=>"",'cargada'=>"SI",
+                                                'im1'=>$im1,
+                                                'im2'=>$im2]);
+        }
     }
     public function actionAgregarcomponente(){
         $model = new Componente();
@@ -82,19 +129,23 @@ class PrendasController extends Controller
         if ($model->load(Yii::$app->request->post())){
             $fechaAlta = date("Y-m-d");
             $model->fechaAlta = $fechaAlta;
+
             if($model->save(false)){
-                $msg="Prenda guardada correctamente.";
                 $categorias = Categoria::obtenerCategorias();
                 $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
                 $subCategorias = SubCategoria::obtenerSubCategorias();
                 $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
                 $temporadas = Temporada::obtenerTemporadas();
                 $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
+                
                 return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>$listCategorias,
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
-                                                'msg'=>$msg]);
+                                                'msg'=>"Prenda guardada correctamente.",
+                                                'cargada'=>"",
+                                                'im1'=>"",
+                                                'im2'=>""]);
             }else{
                 $categorias = Categoria::obtenerCategorias();
                 $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
@@ -103,11 +154,16 @@ class PrendasController extends Controller
                 $temporadas = Temporada::obtenerTemporadas();
                 $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
                 $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
+                $cargada = "NO";
+
                 return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>$listCategorias,
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
-                                                'msg'=>$msg]);    
+                                                'msg'=>"Ocurrió un problema al guardar la prenda, vuelva a intentarlo.",
+                                                'cargada'=>"NO",
+                                                'im1'=>"",
+                                                'im2'=>""]);    
             }
         }
     }
@@ -145,4 +201,4 @@ class PrendasController extends Controller
                 return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
             }
         }*/
-    }
+}
