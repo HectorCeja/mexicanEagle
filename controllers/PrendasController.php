@@ -62,8 +62,20 @@ class PrendasController extends Controller
     }
     public function actionAgregarcomponente(){
         $model = new Componente();
-        $msg="";
-        return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
+        if(Yii::$app->request->get("id")){
+            $idPrenda = Html::encode($_GET["id"]);
+            if((int)$idPrenda){
+                $msg="";
+                return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$idPrenda]);
+            }else{
+                $model = Prenda::findOne($idPrenda);
+                $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+                $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+                $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+                return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
+                ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
+            }
+        }
     }
     public function actionGuardarprenda(){
         $model = new Prenda();
@@ -102,19 +114,19 @@ class PrendasController extends Controller
     public function actionGuardarcomponente(){
         $model = new Componente();
         if ($model->load(Yii::$app->request->post())){
-            if(Yii::$app->request->get("idPrenda")){
-                $idPrenda = Html::encode($_GET["idPrenda"]);
                 $fechaAlta = date("Y-m-d");
                 $precio = 0;
                 $model->fechaAlta = $fechaAlta;
+                $model->precio = $precio;
+                $model->urlImagen = "";
+                $model->urlImagenMiniatura = "";
                 if($model->save(false)){
                     $msg="Componente guardado correctamente.";
-                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
+                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$model->idPrenda]);
                 }else{
                     $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
-                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg]);
+                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$model->idPrenda]);
                 }
-            }
         }
     }
         /*if(Yii::$app->request->post()){

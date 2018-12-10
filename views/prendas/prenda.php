@@ -54,7 +54,7 @@ use yii\widgets\ActiveForm;
 <h1 class="titulo">Componentes</h1>
 
      <div class="boton">
-        <?= Html::beginForm(Url::toRoute("prendas/agregarcomponente"), "POST") ?>
+        <?= Html::beginForm(Url::toRoute(['prendas/agregarcomponente','id' => $model->id])) ?>
        <button type="submit" class="btn btn-primary">Agregar Componente</button>
      <?= Html::endForm() ?>
 </div>
