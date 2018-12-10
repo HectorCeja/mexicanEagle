@@ -1,0 +1,29 @@
+.infoPrenda {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.prendaContainer {
+    display: flex;
+    padding-bottom: 16px;
+}
+
+.prendaContainer input {
+    width: 100%;
+}
+
+.labelPrenda {
+    font-size: 14px;
+    padding-right: 8px; 
+    width: 184px;
+}
+
+.boton {
+    font-size: 14px;
+    padding-right: 8px; 
+    display: block;
+}
+
+.imagePrenda {
+    
+}

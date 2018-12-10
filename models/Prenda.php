@@ -41,4 +41,9 @@ class Prenda extends \yii\db\ActiveRecord {
             'idSubCategoria'=>'Seleccione sub categoria'
         ];
     }
+
+    public static function obtenerPrendas()
+    {
+        return static::find()->all();
+    }
 }
