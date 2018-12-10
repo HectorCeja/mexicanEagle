@@ -33,11 +33,12 @@ class PrendasController extends Controller
             $idPrenda = Html::encode($_GET["id"]);
             if((int)$idPrenda){
              $model = Prenda::findOne($idPrenda);
+             $componentes = Componente::obtenerComponentesPrenda($idPrenda);
              $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
              $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
              $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
              return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
-             ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
+             ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes]);
             }
         }else{
              $prendas = Prenda::obtenerPrendas();
@@ -165,11 +166,17 @@ class PrendasController extends Controller
                 $model->fechaAlta = $fechaAlta;
                 $model->precio = $precio;
                 $model->urlImagen = "";
-                $model->idPrenda=Yii::$app->session['idPrenda'];
+                $idPrenda = Yii::$app->session['idPrenda'];
+                $model->idPrenda=$idPrenda;
                 $model->urlImagenMiniatura = "";
                 if($model->save(false)){
-                    $msg="Componente guardado correctamente.";
-                    return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$model->idPrenda]);
+                        $model = Prenda::findOne($idPrenda);
+                        $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+                        $componentes = Componente::obtenerComponentesPrenda($idPrenda);
+                        $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+                        $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+                        return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
+                        ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes]);
                 }else{
                     $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
                     return $this->render('agregarComponente', ['model'=>$model, 'msg'=>$msg,'id'=>$model->idPrenda]);

@@ -34,4 +34,8 @@ class Componente extends \yii\db\ActiveRecord {
             'urlImagenMiniatura' => 'Imagen Miniatura',
         ];
     }
+    public static function obtenerComponentesPrenda($id)
+    {
+        return static::find()->where(['idPrenda'=>$id])->all();
+    }
 }
