@@ -1,0 +1,16 @@
+.text-center {
+    text-align: center;
+    margin: 2%;
+}
+
+.empty-cart {
+    height: 200px;
+    width: 200px;
+    margin-left: 42%;
+}
+
+#form-direccion {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 25px;
+}

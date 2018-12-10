@@ -133,4 +133,4 @@ class PrendasController extends Controller
                 return $this->render('agregarPrenda',['model'=>$model,'listCategorias'=>$listCategorias,'listSubCategorias'=>$listSubCategorias]);
             }
         }*/
-    }
+}

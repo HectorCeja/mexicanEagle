@@ -92,8 +92,9 @@ class SiteController extends Controller
             $user = $model->getUser();
             $opcionesPorPerfil = $modelPerfilOpcion->obtenerOpcionesPorPerfil($user->idPerfil);
             $listOpcionesPorPerfil = ArrayHelper::map($opcionesPorPerfil, 'idOpcion', 'idOpcion');
-            $opciones = $modelOpcion->obtenerOpciones($listOpcionesPorPerfil);
+            $opciones = $modelOpcion->obtenerOpcionesPorIds($listOpcionesPorPerfil);
             $listOpciones = ArrayHelper::map($opciones, 'descripcion', 'url');
+            Yii::$app->session['idUsuario'] = $user->id;
             Yii::$app->session['opciones'] = $listOpciones;
             return $this->render('index', [
                 'model' => $model
