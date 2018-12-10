@@ -12,7 +12,7 @@ use kartik\file\FileInput;
     <button type="submit" class="btn btn-primary">Agregar Prenda</button>
 <?= Html::endForm() ?>
 </div>
-<h3> </h3>
+<h3><?= $msg ?> </h3>
 <table class="table table-bordered">
     <tr>
         <th>Imagen</th>

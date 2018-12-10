@@ -25,7 +25,7 @@ class PrendasController extends Controller
     public function actionPrendas(){
         $prendas = Prenda::obtenerPrendas();
         $urlbase=Url::base(true);
-        return $this->render('prendas',['model'=>$prendas,'urlbase'=>$urlbase]);
+        return $this->render('prendas',['model'=>$prendas,'urlbase'=>$urlbase, 'msg'=>""]);
     }
 
     public function actionMostrardetalle(){
@@ -41,7 +41,7 @@ class PrendasController extends Controller
             }
         }else{
              $prendas = Prenda::obtenerPrendas();
-             return $this->render('prendas',['model'=>$prendas]);
+             return $this->render('prendas',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
         }
     }
     public function actionComponentes(){
@@ -96,8 +96,8 @@ class PrendasController extends Controller
             $temporadas = Temporada::obtenerTemporadas();
             $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
 
-            $im1 = dirname( dirname(__FILE__) ) . "/files/clothes/".$file1;
-            $im2 = dirname( dirname(__FILE__) ) . "/files/clothes/".$file2;
+            $im1 = "/files/clothes/".$file1;
+            $im2 = "/files/clothes/".$file2;
             return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>$listCategorias,
                                                 'listSubCategorias'=>$listSubCategorias,
@@ -119,21 +119,10 @@ class PrendasController extends Controller
             $model->fechaAlta = $fechaAlta;
 
             if($model->save(false)){
-                $categorias = Categoria::obtenerCategorias();
-                $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
-                $subCategorias = SubCategoria::obtenerSubCategorias();
-                $listSubCategorias = ArrayHelper::map($subCategorias,'id','descripcion');
-                $temporadas = Temporada::obtenerTemporadas();
-                $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
-                
-                return $this->render('agregarPrenda',['model'=>$model,
-                                                'listCategorias'=>$listCategorias,
-                                                'listSubCategorias'=>$listSubCategorias,
-                                                'listTemporadas'=>$listTemporadas, 
-                                                'msg'=>"Prenda guardada correctamente.",
-                                                'cargada'=>"",
-                                                'im1'=>"",
-                                                'im2'=>""]);
+                $prendas = Prenda::obtenerPrendas();
+                return $this->render('prendas',['model'=>$prendas,
+                                                'urlbase'=>Url::base(true), 
+                                                'msg'=>"Prenda guardada correctamente."]);
             }else{
                 $categorias = Categoria::obtenerCategorias();
                 $listCategorias=ArrayHelper::map($categorias,'id','descripcion');

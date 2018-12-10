@@ -35,9 +35,11 @@ $this->title = 'Prendas';
                         'method' => 'post',
                         'action' => ['prendas/guardarprenda'],]); ?>
 
-                        <?= $form->field($model, 'urlImagen')->fileInput(['disabled'=>'true', 'value'=> $im1]) ?>
+                        <?= $form->field($model, 'urlImagen')->fileInput(['value'=> $im1, 'disabled' => true, 'id' => 'imgInpC']) ?>
+                        <?=$form->field($model, 'urlImagen')->hiddenInput(['value'=> $im1])->label(false); ?>
                         <img id="precargaPrendaC" src="<?= $im1 ?>"/>
-                        <?= $form->field($model, 'urlImagenMiniatura')->fileInput(['disabled'=>'true', 'value'=> $im2]) ?>
+                        <?= $form->field($model, 'urlImagenMiniatura')->fileInput(['value'=> $im2, 'disabled' => true, 'id' => 'imgInpI']) ?>
+                        <?=$form->field($model, 'urlImagenMiniatura')->hiddenInput(['value'=> $im2])->label(false); ?>
                         <img id="precargaPrendaI" src="<?= $im2 ?>"/>
                         <?= $form->field($model, 'nombre')->textInput() ?>
                         <?= $form->field($model,'tipoPrenda')->dropDownList(['BASICA' => 'BASICA', 'DISEÑADOR'=>'DISEÑADOR']); ?>
