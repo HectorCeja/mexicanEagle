@@ -102,20 +102,13 @@ class ProspectoController extends Controller
               if((int)$idProspect){
                 $prospecto = Prospectos::findOne($idProspect);
                 $user = new User();
+                
                 $user->email=$prospecto->email;
                 $user->setPassword("_");
                 $user->activo = 1;
                 $user->idPerfil = 1;
 
-                $cliente = new Cliente();
-                $cliente->nombre = $prospecto->nombre;
-                $cliente->apellidoPaterno = $prospecto->apellidoPaterno;
-                $cliente->apellidoMaterno = $prospecto->apellidoMaterno;
-                $cliente->numeroTelefono = $prospecto->numeroTelefono;
-                $cliente->pais= $prospecto->pais;
-                $cliente->ciudad= $prospecto->ciudad;
-                $cliente->rfc= $prospecto->rfc;
-                $cliente->fechaNacimiento= $prospecto->fechaNacimiento;
+                $cliente = static::asignarDatos($prospecto);
 
                 $user->save(false);
                 
@@ -126,7 +119,6 @@ class ProspectoController extends Controller
                 $prospecto->update();
 
                 $contact = new ContactForm();
-
                 ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
 
                 $model = Prospectos::obtenerEnEspera();
@@ -156,6 +148,19 @@ class ProspectoController extends Controller
             'model' => $model,
         ]);
 
+    }
+
+    public function asignarDatos($prospecto){
+        $cliente = new Cliente();
+        $cliente->nombre = $prospecto->nombre;
+        $cliente->apellidoPaterno = $prospecto->apellidoPaterno;
+        $cliente->apellidoMaterno = $prospecto->apellidoMaterno;
+        $cliente->numeroTelefono = $prospecto->numeroTelefono;
+        $cliente->pais= $prospecto->pais;
+        $cliente->ciudad= $prospecto->ciudad;
+        $cliente->rfc= $prospecto->rfc;
+        $cliente->fechaNacimiento= $prospecto->fechaNacimiento;
+        return $cliente;
     }
 
     public function actionAceptacion()

@@ -19,9 +19,13 @@ class Prenda extends \yii\db\ActiveRecord {
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['nombre', 'descripcion', 'urlImagen', 'urlImagenMiniatura','tipoPrenda','idCategoria','idSubCategoria','idTemporada'], 'required'],
-            
+            [['nombre'], 'required', 'message' => 'El nombre no debe ser vacío.'],
+            [['descripcion'], 'required', 'message' => 'La descripción no debe ser vacía.'],
+            [['idCategoria'], 'required', 'message' => 'La categoría no debe ser vacía.'],
+            [['idSubCategoria'], 'required', 'message' => 'La subCategoría no debe ser vacía.'],
+            [['idTemporada'], 'required', 'message' => 'La temporada no debe ser vacía.'],
+            [['urlImagen'], 'required', 'message' => 'Debe seleccionar una imagen para la prenda.'],
+            [['urlImagenMiniatura'], 'required', 'message' => 'Debe seleccionar una imagen miniatura para la prenda.']
         ];
     }
 
