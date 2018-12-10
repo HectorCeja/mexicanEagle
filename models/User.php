@@ -14,11 +14,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
             return [
-                [['email','password'], 'required'],
-                [['email'], 'email'],
+                [['email'], 'required'],
+                [['password'], 'required', 'message'=>'La contraseña no debe ser vacía.'],
                 [['email'], 'unique','targetClass'=>'\app\models\User','message' => 'correo ya registrado.'],
-                [['password'], 'string', 'max' => 50],
-                [['email'], 'string', 'max' => 50]           
+                [['password'], 'string', 'max' => 50,'message' => 'El campo excede los 50 caracteres.'],
+                [['email'], 'string', 'max' => 50, 'message' => 'El campo excede los 50 caracteres.']           
             ];
     }
 
