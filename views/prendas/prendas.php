@@ -23,8 +23,7 @@ use kartik\file\FileInput;
         <th></th>
     </tr>
     <?php foreach($model as $row): ?>
-    <?php $extension= '.jpg';?>
-    <?php $urlfinal = $urlbase.$row->urlImagen.$extension; ?>
+    <?php $urlfinal = $urlbase.$row->urlImagenMiniatura; ?>
     <tr> 
         <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
         <td><?= $row->nombre  ?></td>
