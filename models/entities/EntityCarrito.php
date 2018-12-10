@@ -2,7 +2,7 @@
 
 namespace app\models\entities;
 
-class EntityCarritoCompra extends \yii\db\ActiveRecord{
+class EntityCarrito extends \yii\db\ActiveRecord{
 
     public static function tableName()
     {

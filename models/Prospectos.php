@@ -2,6 +2,8 @@
 
 namespace app\models;
 use app\models\entities\EntityProspectos;
+use app\models\Prospectos;
+use app\models\Cliente;
 
 class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -14,10 +16,12 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public function rules()
     {
             return [
-                [['email','rfc','numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad','fechaNacimiento'], 'required'],
-                [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'usuario ya registrado.'],
-                [['numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],
-                [['email'], 'string', 'max' => 50]           
+                [['email','rfc','numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais'], 'required'],
+                [['ciudad'],'required', 'message' => 'La Ciudad no debe estar vacía.'],
+                [['fechaNacimiento'],'required', 'message' => 'La Fecha de Nacimiento no debe estar vacía.'],
+                [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'Usuario ya registrado.'],
+                [['numeroTelefono','email','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30, 'message' => 'El campo excede los 30 caracteres.'],
+                [['numeroTelefono'], 'match', 'pattern' =>'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$', 'message'=>'El teléfono es inválido.']           
             ];
     }
 

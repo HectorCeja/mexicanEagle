@@ -9,7 +9,7 @@ $this->title = 'Prendas';
 <h1 class="titulo">Nueva Prenda Basica </h1>
 <h4 ><?= $msg ?></h4>
 <div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-5 text-center">
 
                 <?php if ($cargada=="NO"): ?>
                     
@@ -45,8 +45,17 @@ $this->title = 'Prendas';
                         <?= $form->field($model, 'idSubCategoria')->dropDownList($listSubCategorias, ['prompt'=>'Selecciona SubCategoria'] );?>
                         <?= $form->field($model, 'idTemporada')->dropDownList($listTemporadas, ['prompt'=>'Selecciona Temporada'] );?>
                         <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+                        
                         <div class="form-group">
                             <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        </div>
+                    <?php ActiveForm::end(); ?>
+                    <?php $form2 = ActiveForm::begin([
+                        'id' => 'prenda-2',
+                        'method' => 'get',
+                        'action' => ['prendas/saveprenda'],]); ?>
+                        <div class="form-group">
+                            <?= Html::submitButton('Regresar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
                     <?php ActiveForm::end(); ?>
                 <?php endif; ?>
