@@ -2,6 +2,8 @@
 
 namespace app\models;
 use app\models\entities\EntityProspectos;
+use app\models\Prospectos;
+use app\models\Cliente;
 
 class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -15,7 +17,7 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     {
             return [
                 [['email','rfc','numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad','fechaNacimiento'], 'required'],
-                [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'usuario ya registrado.'],
+                [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'Usuario ya registrado.'],
                 [['numeroTelefono','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30],
                 [['email'], 'string', 'max' => 50]           
             ];

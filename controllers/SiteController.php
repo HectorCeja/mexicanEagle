@@ -156,7 +156,7 @@ class SiteController extends Controller
             $email = Html::encode($_POST["email"]);
             $password = Html::encode($_POST["password"]);
 
-            $user=User::findByEmail($email);
+            $user = User::findByEmail($email);
             if($user!=null){
                 $user->setPassword($password);
                 if($user->update(false)){
