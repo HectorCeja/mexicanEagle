@@ -238,7 +238,7 @@ class VentasController extends Controller
                     $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
                     $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                     $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
-                    return $this->render('//prendas/prendaPersonalizar',['msg'=>'Necesita logearse para agregar al carrito.',
+                    return $this->render('//prendas/prendaPersonalizar',['msg'=>'Necesita loguearse para agregar al carrito.',
                                                                          'model'=>$model,
                                                                          'temporada'=>$descripciontemporada,
                                                                          'categoria'=>$descripcionCategoria,

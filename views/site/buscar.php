@@ -24,7 +24,7 @@ $this->title = 'Búsqueda';
                 <td><?= $row->nombre  ?></td>
                 <td><?= $row->precio ?></td>
                 <td><?= $row->descripcion ?></td>
-                <td style="text-align:center"><a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>">Mostrar</a></td>
+                <td style="text-align:center"><a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>" class="btn btn-info">Mostrar</a></td>
             </tr>
             <?php endforeach ?>
         </table>

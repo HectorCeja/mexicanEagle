@@ -132,15 +132,20 @@ class SiteController extends Controller
             Yii::$app->session['idUsuario'] = $user->id;
             Yii::$app->session['emailUsuario'] = $user->email;
             Yii::$app->session['opciones'] = $listOpciones;
+            $prendasTemporada = Prenda::obtenerPrendasPorTemporadas();
+            $prendas = Prenda::obtenerPrendasSite();
             return $this->render('index', [
-                'model' => $model
+                'model' => $model,
+                'prendasTemporada'=>$prendasTemporada,
+                'prendas'=>$prendas
             ]);
         }
         
         return $this->render('login', [
             'model' => $model, 
             'msg' => "",
-            'tipo' => 0
+            'tipo' => 0,
+            'prendasTemporada'=>''
         ]);
     }
 
