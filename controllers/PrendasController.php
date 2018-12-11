@@ -146,11 +146,11 @@ class PrendasController extends Controller
     public function actionGuardarprenda(){
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
-            $fechaAlta = date("Y-m-d");
-            $model->tipoPrenda = $_POST['Prenda']['tipoPrenda'];
-            $model->fechaAlta = $fechaAlta;
+          /*  $fechaAlta = date("Y-m-d");
+            $model->tipoPrenda =
+            $model->fechaAlta = $fechaAlta;*/
 
-            if($model->save(false)){
+            if(Prenda::guardarPrenda($model, $_POST['Prenda']['tipoPrenda']) !==false){
                 $prendas = Prenda::obtenerPrendas();
                 return $this->render('prendas',['model'=>$prendas,
                                                 'urlbase'=>Url::base(true), 
@@ -245,13 +245,8 @@ class PrendasController extends Controller
     public function actionGuardarcomponente(){
         $model = new Componente();
         if ($model->load(Yii::$app->request->post())){
-                $fechaAlta = date("Y-m-d");
-                $precio = 0.0;
-                $model->fechaAlta = $fechaAlta;
-                $model->precio = $precio;
                 $idPrenda = Yii::$app->session['idPrenda'];
-                $model->idPrenda=$idPrenda;
-                if($model->save(false)){
+                if(Componente::guardarComponente($model,$idPrenda) !==false){
                         $model = Prenda::findOne($idPrenda);
                         $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
                         $componentes = Componente::obtenerComponentesPrenda($idPrenda);

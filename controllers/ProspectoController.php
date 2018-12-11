@@ -110,7 +110,7 @@ class ProspectoController extends Controller
                 Prospectos::actualizar($prospecto);
                 $form = new FormSearch;
                 $contact = new ContactForm();
-               // ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
+                ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
                 $model = Prospectos::obtenerEnEspera();
                 $search = null;
                 $msg="Prospecto fue aceptado ";

@@ -189,11 +189,9 @@ class SiteController extends Controller
         if(Yii::$app->request->post()){
             $email = Html::encode($_POST["email"]);
             $password = Html::encode($_POST["password"]);
-
             $user = User::findByEmail($email);
             if($user!=null){
-                $user->setPassword($password);
-                if($user->update(false)){
+                if(User::cambiarContraseña($user,$password) !==false){
                     $msg="Te has registrado correctamente, inicia sesión.";
                     $model = new LoginForm();
                     return $this->render('login',['model'=>$model,'msg'=>$msg,'tipo'=>1]);
@@ -203,7 +201,7 @@ class SiteController extends Controller
                     return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>1]);
                 }
             }else{
-                $msg="El correo ingresado no es correcto, verifiqe sus datos.";
+                $msg="El correo ingresado no es correcto, verifique sus datos.";
                 $model = new LoginForm(); 
                 return $this->render('ingresarcontrasenia',['msg'=>$msg,'tipo'=>1]);
             }      

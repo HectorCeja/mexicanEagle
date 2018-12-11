@@ -59,8 +59,13 @@ class Prenda extends \yii\db\ActiveRecord {
     }
 
     public static function obtenerPrendasBuscador($search){
+        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();        
+    }
 
-        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();
-          
+    public static function guardarPrenda($prenda,$tipoPrenda){
+        $fechaAlta = date("Y-m-d");
+        $prenda->tipoPrenda = $tipoPrenda;
+        $prenda->fechaAlta = $fechaAlta;
+        return $prenda->save(false);
     }
 }

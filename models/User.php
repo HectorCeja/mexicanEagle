@@ -116,4 +116,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         return $user;
     }
+    public function cambiarContraseña($user,$password){                   
+        $user->setPassword($password);
+        return $user->update(false);
+    }
 }
