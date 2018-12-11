@@ -76,4 +76,12 @@ class Venta extends \yii\db\ActiveRecord{
         return \Yii::$app->db->createCommand("select @folio;")->queryScalar();
     }
 
+    public function cambiarTotalSubtotal($total){
+        $venta = new Venta();
+        $venta->setTotal($total);
+        $venta->setSubtotal($total * 0.84);
+        $venta->setIva($total * 0.16);
+        return $venta;
+    }
+
 }

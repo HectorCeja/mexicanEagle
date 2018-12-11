@@ -52,28 +52,19 @@ class VentasController extends Controller
 
     public function actionAgregardireccion(){
         $direccion = new Direccion();
-
         if ($direccion->load(Yii::$app->request->post())){
-
             if($direccion->validate()){
-
-                $direccion->setIdUsuario(Yii::$app->session['idUsuario']);
-                $direccion->save();
+                $direccion= Direccion::guardarDireccion($direccion,Yii::$app->session['idUsuario']);
+              //  $direccion->setIdUsuario();
+               // $direccion->save();
                 Yii::$app->session['idDireccion'] = $direccion->id;
-                Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');
-                
-                $venta = new Venta();
+                Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');             
                 $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-                $venta->setTotal($total);
-                $venta->setSubtotal($total * 0.84);
-                $venta->setIva($total * 0.16);
-
+                $venta= Venta::cambiarTotalSubtotal($total);
                 return $this->render('pago',[
                     'model' => $venta
                 ]);
-
             }
-
         }
         Yii::$app->session->setFlash('error','Ha ocurrido un error al guardar dirección');
         return $this->render('direccion',[
@@ -83,7 +74,6 @@ class VentasController extends Controller
 
     public function actionAgregarpago(){
         $venta = new Venta();
-
         if ($venta->load(Yii::$app->request->post())){
             date_default_timezone_set('America/Mazatlan');
             $fechaActual = date("Y-m-d");

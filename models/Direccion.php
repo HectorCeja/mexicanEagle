@@ -36,4 +36,10 @@ class Direccion extends \yii\db\ActiveRecord{
         return static::findOne(['idUsuario' => $idUsuario]);
     }
 
+    public  function guardarDireccion($direccion,$idUsuario){
+        $direccion->setIdUsuario($idUsuario);
+        $direccion->save();
+        return $direccion;
+    }
+
 }
