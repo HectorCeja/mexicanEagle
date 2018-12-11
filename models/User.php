@@ -105,4 +105,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return \Yii::$app->security->validatePassword($password,$this->password);
     }
+
+    public function guardarUserNuevo($prospect){
+        $user = new User();
+        $user->email= $prospect->email;
+        $user->setPassword("_");
+        $user->activo = 1;
+        $user->idPerfil = 1;
+        $user->save(false);
+
+        return $user;
+    }
+    public function cambiarContraseña($user,$password){                   
+        $user->setPassword($password);
+        return $user->update(false);
+    }
 }

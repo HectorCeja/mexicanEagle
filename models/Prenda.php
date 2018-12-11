@@ -51,6 +51,16 @@ class Prenda extends \yii\db\ActiveRecord {
         return static::find()->all();
     }
 
+    public static function obtenerPrendasSite()
+    {
+        return static::find()->Where(['>', 'precio', 0.0])->all();
+    }
+
+    public static function obtenerPrendasPorTemporadas()
+    {
+        return static::find()->where(['in', 'idTemporada', 1])->all();
+    }
+
     public static function obtenerPrendasPorIds($prendas)
     {
         return static::find()
@@ -59,9 +69,14 @@ class Prenda extends \yii\db\ActiveRecord {
     }
 
     public static function obtenerPrendasBuscador($search){
+        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();        
+    }
 
-        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();
-          
+    public static function guardarPrenda($prenda,$tipoPrenda){
+        $fechaAlta = date("Y-m-d");
+        $prenda->tipoPrenda = $tipoPrenda;
+        $prenda->fechaAlta = $fechaAlta;
+        return $prenda->save(false);
     }
 
     public function borrarPrenda($idPrenda){

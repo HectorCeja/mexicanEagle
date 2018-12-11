@@ -38,4 +38,13 @@ class Componente extends \yii\db\ActiveRecord {
     {
         return static::find()->where(['idPrenda'=>$id])->all();
     }
+
+    public static function guardarComponente($componente,$idPrenda){
+        $fechaAlta = date("Y-m-d");
+        $precio = 0.0;
+        $componente->fechaAlta = $fechaAlta;
+        $componente->precio = $precio;
+        $componente->idPrenda=$idPrenda;
+        return $componente->save(false);
+    }
 }

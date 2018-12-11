@@ -31,8 +31,9 @@ class Carrito extends \yii\db\ActiveRecord{
 
     public static function limpiarCarritoPorIdUsuario($idUsuario)
     {
-        return static::deleteAll(['idUsuario' => $idUsuario]);;
+        return static::deleteAll(['idUsuario' => $idUsuario]);
     }
+
     public static function obtenerUsuarioPrenda($idUsuario, $idPrenda){
         return static::find()
             ->where(['idUsuario'=>$idUsuario])->andWhere(['idPrenda'=>$idPrenda])

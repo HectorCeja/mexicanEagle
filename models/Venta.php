@@ -13,6 +13,12 @@ class Venta extends \yii\db\ActiveRecord{
         return EntityVenta::tableName();
     }
 
+    public function attributeLabels(){
+        return[ 
+            'idTipoPago' => 'Tipo de pago',
+        ];
+    }
+
     public function setFolio($folio)
     {
         $this->folio = $folio;
@@ -36,6 +42,16 @@ class Venta extends \yii\db\ActiveRecord{
     public function setIdUsuario($idUsuario)
     {
         $this->idUsuario = $idUsuario;
+    }
+
+    public function setIdDireccion($idDireccion)
+    {
+        $this->idDireccion = $idDireccion;
+    }
+
+    public function setIdTipoPago($idTipoPago)
+    {
+        $this->idTipoPago = $idTipoPago;
     }
 
     public function setFechaVenta($fechaVenta)
