@@ -76,22 +76,24 @@ class ProspectoController extends Controller
             $tipo=0;
             $id = Html::encode($_POST["id"]);
             if((int)$id){
-                $prospect=Prospectos::findOne($id);
-                $prospect->estatus='RECHAZADO';
-                if($prospect->update()){
+                $form = new FormSearch;
+                $search = null;
+                if(Prospectos::rechazar($id) !==false){
                     $model = Prospectos::obtenerEnEspera();
                     $msg="Prospecto borrado correctamente";
                     $tipo=1;
-                    return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
+                    return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>$tipo,'search'=>$search]);
                 }else{
                     $model = Prospectos::obtenerEnEspera();
                     $msg="Prospecto no pudo ser borrado";
-                    return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
+                    return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>$tipo,'search'=>$search]);
                 }
             }else{
+                $form = new FormSearch;
+                $search = null;
                 $model = Prospectos::obtenerEnEspera();
                 $msg="Prospecto no pudo ser borrado";
-                return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
+                return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>$tipo,'search'=>$search]);
             }
         }
     }
@@ -102,34 +104,24 @@ class ProspectoController extends Controller
               $idProspect = Html::encode($_GET["id"]);
               if((int)$idProspect){
                 $prospecto = Prospectos::findOne($idProspect);
-                $user = new User();
-                
-                $user->email=$prospecto->email;
-                $user->setPassword("_");
-                $user->activo = 1;
-                $user->idPerfil = 1;
-
-                $cliente = static::asignarDatos($prospecto);
-
-                $user->save(false);
-                
-                $cliente->idUsuario=$user->id;
-                $cliente->save(false);
-
-                $prospecto->estatus='ACEPTADO';
-                $prospecto->update();
-
+                $user = new User();          
+                $user = User::guardarUserNuevo($prospecto);
+                Cliente::guardarNuevoCliente($prospecto,$user->id);             
+                Prospectos::actualizar($prospecto);
+                $form = new FormSearch;
                 $contact = new ContactForm();
-                ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
-
+               // ContactForm::contactProspect(Yii::$app->params['adminEmail'],$user->email, $cliente->nombre);
                 $model = Prospectos::obtenerEnEspera();
+                $search = null;
                 $msg="Prospecto fue aceptado ";
-                return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>1]);
+                return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>1,'search'=>$search]);
             }
         }else{
+            $form = new FormSearch;
+            $search = null;
             $model = Prospectos::find()->obtenerEnEspera();
-            $msg="Entro por otro lado";
-            return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
+            $msg="";
+            return $this->render('aceptacion',['model'=>$model,'form'=>$form,'msg'=>$msg,'tipo'=>$tipo,'search'=>$search]);
         }      
     }
 
@@ -151,18 +143,6 @@ class ProspectoController extends Controller
 
     }
 
-    public function asignarDatos($prospecto){
-        $cliente = new Cliente();
-        $cliente->nombre = $prospecto->nombre;
-        $cliente->apellidoPaterno = $prospecto->apellidoPaterno;
-        $cliente->apellidoMaterno = $prospecto->apellidoMaterno;
-        $cliente->numeroTelefono = $prospecto->numeroTelefono;
-        $cliente->pais= $prospecto->pais;
-        $cliente->ciudad= $prospecto->ciudad;
-        $cliente->rfc= $prospecto->rfc;
-        $cliente->fechaNacimiento= $prospecto->fechaNacimiento;
-        return $cliente;
-    }
 
     public function actionAceptacion()
     {

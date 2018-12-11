@@ -106,4 +106,19 @@ class Cliente extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return \Yii::$app->security->validatePassword($password,$this->password);
     }
+
+    public function guardarNuevoCliente($prospecto,$user_id){
+        $cliente= new Cliente();
+        $cliente->nombre = $prospecto->nombre;
+        $cliente->apellidoPaterno = $prospecto->apellidoPaterno;
+        $cliente->apellidoMaterno = $prospecto->apellidoMaterno;
+        $cliente->numeroTelefono = $prospecto->numeroTelefono;
+        $cliente->pais= $prospecto->pais;
+        $cliente->ciudad= $prospecto->ciudad;
+        $cliente->rfc= $prospecto->rfc;
+        $cliente->fechaNacimiento= $prospecto->fechaNacimiento;
+        $cliente->idUsuario=$user_id;
+        $cliente->save(false);
+        return $cliente;
+    }
 }
