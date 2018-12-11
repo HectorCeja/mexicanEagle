@@ -13,12 +13,6 @@ class Pago extends \yii\db\ActiveRecord{
         return EntityPago::tableName();
     }
 
-    public function attributeLabels(){
-        return[ 
-            'idPago' => 'Tipo de pago',
-        ];
-    }
-
     public function setIdFolio($idFolio)
     {
         $this->idFolio = $idFolio;
@@ -37,11 +31,6 @@ class Pago extends \yii\db\ActiveRecord{
     public function setIva($iva)
     {
         $this->iva = $iva;
-    }
-
-    public function setIdPago($idPago)
-    {
-        $this->idPago = $idPago;
     }
 
     public function setFechaPago($fechaPago)

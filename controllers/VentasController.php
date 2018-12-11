@@ -58,19 +58,17 @@ class VentasController extends Controller
 
                 $direccion->setIdUsuario(Yii::$app->session['idUsuario']);
                 $direccion->save();
-                Yii::$app->session['idDomicilio'] = $direccion->id;
+                Yii::$app->session['idDireccion'] = $direccion->id;
                 Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');
                 
-                $pago = new Pago();
+                $venta = new Venta();
                 $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-                $subtotal = $total * 0.84;
-                $iva = $total * 0.16;
+                $venta->setTotal($total);
+                $venta->setSubtotal($total * 0.84);
+                $venta->setIva($total * 0.16);
 
                 return $this->render('pago',[
-                    'model' => $pago,
-                    'total' => $total,
-                    'subtotal' => $subtotal,
-                    'iva' => $iva
+                    'model' => $venta
                 ]);
 
             }
@@ -82,18 +80,16 @@ class VentasController extends Controller
         ]);
     }
 
-    // TODO -> fecha
     public function actionAgregarpago(){
-        $pago = new Pago();
-        $total = 0;
-        $subtotal = 0;
-        $iva = 0;
+        $venta = new Venta();
 
-        if ($pago->load(Yii::$app->request->post())){
+        if ($venta->load(Yii::$app->request->post())){
             date_default_timezone_set('America/Mazatlan');
             $fechaActual = date("Y-m-d");
             $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
             $folio = Venta::obtenerFolio();
+            $idTipoPago = (int) Yii::$app->request->post()['Venta']['idTipoPago'];
+            $status = ($idTipoPago == 1) ? 'SALDADA' : 'NO SALDADA';
 
             $venta = new Venta();
             $venta->setFolio($folio);
@@ -101,8 +97,10 @@ class VentasController extends Controller
             $venta->setSubtotal($total * 0.84);
             $venta->setIva($total * 0.16);
             $venta->setIdUsuario(Yii::$app->session['idUsuario']);
+            $venta->setIdDireccion(Yii::$app->session['idDireccion']);
+            $venta->setIdTipoPago($idTipoPago);
             $venta->setFechaVenta($fechaActual);
-            $venta->setStatus('SALDADA');
+            $venta->setStatus($status);
             $venta->save();
             
             $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
@@ -116,13 +114,15 @@ class VentasController extends Controller
                 $ventaDetalle->save();
             }
 
-            $pago->setIdFolio($folio);
-            $pago->setIdPago(Yii::$app->request->post()['Pago']);
-            $pago->setTotal($total);
-            $pago->setSubtotal($total * 0.84);
-            $pago->setIva($total * 0.16);
-            $pago->setFechaPago($fechaActual);
-            $pago->save();
+            if ($idTipoPago == 1) {
+                $pago = new Pago();
+                $pago->setIdFolio($folio);
+                $pago->setTotal($total);
+                $pago->setSubtotal($total * 0.84);
+                $pago->setIva($total * 0.16);
+                $pago->setFechaPago($fechaActual);
+                $pago->save();
+            }
 
             $emailFrom = Yii::$app->params['adminEmail'];
             $emailTo = Yii::$app->session['emailUsuario'];
@@ -143,10 +143,7 @@ class VentasController extends Controller
         }
         Yii::$app->session->setFlash('error','Ha ocurrido un error al procesar el pago.');
         return $this->render('pago',[
-            'model' => $pago,
-            'total' => $total,
-            'subtotal' => $subtotal,
-            'iva' => $iva
+            'model' => $venta
         ]);
 
     }

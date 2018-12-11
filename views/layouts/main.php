@@ -33,7 +33,7 @@ AppAsset::register($this);
                 <div class="wrap">
                     <?php
                         NavBar::begin([
-                            'brandLabel' => 'RopaLinda',
+                            'brandLabel' => '<img class="logo" src="images/logo2.jpeg"></img>',
                             'brandUrl' => Yii::$app->homeUrl,
                             'options' => [
                                 'class' => 'navbar-inverse navbar-fixed-top',
