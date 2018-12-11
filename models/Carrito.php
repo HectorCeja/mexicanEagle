@@ -50,4 +50,8 @@ class Carrito extends \yii\db\ActiveRecord{
         return $total;
     }
 
+    public static function borrarElemento($idUsuario,$idPrenda){
+        static::deleteAll(['idUsuario' => $idUsuario,'idPrenda'=>$idPrenda]);
+    } 
+
 }

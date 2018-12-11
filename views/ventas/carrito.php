@@ -27,6 +27,7 @@ $this->title = 'Carrito';
             <th>Tipo de Prenda</th>
             <th>Cantidad</th>
             <th>Precio</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +41,31 @@ $this->title = 'Carrito';
                     <td><?= $prenda->tipoPrenda ?> </td>
                     <td><?= $carrito[$prenda->id] ?> </td>
                     <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
+                    <td>
+                    <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>">Eliminar</a>
+                    <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
+                            <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <h4 class="modal-title">Eliminar Prenda</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                            <p>¿Realmente deseas eliminar del carrito la prenda <?= $prenda->nombre ?>?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <?php $form = ActiveForm::begin([
+                                                                    'method' => 'post',
+                                                                    'action' => ['ventas/borrarcarrito']]); ?>
+                                            <input type="hidden" value="id" name="<?= $prenda->id?>">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Eliminar</button>
+                                    <?php ActiveForm::end(); ?>
+                                    </div>
+                                    </div>
+                            </div>
+                    </div>
+                </td>
                 </tr>
         <?php 
             endforeach 

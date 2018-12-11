@@ -63,4 +63,9 @@ class Prenda extends \yii\db\ActiveRecord {
         return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();
           
     }
+
+    public function borrarPrenda($idPrenda){
+        static::deleteAll(['id'=>$idPrenda]);
+    }
+
 }

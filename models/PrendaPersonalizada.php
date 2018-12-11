@@ -46,4 +46,15 @@ class PrendaPersonalizada extends \yii\db\ActiveRecord {
             ->where(['in', 'id', $prendas])
             ->all();
     }
+
+    public static function borrarPersonalizado($idUsuario, $idPrenda)
+    {
+
+        static::deleteAll(['idUsuario' => $idUsuario,'idPrenda'=>$idPrenda]);;
+        
+        /*$model = $connection->createCommand('DELETE FROM prendasPersonalizadas WHERE idUsuario=:idUsuario AND idPrenda=:idPrenda');
+        $model->bindParam(':idUsuario', $idUsuario);
+        $model->bindParam(':idPrenda', $idPrenda);
+        $model->execute();*/
+    }
 }

@@ -252,4 +252,28 @@ class VentasController extends Controller
                 }
         }
     }
+
+    public function actionBorrarcarrito(){
+        if (Yii::$app->request->post()){
+            $idPrenda = $_POST = ['id'];
+            $idUsuario = Yii::$app->session['idUsuario'];
+
+            //PrendaPersonalizada::borrarPersonalizado($idUsuario, $idPrenda);
+            //Prenda::borrarPrenda($idPrenda);
+            Carrito::borrarElemento($idUsuario, $idPrenda);
+
+            $carrito = Carrito::obtenerCarritoPorUsuario($idUsuario);
+            $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);
+            $total = Carrito::totalCarrito($idUsuario);
+            $urlbase = Url::base(true);
+            $fechaEntrega = FechaEntrega::obtenerFechaEntrega($idUsuario);
+            return $this->render('carrito',[
+                'carrito' => $carrito,
+                'prendas' => $prendas,
+                'total' => $total,
+                'fechaEntrega' => $fechaEntrega,
+                'urlbase' => $urlbase
+            ]);
+        }
+    }
 }
