@@ -128,7 +128,7 @@ class ProspectoController extends Controller
             }
         }else{
             $model = Prospectos::find()->obtenerEnEspera();
-            $msg="Entro por otro lado";
+            $msg="Entró por otro lado";
             return $this->render('aceptacion',['model'=>$model,'msg'=>$msg,'tipo'=>$tipo]);
         }      
     }

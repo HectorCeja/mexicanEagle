@@ -52,5 +52,12 @@ class Venta extends \yii\db\ActiveRecord{
     {
         return static::findOne(['folio' => $folio]);
     }
-    
+
+    public static function obtenerFolio()
+    {
+        $result = \Yii::$app->db->createCommand("CALL aumentar_folio(@folio);") 
+                      ->execute();
+        return \Yii::$app->db->createCommand("select @folio;")->queryScalar();
+    }
+
 }

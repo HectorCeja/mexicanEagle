@@ -65,6 +65,7 @@ class ContactForm extends Model
         }
         return false;
     }
+
     public function contactProspect($emailSender, $emailTo, $username)
     {
         $link = "http://localhost:8080/index.php?r=site/ingresar";
@@ -86,4 +87,5 @@ class ContactForm extends Model
 
         return false;
     }
+    
 }

@@ -17,7 +17,7 @@ $this->title = 'Carrito';
             <button type="submit" class="btn btn-primary">Proceder Compra</button>
         <?= Html::endForm() ?>
     </div>
-    <h3> </h3>
+    <h3> Fecha de entrega aproximada: <?=$fechaEntrega ?></h3>
     <table class="table table-bordered">
         <tr>
             <th>Imagen</th>

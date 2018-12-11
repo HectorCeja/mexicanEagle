@@ -18,6 +18,11 @@ class VentaDetalle extends \yii\db\ActiveRecord{
         $this->cantidad = $cantidad;
     }
 
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+    }
+
     public function setIdPrenda($idPrenda)
     {
         $this->idPrenda = $idPrenda;
