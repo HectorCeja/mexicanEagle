@@ -12,103 +12,46 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index mainContainer">
   <?php 
-    $images=['<img src="/images/autumn-winter_season.jpg"/>','<img src="/images/segunda.jpg"/>'];
+    $images=['<img src="/images/autumn-winter_season.jpg"/>'];
     echo yii\bootstrap\Carousel::widget(['items'=>$images]);
   ?>
 
   <div class="content-container">
     <div class="sub-header">Ofertas de temporada</div>
     <section class="items-list">
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/basica_blanca_manga_corta.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/basica_gris_manga_corta.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/basica_navy_manga_corta.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/basica_roja_manga_corta.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/basica_tinto_manga_corta.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/tres_cuartos_morada_basica.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/tres_cuartos_negra_basica.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/tres_cuartos_negra_strangerthings.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
-      <a href="" class="item">
-        <figure class="item-image">
-          <img src="/images/tres_cuartos_roja_basica.jpg" alt="">
-        </figure>
-        <span class="item-overlay">
-          <p>
-            <span class="item-price">$100.00</span>
-          </p>
-        </span>
-      </a>
+      <?php foreach($prendasTemporada as $row): ?>
+        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>" class="item">
+          <figure class="item-image">
+            <img src=<?=$urlfinal ?> alt="Imagen de la Prenda">
+          </figure>
+          <span class="item-overlay">
+            <div class="item-info">
+              <span class="item-name"><?= $row->nombre ?></span>
+              <span class="item-price">$<?= $row->precio ?></span>
+            </div>
+          </span>
+        </a>
+      <?php endforeach ?>
+    </section>
+  </div>
+  <div class="content-container">
+    <div class="sub-header">Todos los productos</div>
+    <section class="items-list">
+      <?php foreach($prendas as $row): ?>
+        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>" class="item">
+          <figure class="item-image">
+            <img src=<?=$urlfinal ?> alt="Imagen de la Prenda">
+          </figure>
+          <span class="item-overlay">
+            <div class="item-info">
+              <span class="item-name"><?= $row->nombre ?></span>
+              <span class="item-price">$<?= $row->precio ?></span>
+            </div>
+          </span>
+        </a>
+      <?php endforeach ?>
     </section>
   </div>
 </div>
