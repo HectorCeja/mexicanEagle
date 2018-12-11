@@ -10,7 +10,7 @@ $this->title = 'Carrito';
 
 <h1 class="titulo">Carrito de compra</h1>
 
-<?php if(count($model) > 0) { ?>
+<?php if(count($prendas) > 0) { ?>
 
     <div class="divagregar">
         <?= Html::beginForm(Url::toRoute("ventas/proceder"), "POST") ?>
@@ -23,22 +23,25 @@ $this->title = 'Carrito';
             <th>Imagen</th>
             <th>Nombre</th>
             <th>Tipo de Prenda</th>
+            <th>Cantidad</th>
             <th>Precio</th>
         </tr>
         <?php 
-            foreach($model as $row):
-                $urlfinal = $urlbase.$row->urlImagen;
+            foreach($prendas as $prenda):
+                $urlfinal = $urlbase.$prenda->urlImagen;
         ?>
                 <tr> 
                     <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
-                    <td><?= $row->nombre  ?></td>
-                    <td><?= $row->tipoPrenda ?> </td>
-                    <td>$<?= $row->precio ?></td>
+                    <td><?= $prenda->nombre  ?></td>
+                    <td><?= $prenda->tipoPrenda ?> </td>
+                    <td><?= $carrito[$prenda->id] ?> </td>
+                    <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
                 </tr>
         <?php 
             endforeach 
         ?>
             <tr> 
+                <td></td>
                 <td></td>
                 <td></td>
                 <td>Total: </td>
