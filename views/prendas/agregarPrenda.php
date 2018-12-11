@@ -7,10 +7,10 @@ $this->title = 'Prendas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prendas-agregar"> 
-<h1 class="titulo">Nueva Prenda Basica </h1>
+<h1 class="titulo">Nueva Prenda Basica</h1>
 <h4 ><?= $msg ?></h4>
 <div class="row">
-            <div class="col-lg-5 text-center">
+            <div class="col-lg-5">
 
                 <?php if ($cargada=="NO"): ?>
                     
@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => ['enctype' => 'multipart/form-data'],]); ?>
                         <?= $form1->field($model, 'urlImagen')->fileInput(['multiple' => true,
                         'id' => 'imgInpC', 'name'=>'imagenCompleta']) ?>
-                        <img id="precargaPrendaC" src="<?= $im1 ?>"/> 
+                        <img id="precargaPrendaC" src="<?= $im1 ?>" style="width:200px;height:200px;"/> 
                         <?= $form1->field($model, 'urlImagenMiniatura')->fileInput(['multiple' => true,
                         'id' => 'imgInpI', 'name'=>'imagenMiniatura']) ?>
-                        <img id="precargaPrendaI" src="<?= $im2 ?>"/> 
+                        <img id="precargaPrendaI" src="<?= $im2 ?>" style="width:200px;height:200px;"/> 
                         <div class="form-group">
                             <?= Html::submitButton('Continuar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
@@ -37,9 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'action' => ['prendas/guardarprenda'],]); ?>
 
                         <?=$form->field($model, 'urlImagen')->hiddenInput(['value'=> $im1])->label(false); ?>
-                        <img id="precargaPrendaC" src="<?= $im1 ?>"/>
+                        <h4>Imagen prenda</h4>
+                        <img id="precargaPrendaC" src="<?= $im1 ?>" style="width:200px;height:200px;"/>
                         <?=$form->field($model, 'urlImagenMiniatura')->hiddenInput(['value'=> $im2])->label(false); ?>
-                        <img id="precargaPrendaI" src="<?= $im2 ?>"/>
+                        <br>
+                        <h4>Imagen miniatura prenda</h4>
+                        <img id="precargaPrendaI" src="<?= $im2 ?>" style="width:200px;height:200px;" />
                         <?= $form->field($model, 'nombre')->textInput() ?>
                         <?= $form->field($model,'tipoPrenda')->dropDownList(['BASICA' => 'BASICA', 'DISEÑADOR'=>'DISEÑADOR']); ?>
                         <?= $form->field($model, 'idCategoria')->dropDownList($listCategorias, ['prompt'=>'Selecciona Categoria'] );?>
@@ -48,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
                         
                         <div class="form-group">
-                            <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                            <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
                     <?php ActiveForm::end(); ?>
                     <?php $form2 = ActiveForm::begin([

@@ -54,9 +54,17 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     }
 
     public static function obtenerClientesBuscador($search){
-
         return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','apellidoPaterno',[$search]])->orWhere(['LIKE','apellidoMaterno',[$search]])->orWhere(['LIKE','numeroTelefono',[$search]])->orWhere(['LIKE','email',[$search]])->orWhere(['LIKE','pais',[$search]])->orWhere(['LIKE','ciudad',[$search]])->all();
-          
+    }
+
+    public static function actualizar($prospecto){
+        $prospecto->estatus='ACEPTADO';
+        $prospecto->update();
+    }
+    public static function rechazar($id){
+        $prospect=Prospectos::findOne($id);
+        $prospect->estatus='RECHAZADO';
+        return $prospect->update();
     }
 
     /**

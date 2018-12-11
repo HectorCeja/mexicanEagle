@@ -167,12 +167,28 @@ a.desc:after {
   display: flex;
 }
 
-.item-price {
-  width: 80px;
-  margin: 5px;
+.item-info {
+  text-align: center;
+}
+
+.item-name {
   font-weight: bold;
   text-align: center;
-  display: inline-block;
+  display: block;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.item-price {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 img {

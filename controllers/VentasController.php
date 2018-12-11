@@ -22,6 +22,7 @@ use app\models\Componente;
 use app\models\Categoria;
 use app\models\Temporada;
 use app\models\SubCategoria;
+use app\models\PrendaPersonalizada;
 
 
 class VentasController extends Controller
@@ -152,40 +153,81 @@ class VentasController extends Controller
         $model = new Carrito();
         if (Yii::$app->request->post()){
                 $model->idUsuario = Yii::$app->session['idUsuario'];
-                $model->idPrenda= $_POST['idprenda'];
+                $model->idPrenda = $_POST['idprenda'];
 
                 if($model->idUsuario != null){
                     $existe = Carrito::obtenerUsuarioPrenda(Yii::$app->session['idUsuario'],$_POST['idprenda']);
 
-                    if($existe==null){
-                        $model->save();
-                        $model = Prenda::findOne($model->idPrenda);
-                        $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
-                        $componentes = Componente::obtenerComponentesPrenda($idPrenda);
-                        $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
-                        $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
-                        return $this->render('//prendas/prendaPersonalizar',['msg'=>'Articulo agregado al carrito.',
-                                                                                'model'=>$model,
-                                                                            'temporada'=>$descripciontemporada,
-                                                                            'categoria'=>$descripcionCategoria,
-                                                                            'subcategoria'=>$descripcionSubCategoria,
-                                                                            'componentes'=>$componentes, 
-                                                                            'tipo'=>1]);
-                    }else{
-                        $existe->cantidad=$existe->cantidad+1; 
-                        $existe->save();
-                        $model = Prenda::findOne($model->idPrenda);
+                    $flag = false;
+                    if(!isset($_POST['idComponente'])){
+                        $flag=true;
+                    }
+
+                    if($flag==true){ //personalizada
+                        $ids = explode("|", $_POST['idcomponente']);
+                        $fechaAlta = date("Y-m-d");
+
+                        $prendaAPersonalizar = Prenda::findOne($_POST['idprenda']);
+                        $prendaAPersonalizar->tipoPrenda = "PERSONALIZADA";
+                        $prendaAPersonalizar->fechaAlta = $fechaAlta;
+
+                        $prendaAPersonalizar->save();
+
+                        $idPrendaPersonalizada = $prendaAPersonalizar->id;
+
+                        foreach($ids as $id){
+                            $componentePersonalizar = new PrendaPersonalizada();
+                            $componentePersonalizar->idUsuario = Yii::$app->session['idUsuario'];
+                            $componentePersonalizar->idPrenda = $_POST['idprenda'];
+                            $componentePersonalizar->idComponente = $id;
+                            $componentePersonalizar->fechaAlta = $fechaAlta;
+                            $componentePersonalizar->save();
+                        }
+                        $model = Prenda::findOne($_POST['idprenda']);
                         $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
                         $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
                         $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                         $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
-                        return $this->render('//prendas/prendaPersonalizar',['msg'=>'Articulo agregado al carrito.',
-                                                                                'model'=>$model,
-                                                                            'temporada'=>$descripciontemporada,
-                                                                            'categoria'=>$descripcionCategoria,
-                                                                            'subcategoria'=>$descripcionSubCategoria,
-                                                                            'componentes'=>$componentes, 
-                                                                            'tipo'=>1]);
+                        return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo personalizado agregado al carrito.',
+                                                                                    'model'=>$model,
+                                                                                'temporada'=>$descripciontemporada,
+                                                                                'categoria'=>$descripcionCategoria,
+                                                                                'subcategoria'=>$descripcionSubCategoria,
+                                                                                'componentes'=>$componentes, 
+                                                                                'tipo'=>1]);
+
+                    }else{ //nopersonalizada
+
+                        if($existe==null){
+                            $model->save();
+                            $model = Prenda::findOne($model->idPrenda);
+                            $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+                            $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
+                            $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+                            $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+                            return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
+                                                                                    'model'=>$model,
+                                                                                'temporada'=>$descripciontemporada,
+                                                                                'categoria'=>$descripcionCategoria,
+                                                                                'subcategoria'=>$descripcionSubCategoria,
+                                                                                'componentes'=>$componentes, 
+                                                                                'tipo'=>1]);
+                        }else{
+                            $existe->cantidad=$existe->cantidad+1; 
+                            $existe->save();
+                            $model = Prenda::findOne($model->idPrenda);
+                            $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+                            $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
+                            $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+                            $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+                            return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
+                                                                                    'model'=>$model,
+                                                                                'temporada'=>$descripciontemporada,
+                                                                                'categoria'=>$descripcionCategoria,
+                                                                                'subcategoria'=>$descripcionSubCategoria,
+                                                                                'componentes'=>$componentes, 
+                                                                                'tipo'=>1]);
+                        }
                     }
        
                 }else{
