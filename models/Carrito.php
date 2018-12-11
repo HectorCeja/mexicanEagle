@@ -29,10 +29,9 @@ class Carrito extends \yii\db\ActiveRecord{
         return ArrayHelper::map($prendasCarrito,'idPrenda','cantidad');
     }
 
-    public static function limpiarCarritoPorCliente()
+    public static function limpiarCarritoPorIdUsuario($idUsuario)
     {
-        return static::findModel($id)
-            ->delete();
+        return static::deleteAll(['idUsuario' => $idUsuario]);;
     }
 
     public static function totalCarrito($idUsuario){

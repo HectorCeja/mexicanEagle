@@ -13,6 +13,8 @@ use app\models\Direccion;
 use app\models\Pago;
 use app\models\Venta;
 use app\models\VentaDetalle;
+use app\models\Email;
+use app\models\FechaEntrega;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -21,12 +23,15 @@ use yii\helpers\Url;
 class VentasController extends Controller
 {
     public function actionCarrito(){
-        $prendas = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
-        $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
+        $idUsuario = Yii::$app->session['idUsuario'];
+        $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);
+        $total = Carrito::totalCarrito($idUsuario);
         $urlbase = Url::base(true);
+        $fechaEntrega = FechaEntrega::obtenerFechaEntrega($idUsuario);
         return $this->render('carrito',[
             'model' => $prendas,
             'total' => $total,
+            'fechaEntrega' => $fechaEntrega,
             'urlbase' => $urlbase
         ]);
     }
@@ -71,14 +76,18 @@ class VentasController extends Controller
         ]);
     }
 
+    // TODO -> fecha
     public function actionAgregarpago(){
         $pago = new Pago();
+        $total = 0;
+        $subtotal = 0;
+        $iva = 0;
 
-        if ($pago->load(Yii::$app->request->post()['Pago'])){
+        if ($pago->load(Yii::$app->request->post())){
             date_default_timezone_set('America/Mazatlan');
             $fechaActual = date("Y-m-d");
             $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-            $folio = 5;
+            $folio = Venta::obtenerFolio();
 
             $venta = new Venta();
             $venta->setFolio($folio);
@@ -92,24 +101,36 @@ class VentasController extends Controller
             
             $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
             $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
-            $ventaDetalle = new VentaDetalle();
             foreach($prendasCarrito as $prendaCarrito) {
+                $ventaDetalle = new VentaDetalle();
                 $ventaDetalle->setIdFolio($folio);
                 $ventaDetalle->setIdPrenda($prendaCarrito->id);
                 $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
+                $ventaDetalle->setPrecio($prendaCarrito->precio);
                 $ventaDetalle->save();
             }
 
             $pago->setIdFolio($folio);
+            $pago->setIdPago(Yii::$app->request->post()['Pago']);
             $pago->setTotal($total);
             $pago->setSubtotal($total * 0.84);
             $pago->setIva($total * 0.16);
             $pago->setFechaPago($fechaActual);
             $pago->save();
 
+            $emailFrom = Yii::$app->params['adminEmail'];
+            $emailTo = Yii::$app->session['emailUsuario'];
+            $subject = "Pedido Ropalinda";
+            $message =  "Enhorabuena! Su pedido se ha completado con éxito.";
+            $message .= "Sus prendas serán enviadas a su hogar en la fecha especificada. ";
+            $message .= "Gracias por su preferencia."; 
+            Email::sendEmail($emailFrom, $emailTo, $subject, $message);
+
+            Carrito::limpiarCarritoPorIdUsuario(Yii::$app->session['idUsuario']);
+
             Yii::$app->session->setFlash('success','El pago se realizó con exito. Un correo de confirmación fue enviado a su correo.');
             
-            return $this->render('index',[
+            return $this->render('//site/index',[
                 'model' => $venta
             ]);
 
@@ -117,6 +138,9 @@ class VentasController extends Controller
         Yii::$app->session->setFlash('error','Ha ocurrido un error al procesar el pago.');
         return $this->render('pago',[
             'model' => $pago,
+            'total' => $total,
+            'subtotal' => $subtotal,
+            'iva' => $iva
         ]);
 
     }

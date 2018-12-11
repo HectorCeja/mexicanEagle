@@ -127,6 +127,7 @@ class SiteController extends Controller
             $opciones = $modelOpcion->obtenerOpcionesPorIds($listOpcionesPorPerfil);
             $listOpciones = ArrayHelper::map($opciones, 'descripcion', 'url');
             Yii::$app->session['idUsuario'] = $user->id;
+            Yii::$app->session['emailUsuario'] = $user->email;
             Yii::$app->session['opciones'] = $listOpciones;
             return $this->render('index', [
                 'model' => $model
