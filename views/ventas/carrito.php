@@ -17,8 +17,10 @@ $this->title = 'Carrito';
             <button type="submit" class="btn btn-primary">Proceder Compra</button>
         <?= Html::endForm() ?>
     </div>
+
     <h3> Fecha de entrega aproximada: <?=$fechaEntrega ?></h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
         <tr>
             <th>Imagen</th>
             <th>Nombre</th>
@@ -26,6 +28,8 @@ $this->title = 'Carrito';
             <th>Cantidad</th>
             <th>Precio</th>
         </tr>
+        </thead>
+        <tbody>
         <?php 
             foreach($prendas as $prenda):
                 $urlfinal = $urlbase.$prenda->urlImagen;
@@ -47,6 +51,7 @@ $this->title = 'Carrito';
                 <td>Total: </td>
                 <td>$<?= number_format($total,2,".",",") ?> </td>
             </tr>
+        </tbody>
     </table>
 
 <?php } else { ?>

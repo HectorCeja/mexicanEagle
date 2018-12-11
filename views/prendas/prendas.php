@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <h3><?= $msg ?> </h3>
-<table class="table table-bordered">
+<table class="table table-bordered table-striped table-hover">
     <tr>
         <th>Imagen</th>
         <th>Nombre</th>
