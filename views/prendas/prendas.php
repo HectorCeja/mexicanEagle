@@ -15,13 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <h3><?= $msg ?> </h3>
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover text-center">
     <tr>
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Tipo de Prenda</th>
-        <th>Precio</th>
-        <th>Descripcion</th>
+        <th class="text-center">Imagen</th>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Tipo de Prenda</th>
+        <th class="text-center">Precio</th>
+        <th class="text-center">Descripcion</th>
         <th></th>
     </tr>
     <?php foreach($model as $row): ?>
