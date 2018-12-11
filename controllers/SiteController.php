@@ -80,8 +80,11 @@ class SiteController extends Controller
         ->select(['nombre as value', 'nombre as  label','id as id'])
         ->asArray()
         ->all();
+        $prendas = Prenda::obtenerPrendasSite();
+        $urlbase = Url::base(true);
+        $prendasTemporada = Prenda::obtenerPrendasPorTemporadas();
         Yii::$app->session['prenda'] = $data;
-        return $this->render('index',['model'=>$data,'data'=>$data]);
+        return $this->render('index',['model'=>$data, 'data'=>$data, 'prendas'=>$prendas, 'urlbase'=>$urlbase, 'prendasTemporada'=>$prendasTemporada]);
     }
 
     public function actionBuscar()

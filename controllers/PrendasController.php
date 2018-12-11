@@ -70,7 +70,6 @@ class PrendasController extends Controller
              $prendas = Prenda::obtenerPrendas();
              return $this->render('buscar',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
         }
-        
     }
 
     public function actionAgregar(){
@@ -90,7 +89,6 @@ class PrendasController extends Controller
                                                 'msg'=>"",'cargada'=>"NO",
                                                 'im1'=>"",
                                                 'im2'=>""]);
-        
     }
 
     public function actionSaveprenda(){

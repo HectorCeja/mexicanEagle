@@ -21,18 +21,18 @@ $this->title = 'Pago';
 
                 <div class="prendaContainer">
                     <div class="labelPrenda">Subtotal:</div>
-                    <?= Html::input('text', 'total', number_format($subtotal,2,".",",") ,['readonly' => true]) ?>
+                    <?= Html::input('text', 'total', number_format($model->subtotal,2,".",",") ,['readonly' => true]) ?>
                 </div>
                 <div class="prendaContainer">
                     <div class="labelPrenda">Iva:</div>
-                    <?= Html::input('text', 'total', number_format($iva,2,".",","),['readonly' => true]) ?>
+                    <?= Html::input('text', 'total', number_format($model->iva,2,".",","),['readonly' => true]) ?>
                 </div>
                 <div class="prendaContainer">
                     <div class="labelPrenda">Total:</div>
-                    <?= Html::input('text', 'total', number_format($total,2,".",","),['readonly' => true]) ?>
+                    <?= Html::input('text', 'total', number_format($model->total,2,".",","),['readonly' => true]) ?>
                 </div>
 
-                <?= $form->field($model, 'idPago')->dropDownList(['1' => 'Contado', '2'=>'Credito']); ?>
+                <?= $form->field($model, 'idTipoPago')->dropDownList(['1' => 'Una sola exhibición', '2'=>'Crédito']); ?>
 
                 <div class="form-group"></div>
                 <div class="form-group pago-container">
