@@ -40,9 +40,14 @@ class Carrito extends \yii\db\ActiveRecord{
     }
 
     public static function totalCarrito($idUsuario){
+        $total = 0.00;
+        $carrito = Carrito::obtenerCarritoPorUsuario($idUsuario);
         $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);
-        $listprendas = ArrayHelper::map($prendas,'id','precio');
-        return array_sum($listprendas);
+
+        foreach($prendas as $prenda){
+            $total += $prenda->precio * $carrito[$prenda->id];
+        }
+        return $total;
     }
 
 }
