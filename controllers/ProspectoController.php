@@ -106,7 +106,7 @@ class ProspectoController extends Controller
                 $prospecto = Prospectos::findOne($idProspect);
                 $user = new User();          
                 $user = User::guardarUserNuevo($prospecto);
-                Cliente::guardarNuevoCliente($prospecto,$user->id);             
+                $cliente=Cliente::guardarNuevoCliente($prospecto,$user->id);             
                 Prospectos::actualizar($prospecto);
                 $form = new FormSearch;
                 $contact = new ContactForm();
@@ -132,7 +132,7 @@ class ProspectoController extends Controller
         $model = new Prospectos();
         if ($model->load(Yii::$app->request->post())){
             if($model->validate()){
-                $model->save();
+                $model->save(false);
                 Yii::$app->session->setFlash('success','Has sido registrado como prospecto, espere un correo de aceptación.');
                 return $this->redirect(['site/login']);
             }
