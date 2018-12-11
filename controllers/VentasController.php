@@ -10,6 +10,9 @@ use yii\web\Response;
 use app\models\Prenda;
 use app\models\Carrito;
 use app\models\Direccion;
+use app\models\Pago;
+use app\models\Venta;
+use app\models\VentaDetalle;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -18,12 +21,12 @@ use yii\helpers\Url;
 class VentasController extends Controller
 {
     public function actionCarrito(){
-        $prendasCarrito = Carrito::obtenerPrendasPorCliente(Yii::$app->session['idUsuario']);
-        $listprendasCarrito = ArrayHelper::map($prendasCarrito,'idPrenda','idPrenda');
-        $prendas = Prenda::obtenerPrendasPorIds($listprendasCarrito);
+        $prendas = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
+        $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
         $urlbase = Url::base(true);
         return $this->render('carrito',[
             'model' => $prendas,
+            'total' => $total,
             'urlbase' => $urlbase
         ]);
     }
@@ -33,6 +36,89 @@ class VentasController extends Controller
         return $this->render('direccion',[
             'model' => $direccion
         ]);
+    }
+
+    public function actionAgregardireccion(){
+        $direccion = new Direccion();
+
+        if ($direccion->load(Yii::$app->request->post())){
+
+            if($direccion->validate()){
+
+                $direccion->setIdUsuario(Yii::$app->session['idUsuario']);
+                $direccion->save();
+                Yii::$app->session['idDomicilio'] = $direccion->id;
+                Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');
+                
+                $pago = new Pago();
+                $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
+                $subtotal = $total * 0.84;
+                $iva = $total * 0.16;
+
+                return $this->render('pago',[
+                    'model' => $pago,
+                    'total' => $total,
+                    'subtotal' => $subtotal,
+                    'iva' => $iva
+                ]);
+
+            }
+
+        }
+        Yii::$app->session->setFlash('error','Ha ocurrido un error al guardar dirección');
+        return $this->render('direccion',[
+            'model' => $direccion,
+        ]);
+    }
+
+    public function actionAgregarpago(){
+        $pago = new Pago();
+
+        if ($pago->load(Yii::$app->request->post()['Pago'])){
+            date_default_timezone_set('America/Mazatlan');
+            $fechaActual = date("Y-m-d");
+            $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
+            $folio = 5;
+
+            $venta = new Venta();
+            $venta->setFolio($folio);
+            $venta->setTotal($total);
+            $venta->setSubtotal($total * 0.84);
+            $venta->setIva($total * 0.16);
+            $venta->setIdUsuario(Yii::$app->session['idUsuario']);
+            $venta->setFechaVenta($fechaActual);
+            $venta->setStatus('SALDADA');
+            $venta->save();
+            
+            $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
+            $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
+            $ventaDetalle = new VentaDetalle();
+            foreach($prendasCarrito as $prendaCarrito) {
+                $ventaDetalle->setIdFolio($folio);
+                $ventaDetalle->setIdPrenda($prendaCarrito->id);
+                $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
+                $ventaDetalle->save();
+            }
+
+            $pago->setIdFolio($folio);
+            $pago->setTotal($total);
+            $pago->setSubtotal($total * 0.84);
+            $pago->setIva($total * 0.16);
+            $pago->setFechaPago($fechaActual);
+            $pago->save();
+
+            Yii::$app->session->setFlash('success','El pago se realizó con exito. Un correo de confirmación fue enviado a su correo.');
+            
+            return $this->render('index',[
+                'model' => $venta
+            ]);
+
+        }
+        Yii::$app->session->setFlash('error','Ha ocurrido un error al procesar el pago.');
+        return $this->render('pago',[
+            'model' => $pago,
+        ]);
+
     }
 
 }

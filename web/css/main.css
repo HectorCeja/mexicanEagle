@@ -20,3 +20,8 @@
     height: 50px;
     font-size: 25px;
 }
+
+.pago-container {
+    display: flex;
+    justify-content: flex-end;
+}
