@@ -34,6 +34,11 @@ class Carrito extends \yii\db\ActiveRecord{
         return static::findModel($id)
             ->delete();
     }
+    public static function obtenerUsuarioPrenda($idUsuario, $idPrenda){
+        return static::find()
+            ->where(['idUsuario'=>$idUsuario])->andWhere(['idPrenda'=>$idPrenda])
+            ->one();
+    }
 
     public static function totalCarrito($idUsuario){
         $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);

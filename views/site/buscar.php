@@ -9,20 +9,22 @@ $this->title = 'Búsqueda';
     <br>
     <br>
     <?php if($model!=null):?>
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
             <tr>
                 <th></th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Descripcion</th>
+                <th style="text-align:center">Nombre</th>
+                <th style="text-align:center">Precio</th>
+                <th style="text-align:center">Descripcion</th>
+                <th></th>
             </tr>
             <?php foreach($model as $row): ?>
             <?php $urlfinal = $urlbase.$row->urlImagenMiniatura; ?>
             <tr> 
-                <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
+                <td style="text-align:center"><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
                 <td><?= $row->nombre  ?></td>
                 <td><?= $row->precio ?></td>
                 <td><?= $row->descripcion ?></td>
+                <td style="text-align:center"><a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>">Mostrar</a></td>
             </tr>
             <?php endforeach ?>
         </table>
