@@ -51,6 +51,16 @@ class Prenda extends \yii\db\ActiveRecord {
         return static::find()->all();
     }
 
+    public static function obtenerPrendasSite()
+    {
+        return static::find()->Where(['>', 'precio', 0.0])->all();
+    }
+
+    public static function obtenerPrendasPorTemporadas()
+    {
+        return static::find()->where(['in', 'idTemporada', 1])->all();
+    }
+
     public static function obtenerPrendasPorIds($prendas)
     {
         return static::find()
