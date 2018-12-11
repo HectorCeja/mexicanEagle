@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if (count($componentes)>0): ?>
 <h1 class="titulo">Componentes</h1>
 
-   <table class="table table-bordered">
+   <table class="table table-bordered table-striped table-hover">
     <tr>
         <th>Imagen</th>
         <th>Nombre</th>

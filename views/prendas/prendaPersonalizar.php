@@ -59,25 +59,27 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <div class="botones">
-    <?php $form = ActiveForm::begin([
+<?php $form = ActiveForm::begin([
                         'method' => 'post',
                         'action' => ['ventas/agregarcarrito'],]); ?>
-            <div class="prendaContainer">
-                <input type="hidden" name="idprenda" value="<?= $model->id ?>">
-            </div> 
-        <button type="submit" style="margin-top:0px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
-    <?php ActiveForm::end(); ?>
+    <div class="prendaContainer">
+        <input type="hidden" name="idprenda" value="<?= $model->id ?>">
+    </div> 
+    <button type="submit" style="margin-top:0px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
+
 </div>
 <?php if (count($componentes)>0): ?>
 <h1 class="titulo">Componentes</h1>
 
-   <table class="table table-bordered">
+   <table class="table table-bordered table-striped table-hover">
     <tr>
         <th>Imagen</th>
         <th>Nombre</th>
         <th>Precio</th>
         <th>Descripcion</th>
+        <th>Agregar</th>
     </tr>
+    <?php $listaids = array(); ?>
     <?php foreach($componentes as $row): ?>
     <tr>
         <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
@@ -85,8 +87,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->nombre ?> </td>
         <td><?= $row->precio ?></td>
         <td><?= $row->descripcion?></td>
+        <?php array_push($listaids,  $row->id); ?>
+        <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
     </tr>
     <?php endforeach ?>
+    <?php ActiveForm::end(); ?>
 </table>     
 <?php endif; ?>
    
