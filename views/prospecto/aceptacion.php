@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->email ?></td>
         <td><?= $row->pais ?></td>
         <td><?= $row->ciudad ?></td>
-        <td><a href="<?= Url::toRoute(["prospecto/aceptar", "id" => $row->id]) ?>">Aceptar</a></td>
+        <td><a href="<?= Url::toRoute(["prospecto/aceptar", "id" => $row->id]) ?>" class="btn btn-success">Aceptar</a></td>
         <td>
-            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->id ?>">Eliminar</a>
+            <a href="#" data-toggle="modal" data-target="#id_username_<?= $row->id ?>" class="btn btn-danger">Eliminar</a>
             <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $row->id ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
@@ -69,9 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <button type="submit" class="btn btn-primary">Eliminar</button>
                               <?= Html::endForm() ?>
                               </div>
-                            </div><!-- /.modal-content -->
-                      </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+                            </div>
+                      </div>
+            </div>
         </td>
     </tr>
     <?php endforeach ?>

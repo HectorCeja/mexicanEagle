@@ -21,7 +21,8 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
                 [['ciudad'],'required', 'message' => 'La Ciudad no debe estar vacía.'],
                 [['fechaNacimiento'],'required', 'message' => 'La Fecha de Nacimiento no debe estar vacía.'],
                 [['email'], 'unique','targetClass'=>'\app\models\Prospectos','message' => 'Usuario ya registrado.'],
-                [['numeroTelefono','email','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30, 'message' => 'El campo excede los 30 caracteres.']
+                [['numeroTelefono','email','nombre','apellidoPaterno', 'apellidoMaterno','pais','ciudad'],'string','max' => 30, 'message' => 'El campo excede los 30 caracteres.'],
+                [['rfc'],'string','max' => 13, 'message' => 'El campo excede los 13 caracteres.']
             ];
     }
 
