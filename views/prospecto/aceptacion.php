@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = 'Prospectos';
+$this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1>Lista de Prospectos de Usuario</h1>
 

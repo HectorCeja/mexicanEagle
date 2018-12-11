@@ -54,8 +54,6 @@ class Prospectos extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     }
 
     public static function obtenerClientesBuscador($search){
-       // $query = 'SELECT * FROM prospectos where nombre like %'.$search.'% OR numeroTelefono like %'.$search.'$';
-       // return static::find()->findBySql($query)->all();
 
         return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','apellidoPaterno',[$search]])->orWhere(['LIKE','apellidoMaterno',[$search]])->orWhere(['LIKE','numeroTelefono',[$search]])->orWhere(['LIKE','email',[$search]])->orWhere(['LIKE','pais',[$search]])->orWhere(['LIKE','ciudad',[$search]])->all();
           

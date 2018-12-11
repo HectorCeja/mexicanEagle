@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
 $this->title = 'Dirección';
-
+$this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1 class="titulo">Prendas </h1>
 <div class="divagregar">

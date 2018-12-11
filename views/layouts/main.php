@@ -9,6 +9,10 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
 
 AppAsset::register($this);
 ?>
@@ -37,9 +41,7 @@ AppAsset::register($this);
                         ]);
 
                         $items = [];
-                        $items[] = (
-                            '<li><input type="text" class="filter" /></li>'
-                        );
+                        
                         if(Yii::$app->User->isGuest){
                             $items = [
                                 ['label' => 'Inicio', 'url' => ['/site/index']],
@@ -63,6 +65,38 @@ AppAsset::register($this);
                                 . '</li>'
                             );
                         }
+                        
+                        $items[] = (
+                            '<li>'
+                            . Html::beginForm(['/site/buscar'], 'post')
+                            . AutoComplete::widget([
+                                'name' => 'Prenda',
+                                'id' => 'ddd',
+                                'value' => '',
+                                'clientOptions' => [
+                                    'source' => Yii::$app->session['prenda'],
+                                    'autoFill' => true,
+                                    'minLength' => '1',
+                                    'select' => new JsExpression("function( event, ui ) {
+                                    $('#inoculation-id_user').val(ui.item.id);
+                                }")],
+                                'options' => [
+                                    'class' => 'form-control',
+                                    'id' => 'buscarGeneral',
+                                    'style' => 'margin:7px'
+                                ]
+                            ])
+                            . '</li> '
+                            . '<li> '
+                            . '<input type="hidden" name="yii" value="">'
+                            . Html::submitButton(
+                                'Buscar',
+                                ['class' => 'btn btn-link',
+                                'style' => 'margin:7px']
+                            )
+                            . Html::endForm()
+                            . '</li> '
+                        );
 
                         echo Nav::widget([
                             'options' => ['class' => 'navbar-nav navbar-right'],
