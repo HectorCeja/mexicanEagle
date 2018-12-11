@@ -46,6 +46,31 @@ class PrendasController extends Controller
              $prendas = Prenda::obtenerPrendas();
              return $this->render('prendas',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
         }
+        
+    }
+    public function actionMostrarprenda(){
+        if(Yii::$app->request->get("id")){
+            $idPrenda = Html::encode($_GET["id"]);
+            if((int)$idPrenda){
+             $model = Prenda::findOne($idPrenda);
+             Yii::$app->session['idPrenda'] = $idPrenda;
+             $componentes = Componente::obtenerComponentesPrenda($idPrenda);
+             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
+             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
+             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
+             return $this->render('prendaPersonalizar',['model'=>$model,
+                                                        'temporada'=>$descripciontemporada,
+                                                        'categoria'=>$descripcionCategoria,
+                                                        'subcategoria'=>$descripcionSubCategoria,
+                                                        'componentes'=>$componentes,
+                                                        'tipo'=>'',
+                                                        'msg'=>""]);
+            }
+        }else{
+             $prendas = Prenda::obtenerPrendas();
+             return $this->render('buscar',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
+        }
+        
     }
 
     public function actionAgregar(){
