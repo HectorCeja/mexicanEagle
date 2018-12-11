@@ -83,5 +83,22 @@ class Venta extends \yii\db\ActiveRecord{
         $venta->setIva($total * 0.16);
         return $venta;
     }
+    public function guardarVenta($total,$idUsuario,$idDireccion,$idTipoPago){
+        $venta = new Venta();
+        date_default_timezone_set('America/Mazatlan');
+        $fechaActual = date("Y-m-d");
+        $status = ($idTipoPago == 1) ? 'SALDADA' : 'NO SALDADA';
+        $venta->setFolio(obtenerFolio());
+        $venta->setTotal($total);
+        $venta->setSubtotal($total * 0.84);
+        $venta->setIva($total * 0.16);
+        $venta->setIdUsuario($idUsuario);
+        $venta->setIdDireccion($idDireccion);
+        $venta->setIdTipoPago($idTipoPago);
+        $venta->setFechaVenta($fechaActual);
+        $venta->setStatus($status);
+        $venta->save();
+        return $venta;
+    }
 
 }
