@@ -16,6 +16,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use app\models\UploadForm;
+use app\models\FormSearch;
 use yii\web\UploadedFile;
 
 
@@ -121,6 +122,7 @@ class PrendasController extends Controller
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
             $fechaAlta = date("Y-m-d");
+            $model->tipoPrenda = $_POST['Prenda']['tipoPrenda'];
             $model->fechaAlta = $fechaAlta;
 
             if($model->save(false)){

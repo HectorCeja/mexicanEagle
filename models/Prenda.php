@@ -57,4 +57,10 @@ class Prenda extends \yii\db\ActiveRecord {
             ->where(['in', 'id', $prendas])
             ->all();
     }
+
+    public static function obtenerPrendasBuscador($search){
+
+        return static::find()->where(['LIKE','nombre',$search])->orWhere(['LIKE','descripcion',[$search]])->all();
+          
+    }
 }

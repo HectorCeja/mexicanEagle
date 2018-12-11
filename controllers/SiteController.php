@@ -11,9 +11,14 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\PerfilOpcion;
 use app\models\Opcion;
+use app\models\Prenda;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use app\models\User;
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+use yii\helpers\Url;
+
 
 class SiteController extends Controller
 {
@@ -71,7 +76,34 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $data = Prenda::find()
+        ->select(['nombre as value', 'nombre as  label','id as id'])
+        ->asArray()
+        ->all();
+        Yii::$app->session['prenda'] = $data;
+        return $this->render('index',['model'=>$data,'data'=>$data]);
+    }
+
+    public function actionBuscar()
+    {
+        if(Yii::$app->request->post()){
+            $campoBusqueda = Html::encode($_POST["Prenda"]);
+
+            $prendas = Prenda::obtenerPrendasBuscador($campoBusqueda);
+            if($prendas!=null){
+                if($campoBusqueda!=""){
+                    $urlbase=Url::base(true);
+                    return $this->render('buscar',['model'=>$prendas,'msg'=>"", 'urlbase'=>$urlbase]);
+                }else{
+                    $msg="No se ingresaron datos para buscar.";
+                    return $this->render('buscar',['model'=>'','msg'=>$msg,'urlbase'=>'']);
+                }
+            }else{
+                $msg="No hay resultados en la búsqueda.";
+                return $this->render('buscar',['model'=>'','msg'=>$msg,'urlbase'=>'']);
+            }      
+        }
+        
     }
 
     /**

@@ -3,8 +3,25 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = 'Prospectos';
+$this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1>Lista de Prospectos de Usuario</h1>
+
+<?php $f = ActiveForm::begin([
+    "method" => "get",
+    "action"=> Url::toRoute("prospecto/aceptacion"),
+    'enableClientValidation' => true,
+    ]);
+
+?>
+<div class = "form-group">
+  <?= $f->field($form,"q")->input("search") ?>
+</div>
+<?= Html::submitButton("Buscar",["class"=>"btn btn-primary"]) ?>
+<?php $f->end() ?>
+
+<h3> <?= $search ?> </h3>
+
 <?php if($tipo==1): ?>
     <div class="alert alert-success">
     <h4 ><?= $msg ?></h4>

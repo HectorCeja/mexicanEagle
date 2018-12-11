@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
 $this->title = 'Dirección';
-
+$this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1 class="titulo">Prendas </h1>
 <div class="divagregar">
@@ -13,6 +13,7 @@ $this->title = 'Dirección';
         <button type="submit" class="btn btn-primary">Agregar Prenda</button>
     <?= Html::endForm() ?>
 </div>
+
 <h3><?= $msg ?> </h3>
 <table class="table table-bordered">
     <tr>
