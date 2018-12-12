@@ -39,5 +39,14 @@ class VentaDetalle extends \yii\db\ActiveRecord{
             ->where(['idFolio' => $folio])
             ->all();
     }
-
+    public function guardarVentasDetalle($carrito,$prendasCarrito,$folio){
+        foreach($prendasCarrito as $prendaCarrito) {
+            $ventaDetalle = new VentaDetalle();
+            $ventaDetalle->setIdFolio($folio);
+            $ventaDetalle->setIdPrenda($prendaCarrito->id);
+            $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
+            $ventaDetalle->setPrecio($prendaCarrito->precio);
+            $ventaDetalle->save();
+        }
+    }
 }

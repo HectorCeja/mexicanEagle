@@ -96,23 +96,21 @@ class VentasController extends Controller
             
             $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
             $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
-            foreach($prendasCarrito as $prendaCarrito) {
+            VentaDetalle::guardarVentasDetalle($carrito,$prendasCarrito,$venta->folio);
+           /* foreach($prendasCarrito as $prendaCarrito) {
                 $ventaDetalle = new VentaDetalle();
-                $ventaDetalle->setIdFolio($folio);
+                $ventaDetalle->setIdFolio($venta->folio);
                 $ventaDetalle->setIdPrenda($prendaCarrito->id);
                 $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
                 $ventaDetalle->setPrecio($prendaCarrito->precio);
                 $ventaDetalle->save();
             }
 
+            */
+           
             if ($idTipoPago == 1) {
-                $pago = new Pago();
-                $pago->setIdFolio($folio);
-                $pago->setTotal($total);
-                $pago->setSubtotal($total * 0.84);
-                $pago->setIva($total * 0.16);
-                $pago->setFechaPago($fechaActual);
-                $pago->save();
+                Pago::guardarPago($folio,$total);
+                
             }
 
             $emailFrom = Yii::$app->params['adminEmail'];

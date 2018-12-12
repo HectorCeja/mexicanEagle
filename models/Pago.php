@@ -43,4 +43,15 @@ class Pago extends \yii\db\ActiveRecord{
         return static::findOne(['idFolio' => $idFolio]);
     }
 
+    public function guardarPago($folio,$total){
+        $pago = new Pago();
+        $fechaActual = date("Y-m-d");
+        $pago->setIdFolio($folio);
+        $pago->setTotal($total);
+        $pago->setSubtotal($total * 0.84);
+        $pago->setIva($total * 0.16);
+        $pago->setFechaPago($fechaActual);
+        $pago->save();
+    }
+
 }
