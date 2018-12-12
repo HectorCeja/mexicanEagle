@@ -58,11 +58,7 @@ class VentasController extends Controller
         if ($direccion->load(Yii::$app->request->post())){
             if($direccion->validate()){
                 $direccion= Direccion::guardarDireccion($direccion,Yii::$app->session['idUsuario']);
-                if(isset($_POST['iddireccion'])){
-                    Yii::$app->session['idDireccion'] = explode("|", $_POST['idcomponente']);;
-                }else{
                 Yii::$app->session['idDireccion'] = $direccion->id;
-                }
                 Yii::$app->session->setFlash('success','Direción de envío agregada con éxito al pedido.');             
                 $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
                 $venta = Venta::cambiarTotalSubtotal($total);
@@ -77,6 +73,16 @@ class VentasController extends Controller
         return $this->render('direccion',[
             'model' => $direccion,
             'direcciones' => $direcciones
+        ]);
+    }
+    public function actionUsardireccion(){
+        $idDireccion = Html::encode($_POST["id"]);
+        Yii::$app->session['idDireccion']=$idDireccion;
+        Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');             
+        $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
+        $venta= Venta::cambiarTotalSubtotal($total);
+        return $this->render('pago',[
+            'model' => $venta
         ]);
     }
 
