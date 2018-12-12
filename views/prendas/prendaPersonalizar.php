@@ -62,13 +62,26 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<div class="botones">
+
     <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['ventas/agregarcarrito'],]); ?>
-    <div class="prendaContainer">
+    <div class="">
+        <label for="sel1">Talla:</label>
+        <select class="form-control" id="sel1" name="talla">
+            <option>Chica</option>
+            <option>Mediana</option>
+            <option>Grande</option>
+        </select>
+        <label for="sel2">Color:</label>
+        <select class="form-control" id="sel2" name="color">
+            <option>Blanco</option>
+            <option>Negro</option>
+            <option>Azul marino</option>
+            <option>Gris</option>
+        </select>
         <input type="hidden" name="idprenda" value="<?= $model->id ?>">
+        <button type="submit" style="margin-top:10px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
     </div> 
-    <button type="submit" style="margin-top:0px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
-</div>
+
 
 <?php if (count($componentes)>0): ?>
     <h1 class="titulo">Componentes</h1>
@@ -90,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $row->precio ?></td>
                 <td><?= $row->descripcion?></td>
                 <?php array_push($listaids,  $row->id); ?>
-                <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
+                <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>" class="checkbox"></td>
             </tr>
         <?php endforeach ?>
     </table>

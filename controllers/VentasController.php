@@ -126,6 +126,8 @@ class VentasController extends Controller
         if (Yii::$app->request->post()){
                 $idUsuario = Yii::$app->session['idUsuario'];
                 $idPrenda = $_POST['idprenda'];
+                $talla = $_POST['talla'];
+                $color = $_POST['color'];
 
                 if(Yii::$app->session['idUsuario'] != null){
                     $existe = Carrito::obtenerUsuarioPrenda($idUsuario,$idPrenda);
@@ -170,6 +172,8 @@ class VentasController extends Controller
                         $prendaPersonalizadaNueva->idPrenda = $idPrendaPersonalizada;
                         $prendaPersonalizadaNueva->idUsuario = $idUsuario;
                         $prendaPersonalizadaNueva->cantidad = 1;
+                        $prendaPersonalizadaNueva->talla = $talla;
+                        $prendaPersonalizadaNueva->color = $color;
                         $prendaPersonalizadaNueva->save();
 
                         $model = Prenda::findOne($idPrenda);
@@ -179,7 +183,7 @@ class VentasController extends Controller
                         $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                         $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                         return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo personalizado agregado al carrito.',
-                                                                                    'model'=>$model,
+                                                                                'model'=>$model,
                                                                                 'temporada'=>$descripciontemporada,
                                                                                 'categoria'=>$descripcionCategoria,
                                                                                 'subcategoria'=>$descripcionSubCategoria,
@@ -191,22 +195,24 @@ class VentasController extends Controller
                             $prendaBasicaNueva = new Carrito();
                             $prendaBasicaNueva->idUsuario =$idUsuario;
                             $prendaBasicaNueva->idPrenda = $idPrenda;
+                            $prendaBasicaNueva->talla = $talla;
+                            $prendaBasicaNueva->color = $color;
                             $prendaBasicaNueva->cantidad=1; 
                             $prendaBasicaNueva->save();
-                            $model = Prenda::findOne($model->idPrenda);
+                            $model = Prenda::findOne($idPrenda);
                             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
                             $componentes = Componente::obtenerComponentesPrenda($idPrenda);
                             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                             return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
-                                                                                    'model'=>$model,
+                                                                                'model'=>$model,
                                                                                 'temporada'=>$descripciontemporada,
                                                                                 'categoria'=>$descripcionCategoria,
                                                                                 'subcategoria'=>$descripcionSubCategoria,
                                                                                 'componentes'=>$componentes, 
                                                                                 'tipo'=>1]);
                         }else{
-                            $existe->cantidad=$existe->cantidad+1; 
+                            $existe->cantidad=$existe->cantidad+1;
                             $existe->save();
                             $model = Prenda::findOne($idPrenda);
                             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
@@ -214,7 +220,7 @@ class VentasController extends Controller
                             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                             return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
-                                                                                    'model'=>$model,
+                                                                                'model'=>$model,
                                                                                 'temporada'=>$descripciontemporada,
                                                                                 'categoria'=>$descripcionCategoria,
                                                                                 'subcategoria'=>$descripcionSubCategoria,

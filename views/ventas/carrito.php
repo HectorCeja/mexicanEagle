@@ -20,14 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <h3> Fecha de entrega aproximada: <?=$fechaEntrega ?></h3>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover text-center">
         <thead>
         <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Tipo de Prenda</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
+            <th class="text-center">Imagen</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Tipo de Prenda</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Talla</th>
+            <th class="text-center">Color</th>
+            <th class="text-center">Precio</th>
             <th></th>
         </tr>
         </thead>
