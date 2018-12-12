@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use app\models\entities\EntityComponentes;
+use \yii\db\Query;
 
 class Componente extends \yii\db\ActiveRecord {
     public static function tableName()
@@ -47,5 +48,9 @@ class Componente extends \yii\db\ActiveRecord {
         $componente->idPrenda=$idPrenda;
         $componente->urlImagenMiniatura = '';
         return $componente->save(false);
+    }
+
+    public static function obtenerSumaPrecio($ids){
+        return $total = static::find()->from('componentes')->where(['id'=>$ids])->sum('precio');//return \Yii::$app->db->createCommand("select SUM(precio) FROM componentes WHERE id IN ")->queryScalar();
     }
 }

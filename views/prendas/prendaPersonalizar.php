@@ -27,48 +27,67 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="infoPrenda">
         <div class="prendaContainer">
             <div class="labelPrenda">Nombre de la Prenda:</div>
-            <?= Html::input('text', 'nombre', $model->nombre,['disabled' => true]) ?>
+            <?= Html::input('text', 'nombre', $model->nombre,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Descripcion:</div>
-            <?= Html::input('text', 'descripcion', $model->descripcion,['disabled' => true]) ?>
+            <?= Html::input('text', 'descripcion', $model->descripcion,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Tipo de Prenda:</div>
-            <?= Html::input('text', 'tipoPrenda', $model->tipoPrenda,['disabled' => true]) ?>
+            <?= Html::input('text', 'tipoPrenda', $model->tipoPrenda,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Precio:</div>
-            <?= Html::input('number', 'precio', $model->precio,['disabled' => true]) ?>
+            <?= Html::input('number', 'precio', $model->precio,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Temporada:</div>
-            <?= Html::input('text', 'temporada', $temporada,['disabled' => true]) ?>
+            <?= Html::input('text', 'temporada', $temporada,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Categoria:</div>
-            <?= Html::input('text', 'categoria', $categoria,['disabled' => true]) ?>
+            <?= Html::input('text', 'categoria', $categoria,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">SubCategoria:</div>
-            <?= Html::input('text', 'subcategoria', $subcategoria,['disabled' => true,'size'=>'20']) ?>
+            <?= Html::input('text', 'subcategoria', $subcategoria,['readonly' => true,'size'=>'20','class'=>'form-control']) ?>
         </div>       
     </div>
 </div>
 
-<div class="buttonsContainer buttonEnd">
-    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['ventas/agregarcarrito'],]); ?>
-    <div class="prendaContainer">
-        <input type="hidden" name="idprenda" value="<?= $model->id ?>">
+<?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['ventas/agregarcarrito'],]); ?>
+<div class="">
+    <label for="sel1">Talla:</label>
+    <select class="form-control" id="sel1" name="talla">
+        <option>Chica</option>
+        <option>Mediana</option>
+        <option>Grande</option>
+    </select>
+    <label for="sel2">Color:</label>
+    <select class="form-control" id="sel2" name="color">
+        <option>Blanco</option>
+        <option>Negro</option>
+        <option>Azul marino</option>
+        <option>Gris</option>
+    </select>
+    <div class="form-group">
+        <label for="usr">Cantidad:</label>
+        <input type="number" name="cantidad" min="1" class="form-control" id="usr" required="true">
     </div>
+</div>
+
+<div class="buttonsContainer buttonEnd">
+    <input type="hidden" name="idprenda" value="<?= $model->id ?>">
     <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
 </div>
+
 
 <?php if (count($componentes)>0): ?>
     <h1 class="titulo">Componentes</h1>
@@ -90,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td class="tableCell"><?= $row->precio ?></td>
                 <td class="tableCell"><?= $row->descripcion?></td>
                 <?php array_push($listaids,  $row->id); ?>
-                <td class="tableCell"><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
+                <td class="tableCell"><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>" class="checkbox"></td>
             </tr>
         <?php endforeach ?>
     </table>
