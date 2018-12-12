@@ -21,38 +21,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="infoPrenda">
         <div class="prendaContainer">
             <div class="labelPrenda">Nombre de la Prenda:</div>
-            <?= Html::input('text', 'nombre', $model->nombre,['disabled' => true]) ?>
+            <?= Html::input('text', 'nombre', $model->nombre,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Descripcion:</div>
-            <?= Html::input('text', 'descripcion', $model->descripcion,['disabled' => true]) ?>
+            <?= Html::input('text', 'descripcion', $model->descripcion,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Tipo de Prenda:</div>
-            <?= Html::input('text', 'tipoPrenda', $model->tipoPrenda,['disabled' => true]) ?>
+            <?= Html::input('text', 'tipoPrenda', $model->tipoPrenda,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Precio:</div>
-            <?= Html::input('number', 'precio', $model->precio,['disabled' => true]) ?>
+            <?= Html::input('number', 'precio', $model->precio,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Temporada:</div>
-            <?= Html::input('text', 'temporada', $temporada,['disabled' => true]) ?>
+            <?= Html::input('text', 'temporada', $temporada,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">Categoria:</div>
-            <?= Html::input('text', 'categoria', $categoria,['disabled' => true]) ?>
+            <?= Html::input('text', 'categoria', $categoria,['readonly' => true, 'class'=>'form-control']) ?>
         </div>
 
         <div class="prendaContainer">
             <div class="labelPrenda">SubCategoria:</div>
-            <?= Html::input('text', 'subcategoria', $subcategoria,['disabled' => true]) ?>
-        </div>
+            <?= Html::input('text', 'subcategoria', $subcategoria,['readonly' => true,'size'=>'20','class'=>'form-control']) ?>
+        </div>       
     </div>
 </div>
 <div class="buttonsContainer">
