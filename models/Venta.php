@@ -83,7 +83,7 @@ class Venta extends \yii\db\ActiveRecord{
         $venta->setIva($total * 0.16);
         return $venta;
     }
-    public function guardarVenta($total,$idUsuario,$idDireccion,$idTipoPago){
+    public function guardarVenta($total, $idUsuario, $idDireccion, $idTipoPago){
         $venta = new Venta();
         date_default_timezone_set('America/Mazatlan');
         $fechaActual = date("Y-m-d");
