@@ -244,7 +244,7 @@ class VentasController extends Controller
 
     public function actionBorrarcarrito(){
         if (Yii::$app->request->post()){
-            $idPrenda = $_POST = ['id'];
+            $idPrenda = Html::encode($_POST["id"]);
             $idUsuario = Yii::$app->session['idUsuario'];
 
             //PrendaPersonalizada::borrarPersonalizado($idUsuario, $idPrenda);
