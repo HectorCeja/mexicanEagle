@@ -52,7 +52,7 @@ class Carrito extends \yii\db\ActiveRecord{
     }
 
     public static function borrarElemento($idUsuario,$idPrenda){
-        static::deleteAll(['idUsuario' => $idUsuario,'idPrenda'=>$idPrenda]);
+        static::deleteAll('idUsuario = :idUsuario AND idPrenda = :idPrenda',[':idUsuario' => $idUsuario,':idPrenda'=>$idPrenda]);
     } 
 
 }

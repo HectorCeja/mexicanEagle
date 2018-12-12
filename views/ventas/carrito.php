@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $carrito[$prenda->id] ?> </td>
                     <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
                     <td>
-                    <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>">Eliminar</a>
+                    <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
                             <div class="modal-dialog">
                                     <div class="modal-content">
@@ -55,13 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <p>¿Realmente deseas eliminar del carrito la prenda <?= $prenda->nombre ?>?</p>
                                     </div>
                                     <div class="modal-footer">
-                                    <?php $form = ActiveForm::begin([
-                                                                    'method' => 'post',
-                                                                    'action' => ['ventas/borrarcarrito']]); ?>
-                                            <input type="hidden" value="id" name="<?= $prenda->id?>">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Eliminar</button>
-                                    <?php ActiveForm::end(); ?>
+                                    <?= Html::beginForm(Url::toRoute("ventas/borrarcarrito"), "POST") ?>
+                                    <input type="hidden" name="id" value="<?= $prenda->id ?>">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                                    <?= Html::endForm() ?>
                                     </div>
                                     </div>
                             </div>

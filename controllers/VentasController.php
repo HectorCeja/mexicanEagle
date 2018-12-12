@@ -76,41 +76,25 @@ class VentasController extends Controller
         $venta = new Venta();
         if ($venta->load(Yii::$app->request->post())){
             $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-          //  $folio = Venta::obtenerFolio();
             $idTipoPago = (int) Yii::$app->request->post()['Venta']['idTipoPago'];
             $idDireccion=Yii::$app->session['idDireccion'];
             $idUsuario=Yii::$app->session['idUsuario'];
-           // $status = ($idTipoPago == 1) ? 'SALDADA' : 'NO SALDADA';
+
             $venta=Venta::guardarVenta($total,$idUsuario,$idDireccion,$idTipoPago);
-         /*   $venta = new Venta();
-            $venta->setFolio($folio);
-            $venta->setTotal($total);
-            $venta->setSubtotal($total * 0.84);
-            $venta->setIva($total * 0.16);
-            $venta->setIdUsuario(;
-            $venta->setIdDireccion();
-            $venta->setIdTipoPago($idTipoPago);
-            $venta->setFechaVenta($fechaActual);
-            $venta->setStatus($status);
-            $venta->save();*/
+
             
             $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
             $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
             VentaDetalle::guardarVentasDetalle($carrito,$prendasCarrito,$venta->folio);
-           /* foreach($prendasCarrito as $prendaCarrito) {
-                $ventaDetalle = new VentaDetalle();
-                $ventaDetalle->setIdFolio($venta->folio);
-                $ventaDetalle->setIdPrenda($prendaCarrito->id);
-                $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
-                $ventaDetalle->setPrecio($prendaCarrito->precio);
-                $ventaDetalle->save();
-            }
-
-            */
            
             if ($idTipoPago == 1) {
-                Pago::guardarPago($folio,$total);
-                
+                $pago = new Pago();
+                $pago->setIdFolio($folio);
+                $pago->setTotal($total);
+                $pago->setSubtotal($total * 0.84);
+                $pago->setIva($total * 0.16);
+                $pago->setFechaPago($fechaActual);
+                $pago->save();
             }
 
             $emailFrom = Yii::$app->params['adminEmail'];
@@ -138,42 +122,60 @@ class VentasController extends Controller
     }
 
     public function actionAgregarcarrito(){
-        $model = new Carrito();
+        
         if (Yii::$app->request->post()){
-                $model->idUsuario = Yii::$app->session['idUsuario'];
-                $model->idPrenda = $_POST['idprenda'];
+                $idUsuario = Yii::$app->session['idUsuario'];
+                $idPrenda = $_POST['idprenda'];
 
-                if($model->idUsuario != null){
-                    $existe = Carrito::obtenerUsuarioPrenda(Yii::$app->session['idUsuario'],$_POST['idprenda']);
+                if(Yii::$app->session['idUsuario'] != null){
+                    $existe = Carrito::obtenerUsuarioPrenda($idUsuario,$idPrenda);
 
-                    $flag = false;
-                    if(!isset($_POST['idComponente'])){
-                        $flag=true;
-                    }
-
-                    if($flag==true){ //personalizada
+                    if(isset($_POST['idcomponente'])){ //personalizada
                         $ids = explode("|", $_POST['idcomponente']);
                         $fechaAlta = date("Y-m-d");
 
-                        $prendaAPersonalizar = Prenda::findOne($_POST['idprenda']);
-                        $prendaAPersonalizar->tipoPrenda = "PERSONALIZADA";
-                        $prendaAPersonalizar->fechaAlta = $fechaAlta;
+                        $prendaAPersonalizar = Prenda::findOne($idPrenda);
 
-                        $prendaAPersonalizar->save();
+                        $prendaNueva = new Prenda();
+                        $prendaNueva->tipoPrenda = "PERSONALIZADA";
+                        $prendaNueva->fechaAlta = $fechaAlta;
+                        $prendaNueva->nombre = $prendaAPersonalizar->nombre;
+                        $prendaNueva->precio = $prendaAPersonalizar->precio;
+                        $prendaNueva->descripcion = $prendaAPersonalizar->descripcion;
+                        $prendaNueva->idTemporada = $prendaAPersonalizar->idTemporada;
+                        $prendaNueva->urlImagen = $prendaAPersonalizar->urlImagen;
+                        $prendaNueva->urlImagenMiniatura = '';
+                        $prendaNueva->idCategoria = $prendaAPersonalizar->idCategoria;
+                        $prendaNueva->idSubCategoria = $prendaAPersonalizar->idSubCategoria;
 
-                        $idPrendaPersonalizada = $prendaAPersonalizar->id;
+                        $prendaNueva->save(false);
 
+                        $idPrendaPersonalizada = $prendaNueva->id;
+
+                        $folioPrendaPersonalizada = PrendaPersonalizada::obtenerFolio();
                         foreach($ids as $id){
+
                             $componentePersonalizar = new PrendaPersonalizada();
-                            $componentePersonalizar->idUsuario = Yii::$app->session['idUsuario'];
-                            $componentePersonalizar->idPrenda = $_POST['idprenda'];
+                            $componentePersonalizar->id = $folioPrendaPersonalizada;
+                            $componentePersonalizar->idUsuario = $idUsuario;
+                            $componentePersonalizar->idPrenda = $idPrenda;
+
                             $componentePersonalizar->idComponente = $id;
                             $componentePersonalizar->fechaAlta = $fechaAlta;
                             $componentePersonalizar->save();
+
                         }
-                        $model = Prenda::findOne($_POST['idprenda']);
+
+                        $prendaPersonalizadaNueva = new Carrito();
+                        $prendaPersonalizadaNueva->idPrenda = $idPrendaPersonalizada;
+                        $prendaPersonalizadaNueva->idUsuario = $idUsuario;
+                        $prendaPersonalizadaNueva->cantidad = 1;
+                        $prendaPersonalizadaNueva->save();
+
+                        $model = Prenda::findOne($idPrenda);
+
                         $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
-                        $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
+                        $componentes = Componente::obtenerComponentesPrenda($idPrenda);
                         $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                         $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                         return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo personalizado agregado al carrito.',
@@ -183,14 +185,17 @@ class VentasController extends Controller
                                                                                 'subcategoria'=>$descripcionSubCategoria,
                                                                                 'componentes'=>$componentes, 
                                                                                 'tipo'=>1]);
-
                     }else{ //nopersonalizada
 
                         if($existe==null){
-                            $model->save();
+                            $prendaBasicaNueva = new Carrito();
+                            $prendaBasicaNueva->idUsuario =$idUsuario;
+                            $prendaBasicaNueva->idPrenda = $idPrenda;
+                            $prendaBasicaNueva->cantidad=1; 
+                            $prendaBasicaNueva->save();
                             $model = Prenda::findOne($model->idPrenda);
                             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
-                            $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
+                            $componentes = Componente::obtenerComponentesPrenda($idPrenda);
                             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                             return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
@@ -203,9 +208,9 @@ class VentasController extends Controller
                         }else{
                             $existe->cantidad=$existe->cantidad+1; 
                             $existe->save();
-                            $model = Prenda::findOne($model->idPrenda);
+                            $model = Prenda::findOne($idPrenda);
                             $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
-                            $componentes = Componente::obtenerComponentesPrenda($_POST['idprenda']);
+                            $componentes = Componente::obtenerComponentesPrenda($idPrenda);
                             $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                             $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                             return $this->render('//prendas/prendaPersonalizar',['msg'=>'Artículo agregado al carrito.',
@@ -219,7 +224,6 @@ class VentasController extends Controller
                     }
        
                 }else{
-                    $idPrenda = $_POST['idprenda'];
                     $model = Prenda::findOne($idPrenda);
                     Yii::$app->session['idPrenda'] = $idPrenda;
                     $componentes = Componente::obtenerComponentesPrenda($idPrenda);
@@ -240,7 +244,7 @@ class VentasController extends Controller
 
     public function actionBorrarcarrito(){
         if (Yii::$app->request->post()){
-            $idPrenda = $_POST = ['id'];
+            $idPrenda = Html::encode($_POST["id"]);
             $idUsuario = Yii::$app->session['idUsuario'];
 
             //PrendaPersonalizada::borrarPersonalizado($idUsuario, $idPrenda);
