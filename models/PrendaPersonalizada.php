@@ -40,6 +40,13 @@ class PrendaPersonalizada extends \yii\db\ActiveRecord {
         return static::find()->all();
     }
 
+    public static function obtenerFolio()
+    {
+        $result = \Yii::$app->db->createCommand("CALL aumentar_folio('prendasPersonalizadas', @folio);") 
+                      ->execute();
+        return \Yii::$app->db->createCommand("select @folio;")->queryScalar();
+    }
+
     public static function obtenerPrendasPorIds($prendas)
     {
         return static::find()
