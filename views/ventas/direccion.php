@@ -54,7 +54,7 @@ $this->title = 'Dirección';
               <td><?= $row->pais?></td>
               <td><?= $row->codigoPostal?></td>
         <?php array_push($listaids,  $row->id); ?>
-        <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
+        <td><input type="checkbox" name="iddireccion" value="<?= implode("|",$listaids); ?>"></td>
     </tr>
     <?php endforeach ?>
     <?php ActiveForm::end(); ?>
