@@ -20,14 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <h3> Fecha de entrega aproximada: <?=$fechaEntrega ?></h3>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover text-center">
         <thead>
         <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Tipo de Prenda</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
+            <th class="text-center">Imagen</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Tipo de Prenda</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Talla</th>
+            <th class="text-center">Color</th>
+            <th class="text-center">Precio Unitario</th>
             <th></th>
         </tr>
         </thead>
@@ -40,8 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
                     <td><?= $prenda->nombre  ?></td>
                     <td><?= $prenda->tipoPrenda ?> </td>
-                    <td><?= $carrito[$prenda->id] ?> </td>
-                    <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
+                    <td><?= $carrito[$prenda->id]->cantidad ?> </td>
+                    <td><?= $carrito[$prenda->id]->talla ?> </td>
+                    <td><?= $carrito[$prenda->id]->color ?> </td>
+                    <td>$<?= $prenda->precio ?></td>
                     <td>
                     <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
@@ -73,8 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td>Total: </td>
                 <td>$<?= number_format($total,2,".",",") ?> </td>
+                <td></td>
             </tr>
         </tbody>
     </table>
