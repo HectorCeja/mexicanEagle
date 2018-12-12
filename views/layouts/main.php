@@ -51,19 +51,34 @@ AppAsset::register($this);
                                 ['label' => 'Registrarse', 'url' => ['/prospecto/register']]
                             ];
                         } else {
-                            foreach(Yii::$app->session['opciones'] as $key => $value) {
-                                $items[] = ['label' => $key, 'url' => [$value]];
+                            if(Yii::$app->session['opciones']){
+                                foreach(Yii::$app->session['opciones'] as $key => $value) {
+                                    if ($key == 'Carrito') {
+                                        $items[] = (
+                                            '<li>'
+                                            . Html::beginForm([$value], 'post')
+                                            . Html::submitButton(
+                                                '<span class="glyphicon glyphicon-shopping-cart nav-cart"></span>',
+                                                ['class' => 'btn btn-link logout btn-lg']
+                                            )
+                                            . Html::endForm()
+                                            . '</li>'
+                                        );
+                                    } else {
+                                        $items[] = ['label' => $key, 'url' => [$value]];
+                                    }
+                                }
+                                $items[] = (
+                                    '<li>'
+                                    . Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                        'Salir (' . Yii::$app->user->identity->email . ')',
+                                        ['class' => 'btn btn-link logout']
+                                    )
+                                    . Html::endForm()
+                                    . '</li>'
+                                );
                             }
-                            $items[] = (
-                                '<li>'
-                                . Html::beginForm(['/site/logout'], 'post')
-                                . Html::submitButton(
-                                    'Salir (' . Yii::$app->user->identity->email . ')',
-                                    ['class' => 'btn btn-link logout']
-                                )
-                                . Html::endForm()
-                                . '</li>'
-                            );
                         }
                         
                         $items[] = (

@@ -44,7 +44,7 @@ class VentaDetalle extends \yii\db\ActiveRecord{
             $ventaDetalle = new VentaDetalle();
             $ventaDetalle->setIdFolio($folio);
             $ventaDetalle->setIdPrenda($prendaCarrito->id);
-            $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]->cantidad);
+            $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
             $ventaDetalle->setPrecio($prendaCarrito->precio);
             $ventaDetalle->save();
         }
