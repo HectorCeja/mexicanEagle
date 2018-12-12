@@ -101,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $listaids = array(); ?>
         <?php foreach($componentes as $row): ?>
             <tr>
-                <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+                <?php $urlfinal = Url::base(true).$row->urlImagen ?>
                 <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
                 <td><?= $row->nombre ?> </td>
                 <td><?= $row->precio ?></td>
