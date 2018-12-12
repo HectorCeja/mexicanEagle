@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = 'Detalle Prenda';
 $this->params['breadcrumbs'][] = $this->title;
-?> 
+?>
 <h1 class="titulo">Prenda</h1>
 
 <?php if($tipo==1): ?>
@@ -82,6 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->descripcion?></td>
     </tr>
     <?php endforeach ?>
-</table>     
+</table>
 <?php endif; ?>
    

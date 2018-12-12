@@ -6,16 +6,19 @@ use yii\widgets\ActiveForm;
 $this->title = 'Prendas detalle';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
+
 <?php if($tipo==1): ?>
     <div class="alert alert-success">
-    <h4 ><?= $msg ?></h4>
-        </div>
-        <?php endif; ?>
+        <h4 ><?= $msg ?></h4>
+    </div>
+<?php endif; ?>
+
 <?php if($tipo==0 && $msg!=""): ?>
     <div class="alert alert-danger">
         <?= nl2br(Html::encode($msg)) ?>
     </div>
-    <?php endif; ?>
+<?php endif; ?>
+
 <div class="infoContainer">
     <div class="imageContainer">
         <?php $urlfinal = Url::base(true).$model->urlImagen ?>
@@ -58,40 +61,39 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>       
     </div>
 </div>
+
 <div class="botones">
-<?php $form = ActiveForm::begin([
-                        'method' => 'post',
-                        'action' => ['ventas/agregarcarrito'],]); ?>
+    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['ventas/agregarcarrito'],]); ?>
     <div class="prendaContainer">
         <input type="hidden" name="idprenda" value="<?= $model->id ?>">
     </div> 
     <button type="submit" style="margin-top:0px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
-
 </div>
-<?php if (count($componentes)>0): ?>
-<h1 class="titulo">Componentes</h1>
 
-   <table class="table table-bordered table-striped table-hover">
-    <tr>
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Descripcion</th>
-        <th>Agregar</th>
-    </tr>
-    <?php $listaids = array(); ?>
-    <?php foreach($componentes as $row): ?>
-    <tr>
-        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
-        <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
-        <td><?= $row->nombre ?> </td>
-        <td><?= $row->precio ?></td>
-        <td><?= $row->descripcion?></td>
-        <?php array_push($listaids,  $row->id); ?>
-        <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
-    </tr>
-    <?php endforeach ?>
-    <?php ActiveForm::end(); ?>
-</table>     
+<?php if (count($componentes)>0): ?>
+    <h1 class="titulo">Componentes</h1>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripcion</th>
+            <th>Agregar</th>
+        </tr>
+        <?php $listaids = array(); ?>
+        <?php foreach($componentes as $row): ?>
+            <tr>
+                <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+                <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
+                <td><?= $row->nombre ?> </td>
+                <td><?= $row->precio ?></td>
+                <td><?= $row->descripcion?></td>
+                <?php array_push($listaids,  $row->id); ?>
+                <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
+            </tr>
+        <?php endforeach ?>
+    </table>
 <?php endif; ?>
+<?php ActiveForm::end(); ?>
    
