@@ -54,13 +54,11 @@ class VentasController extends Controller
         $direccion = new Direccion();
         if ($direccion->load(Yii::$app->request->post())){
             if($direccion->validate()){
-                $direccion= Direccion::guardarDireccion($direccion,Yii::$app->session['idUsuario']);
-              //  $direccion->setIdUsuario();
-               // $direccion->save();
+                $direccion = Direccion::guardarDireccion($direccion,Yii::$app->session['idUsuario']);
                 Yii::$app->session['idDireccion'] = $direccion->id;
                 Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');             
                 $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-                $venta= Venta::cambiarTotalSubtotal($total);
+                $venta = Venta::cambiarTotalSubtotal($total);
                 return $this->render('pago',[
                     'model' => $venta
                 ]);
@@ -73,53 +71,35 @@ class VentasController extends Controller
     }
 
     public function actionAgregarpago(){
+        ini_set('max_execution_time', 300);
         $venta = new Venta();
+
         if ($venta->load(Yii::$app->request->post())){
-            $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
             $idTipoPago = (int) Yii::$app->request->post()['Venta']['idTipoPago'];
-            $idDireccion=Yii::$app->session['idDireccion'];
-            $idUsuario=Yii::$app->session['idUsuario'];
+            $idDireccion = Yii::$app->session['idDireccion'];
+            $idUsuario = Yii::$app->session['idUsuario'];
+            $total = Carrito::totalCarrito($idUsuario);
+            $venta = Venta::guardarVenta($total, $idUsuario, $idDireccion, $idTipoPago);
 
-            $venta=Venta::guardarVenta($total,$idUsuario,$idDireccion,$idTipoPago);
+            $carrito = Carrito::obtenerCarritoPorUsuario($idUsuario);
+            $prendasCarrito = Carrito::obtenerPrendasPorUsuario($idUsuario);
+            VentaDetalle::guardarVentasDetalle($carrito, $prendasCarrito, $venta->folio);
 
-            
-            $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
-            $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
-            VentaDetalle::guardarVentasDetalle($carrito,$prendasCarrito,$venta->folio);
-           
-            if ($idTipoPago == 1) {
-                $pago = new Pago();
-                $pago->setIdFolio($folio);
-                $pago->setTotal($total);
-                $pago->setSubtotal($total * 0.84);
-                $pago->setIva($total * 0.16);
-                $pago->setFechaPago($fechaActual);
-                $pago->save();
-            }
+            Pago::guardarPago($idTipoPago, $venta->folio, $total);
 
-            $emailFrom = Yii::$app->params['adminEmail'];
-            $emailTo = Yii::$app->session['emailUsuario'];
-            $subject = "Pedido Ropalinda";
-            $message =  '¡Enhorabuena! Su pedido se ha completado con éxito.'."\n";
-            $message .= 'Sus prendas serán enviadas a su dirección el día ';
-            $message .= FechaEntrega::obtenerFechaEntrega($idUsuario).'.'."\n";
-            $message .= 'Su pedido:'."\n"."\n";
-            
-            foreach($prendasCarrito as $prendaCarrito) {
-                $message .= ' - '.$carrito[$prendaCarrito->id];
-                $message .= ' '.$prendaCarrito->descripcion;
-                $message .= ' -> $'.$prendaCarrito->precio."\n";
-            }
-            $message .= "\n".'Total del pedido: '.$total; 
-            $message .= "\n\n".'Gracias por su preferencia.'; 
+            $fechaEntrega = FechaEntrega::obtenerFechaEntrega($idUsuario);
+            Email::enviarCorreoConfirmacion($prendasCarrito, $carrito, $total, $fechaEntrega);
 
-            Email::sendEmail($emailFrom, $emailTo, $subject, $message);
-
-            Carrito::limpiarCarritoPorIdUsuario(Yii::$app->session['idUsuario']);
-
+            Carrito::limpiarCarritoPorIdUsuario($idUsuario);
             Yii::$app->session->setFlash('success','El pago se realizó con exito. Un correo de confirmación fue enviado a su correo.');
             
+            $prendasTemporada = Prenda::obtenerPrendasPorTemporadas();
+            $prendas = Prenda::obtenerPrendasSite();
+            
             return $this->render('//site/index',[
+                'model' => $venta,
+                'prendas'=>$prendas,
+                'prendasTemporada'=> $prendasTemporada,
                 'model' => $venta
             ]);
 

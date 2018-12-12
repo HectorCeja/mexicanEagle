@@ -34,13 +34,15 @@ class Carrito extends \yii\db\ActiveRecord{
         return static::deleteAll(['idUsuario' => $idUsuario]);
     }
 
-    public static function obtenerUsuarioPrenda($idUsuario, $idPrenda){
+    public static function obtenerUsuarioPrenda($idUsuario, $idPrenda)
+    {
         return static::find()
             ->where(['idUsuario'=>$idUsuario])->andWhere(['idPrenda'=>$idPrenda])
             ->one();
     }
 
-    public static function totalCarrito($idUsuario){
+    public static function totalCarrito($idUsuario)
+    {
         $total = 0.00;
         $carrito = Carrito::obtenerCarritoPorUsuario($idUsuario);
         $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);
@@ -51,7 +53,8 @@ class Carrito extends \yii\db\ActiveRecord{
         return $total;
     }
 
-    public static function borrarElemento($idUsuario,$idPrenda){
+    public static function borrarElemento($idUsuario,$idPrenda)
+    {
         static::deleteAll('idUsuario = :idUsuario AND idPrenda = :idPrenda',[':idUsuario' => $idUsuario,':idPrenda'=>$idPrenda]);
     } 
 
