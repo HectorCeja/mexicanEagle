@@ -141,78 +141,27 @@ class VentasController extends Controller
 
                     if(isset($_POST['idcomponente'])){
                         $ids = explode("|", $_POST['idcomponente']);
-                        $fechaAlta = date("Y-m-d");
-
-                        $prendaAPersonalizar = Prenda::findOne($idPrenda);
-
                         $precio = Componente::obtenerSumaPrecio($ids);
-
-                        $prendaNueva = new Prenda();
-                        $prendaNueva->tipoPrenda = "PERSONALIZADA";
-                        $prendaNueva->fechaAlta = $fechaAlta;
-                        $prendaNueva->nombre = $prendaAPersonalizar->nombre;
-                        $prendaNueva->precio = $prendaAPersonalizar->precio + $precio;
-                        $prendaNueva->descripcion = $prendaAPersonalizar->descripcion;
-                        $prendaNueva->idTemporada = $prendaAPersonalizar->idTemporada;
-                        $prendaNueva->urlImagen = $prendaAPersonalizar->urlImagen;
-                        $prendaNueva->urlImagenMiniatura = '';
-                        $prendaNueva->idCategoria = $prendaAPersonalizar->idCategoria;
-                        $prendaNueva->idSubCategoria = $prendaAPersonalizar->idSubCategoria;
-
-                        $prendaNueva->save(false);
-
+                        $prendaNueva =Prenda::guardarPrendaPersonalizada($idPrenda,$precio);
                         $idPrendaPersonalizada = $prendaNueva->id;
-
-                        $folioPrendaPersonalizada = PrendaPersonalizada::obtenerFolio();
-                        foreach($ids as $id){
-
-                            $componentePersonalizar = new PrendaPersonalizada();
-                            $componentePersonalizar->id = $folioPrendaPersonalizada;
-                            $componentePersonalizar->idUsuario = $idUsuario;
-                            $componentePersonalizar->idPrenda = $idPrenda;
-
-                            $componentePersonalizar->idComponente = $id;
-                            $componentePersonalizar->fechaAlta = $fechaAlta;
-                            $componentePersonalizar->save();
-
-                        }
-
-                        $prendaPersonalizadaNueva = new Carrito();
-                        $prendaPersonalizadaNueva->idPrenda = $idPrendaPersonalizada;
-                        $prendaPersonalizadaNueva->idUsuario = $idUsuario;
-                        $prendaPersonalizadaNueva->cantidad = $cantidad;
-                        $prendaPersonalizadaNueva->talla = $talla;
-                        $prendaPersonalizadaNueva->color = $color;
-                        $prendaPersonalizadaNueva->save();
+                        PrendaPersonalizada::guardarPrendasPersonalizadas($idUsuario,$idPrenda,$ids);
+                        Carrito::guardarNuevaLineaVenta($idPrendaPersonalizada,$idUsuario,$cantidad,$talla,$color);
                         $mensaje = 'Artículo personalizado agregado al carrito.';
                         $tipoMensaje = 1;
                         $model = Prenda::findOne($idPrenda);
                     }else{
 
                         if($existeElemento==null){
-                            $prendaBasicaNueva = new Carrito();
-                            $prendaBasicaNueva->idUsuario =$idUsuario;
-                            $prendaBasicaNueva->idPrenda = $idPrenda;
-                            $prendaBasicaNueva->talla = $talla;
-                            $prendaBasicaNueva->color = $color;
-                            $prendaBasicaNueva->cantidad=$cantidad; 
-                            $prendaBasicaNueva->save();
+                            Carrito::guardarNuevaLineaVentaBasica($idPrenda,$idUsuario,$cantidad,$talla,$color);
                             $mensaje = 'Artículo agregado al carrito.';
                             $tipoMensaje = 1;
                         }else{
                             if($existeElemento->color==$color && $existeElemento->talla==$talla){
-                                $existeElemento->cantidad=$existeElemento->cantidad+$cantidad;
-                                $existeElemento->save();
+                                Carrito::actualizarLineaVenta($existeElemento,$cantidad);
                                 $mensaje = 'Artículo agregado al carrito.';
                                 $tipoMensaje = 1;
                             }else{
-                                $prendaBasicaNueva = new Carrito();
-                                $prendaBasicaNueva->idUsuario =$idUsuario;
-                                $prendaBasicaNueva->idPrenda = $idPrenda;
-                                $prendaBasicaNueva->talla = $talla;
-                                $prendaBasicaNueva->color = $color;
-                                $prendaBasicaNueva->cantidad=$cantidad; 
-                                $prendaBasicaNueva->save();
+                                Carrito::guardarNuevaLineaVentaBasica($idPrenda,$idUsuario,$cantidad,$talla,$color);
                                 $mensaje = 'Artículo agregado al carrito.';
                                 $tipoMensaje = 1;
                             }
@@ -221,7 +170,7 @@ class VentasController extends Controller
                     }
        
                 }else{
-                    $mensaje = 'Necesita loguearse para agregar al carrito.';
+                    $mensaje = 'Necesita autenticarse para agregar al carrito.';
                     $tipoMensaje = 0;
                     
                 }

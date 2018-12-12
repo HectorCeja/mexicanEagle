@@ -84,4 +84,22 @@ class Prenda extends \yii\db\ActiveRecord {
         static::deleteAll(['id'=>$idPrenda]);
     }
 
+    public  function guardarPrendaPersonalizada($idPrenda,$totalComponentes){
+        $prendaAPersonalizar = static::findOne($idPrenda);
+        $fechaAlta = date("Y-m-d");
+        $prendaNueva = new Prenda();
+        $prendaNueva->tipoPrenda = "PERSONALIZADA";
+        $prendaNueva->fechaAlta = $fechaAlta;
+        $prendaNueva->nombre = $prendaAPersonalizar->nombre;
+        $prendaNueva->precio = $prendaAPersonalizar->precio + $totalComponentes;
+        $prendaNueva->descripcion = $prendaAPersonalizar->descripcion;
+        $prendaNueva->idTemporada = $prendaAPersonalizar->idTemporada;
+        $prendaNueva->urlImagen = $prendaAPersonalizar->urlImagen;
+        $prendaNueva->urlImagenMiniatura = '';
+        $prendaNueva->idCategoria = $prendaAPersonalizar->idCategoria;
+        $prendaNueva->idSubCategoria = $prendaAPersonalizar->idSubCategoria;
+        $prendaNueva->save(false);
+        return $prendaNueva;
+    }
+
 }

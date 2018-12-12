@@ -56,6 +56,29 @@ class Carrito extends \yii\db\ActiveRecord{
     public static function borrarElemento($idUsuario,$idPrenda)
     {
         static::deleteAll('idUsuario = :idUsuario AND idPrenda = :idPrenda',[':idUsuario' => $idUsuario,':idPrenda'=>$idPrenda]);
-    } 
+    }
+    public function guardarNuevaLineaVenta($idPrendaPersonalizada,$idUsuario,$cantidad,$talla,$color){
+        $prendaPersonalizadaNueva = new Carrito();
+        $prendaPersonalizadaNueva->idPrenda = $idPrendaPersonalizada;
+        $prendaPersonalizadaNueva->idUsuario = $idUsuario;
+        $prendaPersonalizadaNueva->cantidad = $cantidad;
+        $prendaPersonalizadaNueva->talla = $talla;
+        $prendaPersonalizadaNueva->color = $color;
+        $prendaPersonalizadaNueva->save();
+    }
+
+    public function guardarNuevaLineaVentaBasica($idPrenda,$idUsuario,$cantidad,$talla,$color){
+        $prendaBasicaNueva = new Carrito();
+        $prendaBasicaNueva->idUsuario =$idUsuario;
+        $prendaBasicaNueva->idPrenda = $idPrenda;
+        $prendaBasicaNueva->talla = $talla;
+        $prendaBasicaNueva->color = $color;
+        $prendaBasicaNueva->cantidad=$cantidad; 
+        $prendaBasicaNueva->save();
+    }
+    public function actualizarLineaVenta($linea,$cantidad){
+        $linea->cantidad=$linea->cantidad+$cantidad;
+        $linea->save();
+    }
 
 }

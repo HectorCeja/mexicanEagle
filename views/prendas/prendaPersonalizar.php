@@ -103,11 +103,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $listaids = array(); ?>
         <?php foreach($componentes as $row): ?>
             <tr>
+<<<<<<< HEAD
                 <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
                 <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" /></td>
                 <td class="tableCell"><?= $row->nombre ?> </td>
                 <td class="tableCell"><?= $row->precio ?></td>
                 <td class="tableCell"><?= $row->descripcion?></td>
+=======
+                <?php $urlfinal = Url::base(true).$row->urlImagen ?>
+                <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
+                <td><?= $row->nombre ?> </td>
+                <td><?= $row->precio ?></td>
+                <td><?= $row->descripcion?></td>
+>>>>>>> 3a94a2a619b1f2493f52baa83e87c591dcd16a39
                 <?php array_push($listaids,  $row->id); ?>
                 <td class="tableCell"><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>" class="checkbox"></td>
             </tr>

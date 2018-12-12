@@ -84,12 +84,25 @@ AppAsset::register($this);
                         } else {
                             if(Yii::$app->session['opciones']){
                                 foreach(Yii::$app->session['opciones'] as $key => $value) {
-                                    if ($key == 'Carrito') {
+                                    if ($key == "Prendas personalizadas") {
                                         $items[] = (
                                             '<li>'
                                             . Html::beginForm([$value], 'post')
                                             . Html::submitButton(
-                                                '<span class="glyphicon glyphicon-shopping-cart nav-cart"></span>',
+                                                '<span class="glyphicon glyphicon-tags nav-cart" 
+                                                title="'.$key.'"></span>',
+                                                ['class' => 'btn btn-link logout btn-lg']
+                                            )
+                                            . Html::endForm()
+                                            . '</li>'
+                                        );
+                                    }else if ($key == 'Carrito') {
+                                        $items[] = (
+                                            '<li>'
+                                            . Html::beginForm([$value], 'post')
+                                            . Html::submitButton(
+                                                '<span class="glyphicon glyphicon-shopping-cart nav-cart" 
+                                                title="'.$key.'"></span>',
                                                 ['class' => 'btn btn-link logout btn-lg']
                                             )
                                             . Html::endForm()
