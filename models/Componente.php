@@ -45,6 +45,7 @@ class Componente extends \yii\db\ActiveRecord {
         $componente->fechaAlta = $fechaAlta;
         $componente->precio = $precio;
         $componente->idPrenda=$idPrenda;
+        $componente->urlImagenMiniatura = '';
         return $componente->save(false);
     }
 }

@@ -3,11 +3,16 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = 'Prenda';
+$this->title = 'Detalle Prenda';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1 class="titulo">Prenda</h1>
 
+<?php if($tipo==1): ?>
+    <div class="alert alert-success">
+        <h4><?= $msg ?></h4>
+    </div>
+<?php endif; ?>
 <div class="infoContainer">
     <div class="imageContainer">
         <?php $urlfinal = Url::base(true).$model->urlImagen ?>
@@ -70,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>
     <?php foreach($componentes as $row): ?>
     <tr>
-        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <?php $urlfinal = Url::base(true).$row->urlImagen ?>
         <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
         <td><?= $row->nombre ?> </td>
         <td><?= $row->precio ?></td>

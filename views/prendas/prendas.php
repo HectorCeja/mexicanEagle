@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
-$this->title = 'Dirección';
+$this->title = 'Prendas';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 <h1 class="titulo">Prendas </h1>
@@ -13,8 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <button type="submit" class="btn btn-primary">Agregar Prenda</button>
     <?= Html::endForm() ?>
 </div>
-
-<h3><?= $msg ?> </h3>
+<?php if($tipo==1): ?>
+    <div class="alert alert-success">
+        <h4><?= $msg ?></h4>
+    </div>
+<?php endif; ?>
 <table class="table table-bordered table-striped table-hover text-center">
     <tr>
         <th class="text-center">Imagen</th>

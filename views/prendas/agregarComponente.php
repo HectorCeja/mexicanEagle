@@ -3,6 +3,9 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+$this->title = 'Agregar Componente';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <h4 ><?= $msg ?></h4>
 <div class="componentes-agregar">
@@ -19,9 +22,6 @@ use yii\widgets\ActiveForm;
                     <?= $form1->field($model, 'urlImagen')->fileInput(['multiple' => true,
                     'id' => 'imgInpCC', 'name'=>'componenteCompleto']) ?>
                     <img id="precargaComponenteC" src="<?= $im1 ?>" style="width:200px;height:200px;"/> 
-                    <?= $form1->field($model, 'urlImagenMiniatura')->fileInput(['multiple' => true,
-                    'id' => 'imgInpII', 'name'=>'imagenMiniatura']) ?>
-                    <img id="precargaComponenteI" src="<?= $im2 ?>" style="width:200px;height:200px;"/> 
                     <div class="form-group">
                         <?= Html::submitButton('Continuar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
@@ -34,9 +34,6 @@ use yii\widgets\ActiveForm;
                     <?=$form->field($model, 'urlImagen')->hiddenInput(['value'=> $im1])->label(false); ?>
                     <h4>Imagen componente</h4>
                     <img id="precargaComponenteC" src="<?= $im1 ?>" style="width:200px;height:200px;"/>
-                    <?=$form->field($model, 'urlImagenMiniatura')->hiddenInput(['value'=> $im2])->label(false); ?>
-                    <h4>Imagen componente miniatura</h4>
-                    <img id="precargaComponenteI" src="<?= $im2 ?>" style="width:200px;height:200px;"/>
                     <?= $form->field($model, 'nombre')->textInput(['autofocus' => true]) ?>
                     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model,'idPrenda')->hiddenInput(['options' => ['idPrenda'=> $id] ])->label(false);?>

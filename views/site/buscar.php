@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Búsqueda';
+$this->params['breadcrumbs'][] = $this->title;
 ?> 
 <div class="site-buscar">
     <br>
