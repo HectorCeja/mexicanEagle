@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th></th>
     </tr>
     <?php foreach($model as $row): ?>
-    <?php $urlfinal = $urlbase.$row->urlImagenMiniatura; ?>
+    <?php $urlfinal = $urlbase.$row->urlImagen; ?>
     <tr> 
         <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
         <td><?= $row->nombre  ?></td>
