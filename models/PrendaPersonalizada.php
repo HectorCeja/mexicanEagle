@@ -64,4 +64,19 @@ class PrendaPersonalizada extends \yii\db\ActiveRecord {
         $model->bindParam(':idPrenda', $idPrenda);
         $model->execute();*/
     }
+
+    public function guardarPrendasPersonalizadas($idUsuario,$idPrenda,$ids){
+        $folioPrendaPersonalizada = static::obtenerFolio();
+        $fechaAlta = date("Y-m-d");
+        foreach($ids as $id){
+            $componentePersonalizar = new PrendaPersonalizada();
+            $componentePersonalizar->id = $folioPrendaPersonalizada;
+            $componentePersonalizar->idUsuario = $idUsuario;
+            $componentePersonalizar->idPrenda = $idPrenda;
+
+            $componentePersonalizar->idComponente = $id;
+            $componentePersonalizar->fechaAlta = $fechaAlta;
+            $componentePersonalizar->save();
+        }
+    }
 }
