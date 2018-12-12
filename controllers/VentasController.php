@@ -108,9 +108,19 @@ class VentasController extends Controller
             $emailFrom = Yii::$app->params['adminEmail'];
             $emailTo = Yii::$app->session['emailUsuario'];
             $subject = "Pedido Ropalinda";
-            $message =  "Enhorabuena! Su pedido se ha completado con éxito.";
-            $message .= "Sus prendas serán enviadas a su hogar en la fecha especificada. ";
-            $message .= "Gracias por su preferencia."; 
+            $message =  '¡Enhorabuena! Su pedido se ha completado con éxito.'."\n";
+            $message .= 'Sus prendas serán enviadas a su dirección el día ';
+            $message .= FechaEntrega::obtenerFechaEntrega($idUsuario).'.'."\n";
+            $message .= 'Su pedido:'."\n"."\n";
+            
+            foreach($prendasCarrito as $prendaCarrito) {
+                $message .= ' - '.$carrito[$prendaCarrito->id];
+                $message .= ' '.$prendaCarrito->descripcion;
+                $message .= ' -> $'.$prendaCarrito->precio."\n";
+            }
+            $message .= "\n".'Total del pedido: '.$total; 
+            $message .= "\n\n".'Gracias por su preferencia.'; 
+
             Email::sendEmail($emailFrom, $emailTo, $subject, $message);
 
             Carrito::limpiarCarritoPorIdUsuario(Yii::$app->session['idUsuario']);
