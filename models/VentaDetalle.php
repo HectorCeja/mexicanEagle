@@ -33,6 +33,16 @@ class VentaDetalle extends \yii\db\ActiveRecord{
         $this->idFolio = $idFolio;
     }
 
+    public function setTalla($talla)
+    {
+        $this->talla = $talla;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
     public static function obtenerDetalleVenta($folio)
     {
         return static::find()
@@ -44,7 +54,9 @@ class VentaDetalle extends \yii\db\ActiveRecord{
             $ventaDetalle = new VentaDetalle();
             $ventaDetalle->setIdFolio($folio);
             $ventaDetalle->setIdPrenda($prendaCarrito->id);
-            $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
+            $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]->cantidad);
+            $ventaDetalle->setTalla($carrito[$prendaCarrito->id]->talla);
+            $ventaDetalle->setColor($carrito[$prendaCarrito->id]->color);
             $ventaDetalle->setPrecio($prendaCarrito->precio);
             $ventaDetalle->save();
         }
