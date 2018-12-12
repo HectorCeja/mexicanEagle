@@ -87,7 +87,7 @@ AppAsset::register($this);
                                     if ($key == "Prendas personalizadas") {
                                         $items[] = (
                                             '<li>'
-                                            . Html::beginForm([$value], 'post')
+                                            . Html::beginForm(['/site/index'], 'post')
                                             . Html::submitButton(
                                                 '<span class="glyphicon glyphicon-tags nav-cart" 
                                                 title="'.$key.'"></span>',

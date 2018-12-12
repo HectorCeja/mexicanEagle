@@ -91,7 +91,7 @@ class PrendasController extends Controller
                                                 'im1'=>""]);
     }
 
-    public function actionSaveprenda(){
+    public function actionAgregarimagen(){
         $model = new Prenda();
 
         if (Yii::$app->request->post()) {
@@ -124,7 +124,7 @@ class PrendasController extends Controller
                                                 'listTemporadas'=>$listTemporadas, 
                                                 'msg'=>"",'cargada'=>"SI",
                                                 'im1'=>$im1]);
-        }elseif(Yii::$app->request->get()){
+        } else if(Yii::$app->request->get()){
             return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>'',
                                                 'listSubCategorias'=>'',
@@ -187,7 +187,7 @@ class PrendasController extends Controller
         }
     }
 
-    public function actionSavecomponente(){
+    public function actionAgregarimagencomponente(){
         $model = new Componente();
 
         if (Yii::$app->request->post()) {

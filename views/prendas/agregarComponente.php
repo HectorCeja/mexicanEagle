@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form1 = ActiveForm::begin([
                         'id' => 'componente-2',
                         'method' => 'post',
-                        'action' => ['prendas/savecomponente'],
+                        'action' => ['prendas/agregarimagencomponente'],
                         'options' => ['enctype' => 'multipart/form-data'],]); ?>
                     <?= $form1->field($model, 'urlImagen')->fileInput(['multiple' => true,
                     'id' => 'imgInpCC', 'name'=>'componenteCompleto']) ?>
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form2 = ActiveForm::begin([
                         'id' => 'componente-2',
                         'method' => 'get',
-                        'action' => ['prendas/savecomponente'],]); ?>
+                        'action' => ['prendas/agregarimagencomponente'],]); ?>
                         <div class="form-group">
                             <?= Html::submitButton('Regresar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                         </div>
