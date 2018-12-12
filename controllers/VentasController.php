@@ -76,35 +76,17 @@ class VentasController extends Controller
         $venta = new Venta();
         if ($venta->load(Yii::$app->request->post())){
             $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-          //  $folio = Venta::obtenerFolio();
             $idTipoPago = (int) Yii::$app->request->post()['Venta']['idTipoPago'];
             $idDireccion=Yii::$app->session['idDireccion'];
             $idUsuario=Yii::$app->session['idUsuario'];
-           // $status = ($idTipoPago == 1) ? 'SALDADA' : 'NO SALDADA';
+
             $venta=Venta::guardarVenta($total,$idUsuario,$idDireccion,$idTipoPago);
-         /*   $venta = new Venta();
-            $venta->setFolio($folio);
-            $venta->setTotal($total);
-            $venta->setSubtotal($total * 0.84);
-            $venta->setIva($total * 0.16);
-            $venta->setIdUsuario(;
-            $venta->setIdDireccion();
-            $venta->setIdTipoPago($idTipoPago);
-            $venta->setFechaVenta($fechaActual);
-            $venta->setStatus($status);
-            $venta->save();*/
+
             
             $carrito = Carrito::obtenerCarritoPorUsuario(Yii::$app->session['idUsuario']);
             $prendasCarrito = Carrito::obtenerPrendasPorUsuario(Yii::$app->session['idUsuario']);
-            foreach($prendasCarrito as $prendaCarrito) {
-                $ventaDetalle = new VentaDetalle();
-                $ventaDetalle->setIdFolio($folio);
-                $ventaDetalle->setIdPrenda($prendaCarrito->id);
-                $ventaDetalle->setCantidad($carrito[$prendaCarrito->id]);
-                $ventaDetalle->setPrecio($prendaCarrito->precio);
-                $ventaDetalle->save();
-            }
-
+            VentaDetalle::guardarVentasDetalle($carrito,$prendasCarrito,$venta->folio);
+           
             if ($idTipoPago == 1) {
                 $pago = new Pago();
                 $pago->setIdFolio($folio);
