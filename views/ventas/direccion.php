@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+
 
 $this->title = 'Dirección';
 //$this->params['breadcrumbs'][] = $this->title;
@@ -45,7 +47,6 @@ $this->title = 'Dirección';
            <th>Codigo Postal</th>
            <th>Seleccionar Direccion</th>
           </tr>
-        <?php $listaids = array(); ?>
         <?php foreach($direcciones as $row): ?>
             <tr>
               <td><?= $row->calle ?> </td>
@@ -53,8 +54,10 @@ $this->title = 'Dirección';
               <td><?= $row->ciudad?></td>
               <td><?= $row->pais?></td>
               <td><?= $row->codigoPostal?></td>
-        <?php array_push($listaids,  $row->id); ?>
-        <td><input type="checkbox" name="iddireccion" value="<?= implode("|",$listaids); ?>"></td>
+        <td><?= Html::beginForm(Url::toRoute("ventas/usardireccion"), "POST") ?>
+                                    <input type="hidden" name="id" value="<?= $row->id ?>">
+                                    <button type="submit" class="btn btn-primary">Seleccionar Direccion</button>
+                                    <?= Html::endForm() ?></td>
     </tr>
     <?php endforeach ?>
     <?php ActiveForm::end(); ?>
