@@ -41,46 +41,7 @@ AppAsset::register($this);
                         ]);
 
                         $items = [];
-                        
-                        if(Yii::$app->User->isGuest){
-                            $items = [
-                                ['label' => 'Inicio', 'url' => ['/site/index']],
-                                ['label' => 'Conócenos', 'url' => ['/site/about']],
-                                ['label' => 'Contáctanos', 'url' => ['/site/contact']],
-                                ['label' => 'Iniciar Sesión', 'url' => ['/site/login']],
-                                ['label' => 'Registrarse', 'url' => ['/prospecto/register']]
-                            ];
-                        } else {
-                            if(Yii::$app->session['opciones']){
-                                foreach(Yii::$app->session['opciones'] as $key => $value) {
-                                    if ($key == 'Carrito') {
-                                        $items[] = (
-                                            '<li>'
-                                            . Html::beginForm([$value], 'post')
-                                            . Html::submitButton(
-                                                '<span class="glyphicon glyphicon-shopping-cart nav-cart"></span>',
-                                                ['class' => 'btn btn-link logout btn-lg']
-                                            )
-                                            . Html::endForm()
-                                            . '</li>'
-                                        );
-                                    } else {
-                                        $items[] = ['label' => $key, 'url' => [$value]];
-                                    }
-                                }
-                                $items[] = (
-                                    '<li>'
-                                    . Html::beginForm(['/site/logout'], 'post')
-                                    . Html::submitButton(
-                                        'Salir (' . Yii::$app->user->identity->email . ')',
-                                        ['class' => 'btn btn-link logout']
-                                    )
-                                    . Html::endForm()
-                                    . '</li>'
-                                );
-                            }
-                        }
-                        
+
                         $items[] = (
                             '<li>'
                             . Html::beginForm(['/site/buscar'], 'post')
@@ -112,6 +73,45 @@ AppAsset::register($this);
                             . Html::endForm()
                             . '</li> '
                         );
+                        
+                        if(Yii::$app->User->isGuest){
+                            $items[] = ['label' => 'Inicio', 'url' => ['/site/index']];
+                            $items[] = ['label' => 'Conócenos', 'url' => ['/site/about']];
+                            $items[] = ['label' => 'Contáctanos', 'url' => ['/site/contact']];
+                            $items[] = ['label' => 'Iniciar Sesión', 'url' => ['/site/login']];
+                            $items[] = ['label' => 'Registrarse', 'url' => ['/prospecto/register']];
+                            
+                        } else {
+                            if(Yii::$app->session['opciones']){
+                                foreach(Yii::$app->session['opciones'] as $key => $value) {
+                                    if ($key == 'Carrito') {
+                                        $items[] = (
+                                            '<li>'
+                                            . Html::beginForm([$value], 'post')
+                                            . Html::submitButton(
+                                                '<span class="glyphicon glyphicon-shopping-cart nav-cart"></span>',
+                                                ['class' => 'btn btn-link logout btn-lg']
+                                            )
+                                            . Html::endForm()
+                                            . '</li>'
+                                        );
+                                    } else {
+                                        $items[] = ['label' => $key, 'url' => [$value]];
+                                    }
+                                }
+                                $items[] = (
+                                    '<li>'
+                                    . Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                        'Salir (' . Yii::$app->user->identity->email . ')',
+                                        ['class' => 'btn btn-link logout']
+                                    )
+                                    . Html::endForm()
+                                    . '</li>'
+                                );
+                            }
+                        }
+                        
 
                         echo Nav::widget([
                             'options' => ['class' => 'navbar-nav navbar-right'],
