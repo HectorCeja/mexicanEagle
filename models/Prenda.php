@@ -76,6 +76,7 @@ class Prenda extends \yii\db\ActiveRecord {
         $fechaAlta = date("Y-m-d");
         $prenda->tipoPrenda = $tipoPrenda;
         $prenda->fechaAlta = $fechaAlta;
+        $prenda->urlImagenMiniatura = '';
         return $prenda->save(false);
     }
 

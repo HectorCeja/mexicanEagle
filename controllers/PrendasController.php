@@ -26,7 +26,7 @@ class PrendasController extends Controller
     public function actionPrendas(){
         $prendas = Prenda::obtenerPrendas();
         $urlbase=Url::base(true);
-        return $this->render('prendas',['model'=>$prendas,'urlbase'=>$urlbase, 'msg'=>""]);
+        return $this->render('prendas',['model'=>$prendas,'urlbase'=>$urlbase, 'msg'=>"",'tipo'=>""]);
     }
 
     public function actionMostrardetalle(){
@@ -40,11 +40,12 @@ class PrendasController extends Controller
              $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
              $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
              return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
-             ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes]);
+             ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes,
+             'msg'=>'','tipo'=>'']);
             }
         }else{
              $prendas = Prenda::obtenerPrendas();
-             return $this->render('prendas',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>""]);
+             return $this->render('prendas',['model'=>$prendas,'urlbase'=>Url::base(true),'msg'=>"",'tipo'=>'']);
         }
         
     }
@@ -87,8 +88,7 @@ class PrendasController extends Controller
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
                                                 'msg'=>"",'cargada'=>"NO",
-                                                'im1'=>"",
-                                                'im2'=>""]);
+                                                'im1'=>""]);
     }
 
     public function actionSaveprenda(){
@@ -97,10 +97,8 @@ class PrendasController extends Controller
         if (Yii::$app->request->post()) {
             
             $model->urlImagen = Html::encode($_FILES["imagenCompleta"]['name']);
-            $model->urlImagenMiniatura = Html::encode($_FILES["imagenMiniatura"]['name']);
 
             $file1 = $_FILES['imagenCompleta']['name'];
-            $file2 = $_FILES['imagenMiniatura']['name'];
 
             $expensions= array("jpeg","jpg","png");
     
@@ -109,10 +107,8 @@ class PrendasController extends Controller
             }
                 
             $urlNueva = "../web/files/clothes/".$file1;
-            $urlNueva2 = "../web/files/clothes/".$file2;
 
             move_uploaded_file($_FILES['imagenCompleta']['tmp_name'],$urlNueva);
-            move_uploaded_file($_FILES['imagenMiniatura']['tmp_name'],$urlNueva2);
 
             $categorias = Categoria::obtenerCategorias();
             $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
@@ -122,37 +118,32 @@ class PrendasController extends Controller
             $listTemporadas=ArrayHelper::map($temporadas,'id','tipoTemporada');
 
             $im1 = "/files/clothes/".$file1;
-            $im2 = "/files/clothes/".$file2;
             return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>$listCategorias,
                                                 'listSubCategorias'=>$listSubCategorias,
                                                 'listTemporadas'=>$listTemporadas, 
                                                 'msg'=>"",'cargada'=>"SI",
-                                                'im1'=>$im1,
-                                                'im2'=>$im2]);
+                                                'im1'=>$im1]);
         }elseif(Yii::$app->request->get()){
             return $this->render('agregarPrenda',['model'=>$model,
                                                 'listCategorias'=>'',
                                                 'listSubCategorias'=>'',
                                                 'listTemporadas'=>'', 
                                                 'msg'=>"",'cargada'=>"NO",
-                                                'im1'=>'',
-                                                'im2'=>'']);
+                                                'im1'=>'']);
         }
     }
 
     public function actionGuardarprenda(){
         $model = new Prenda();
         if ($model->load(Yii::$app->request->post())){
-          /*  $fechaAlta = date("Y-m-d");
-            $model->tipoPrenda =
-            $model->fechaAlta = $fechaAlta;*/
 
             if(Prenda::guardarPrenda($model, $_POST['Prenda']['tipoPrenda']) !==false){
                 $prendas = Prenda::obtenerPrendas();
                 return $this->render('prendas',['model'=>$prendas,
                                                 'urlbase'=>Url::base(true), 
-                                                'msg'=>"Prenda guardada correctamente."]);
+                                                'msg'=>"Prenda guardada correctamente.",
+                                                'tipo'=>1]);
             }else{
                 $categorias = Categoria::obtenerCategorias();
                 $listCategorias=ArrayHelper::map($categorias,'id','descripcion');
@@ -169,8 +160,7 @@ class PrendasController extends Controller
                                                 'listTemporadas'=>$listTemporadas, 
                                                 'msg'=>"Ocurrió un problema al guardar la prenda, vuelva a intentarlo.",
                                                 'cargada'=>"NO",
-                                                'im1'=>"",
-                                                'im2'=>""]);    
+                                                'im1'=>""]);    
             }
         }
     }
@@ -184,15 +174,15 @@ class PrendasController extends Controller
                                                            'msg'=>"",
                                                            'id'=>$idPrenda,
                                                            'cargada'=>'NO',
-                                                           'im1'=>"",
-                                                           'im2'=>""]);
+                                                           'im1'=>""]);
             }else{
                 $model = Prenda::findOne($idPrenda);
                 $descripciontemporada= Temporada::findOne($model->idTemporada)->tipoTemporada;
                 $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                 $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                 return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
-                ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria]);
+                ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,
+                'msg'=>'','tio'=>'']);
             }
         }
     }
@@ -203,10 +193,8 @@ class PrendasController extends Controller
         if (Yii::$app->request->post()) {
             
             $model->urlImagen = Html::encode($_FILES["componenteCompleto"]['name']);
-            $model->urlImagenMiniatura = Html::encode($_FILES["imagenMiniatura"]['name']);
 
             $file1 = $_FILES['componenteCompleto']['name'];
-            $file2 = $_FILES['imagenMiniatura']['name'];
 
             $expensions= array("jpeg","jpg","png");
     
@@ -215,28 +203,22 @@ class PrendasController extends Controller
             }
                 
             $urlNueva = "../web/files/components/".$file1;
-            
-            $urlNueva2 = "../web/files/components/".$file2;
 
             move_uploaded_file($_FILES['componenteCompleto']['tmp_name'],$urlNueva);
-            move_uploaded_file($_FILES['imagenMiniatura']['tmp_name'],$urlNueva2);
 
             $im1 = "/files/components/".$file1;
-            $im2 = "/files/components/".$file2;
             $idPrenda = Yii::$app->session['idPrenda'];
             return $this->render('agregarComponente',['model'=>$model,
                                                       'id'=>$idPrenda,
                                                       'msg'=>"",'cargada'=>"SI",
-                                                      'im1'=>$im1,
-                                                      'im2'=>$im2]);
+                                                      'im1'=>$im1]);
         }elseif(Yii::$app->request->get()){
             return $this->render('agregarComponente',['model'=>$model,
                                                 'listCategorias'=>'',
                                                 'listSubCategorias'=>'',
                                                 'listTemporadas'=>'', 
                                                 'msg'=>"",'cargada'=>"NO",
-                                                'im1'=>'',
-                                                'im2'=>'']);
+                                                'im1'=>'']);
         }
     }
 
@@ -251,15 +233,15 @@ class PrendasController extends Controller
                         $descripcionCategoria = Categoria::findOne($model->idCategoria)->descripcion;
                         $descripcionSubCategoria = SubCategoria::findOne($model->idSubCategoria)->descripcion;
                         return $this->render('prenda',['model'=>$model,'temporada'=>$descripciontemporada
-                        ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes]);
+                        ,'categoria'=>$descripcionCategoria,'subcategoria'=>$descripcionSubCategoria,'componentes'=>$componentes,
+                        'msg'=>"El componente fue dado de alta exitósamente.", 'tipo'=>'1']);
                 }else{
-                    $msg="Ocurrió un problema al guardar la prenda, vuelva a intentarlo.";
+                    $msg="Ocurrió un problema al guardar el componente, vuelva a intentarlo.";
                     return $this->render('agregarComponente', ['model'=>$model, 
                                                                'msg'=>$msg,
                                                                'id'=>$model->idPrenda,
                                                                'cargada'=>'NO',
-                                                               'im1'=>"",
-                                                               'im2'=>""]);
+                                                               'im1'=>"",'tipo'=>'']);
                 }
         }
     }

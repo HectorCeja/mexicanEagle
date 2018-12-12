@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="sub-header">Ofertas de temporada</div>
     <section class="items-list">
       <?php foreach($prendasTemporada as $row): ?>
-        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <?php $urlfinal = Url::base(true).$row->urlImagen ?>
         <a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>" class="item">
           <figure class="item-image">
             <img src=<?=$urlfinal ?> alt="Imagen de la Prenda">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="sub-header">Todos los productos</div>
     <section class="items-list">
       <?php foreach($prendas as $row): ?>
-        <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
+        <?php $urlfinal = Url::base(true).$row->urlImagen ?>
         <a href="<?= Url::toRoute(["prendas/mostrarprenda", "id" => $row->id]) ?>" class="item">
           <figure class="item-image">
             <img src=<?=$urlfinal ?> alt="Imagen de la Prenda">

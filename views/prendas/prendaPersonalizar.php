@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = 'Prenda';
+$this->title = 'Prendas detalle';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 <?php if($tipo==1): ?>
