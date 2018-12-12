@@ -42,4 +42,10 @@ class Direccion extends \yii\db\ActiveRecord{
         return $direccion;
     }
 
+    public  function obtenerDireccionesPorUsuario($idUsuario){
+      return static::find()
+        ->where(['idUsuario'=> $idUsuario])
+        ->all();
+    }
+
 }

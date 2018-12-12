@@ -45,8 +45,11 @@ class VentasController extends Controller
 
     public function actionProceder(){
         $direccion = new Direccion();
+        $idUsuario = Yii::$app->session['idUsuario'];
+        $direcciones = Direccion::obtenerDireccionesPorUsuario($idUsuario);
         return $this->render('direccion',[
-            'model' => $direccion
+            'model' => $direccion,
+            'direcciones' => $direcciones
         ]);
     }
 
@@ -55,8 +58,7 @@ class VentasController extends Controller
         if ($direccion->load(Yii::$app->request->post())){
             if($direccion->validate()){
                 $direccion= Direccion::guardarDireccion($direccion,Yii::$app->session['idUsuario']);
-              //  $direccion->setIdUsuario();
-               // $direccion->save();
+                
                 Yii::$app->session['idDireccion'] = $direccion->id;
                 Yii::$app->session->setFlash('success','Direción de envío agregada con éxito.');             
                 $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
@@ -67,8 +69,11 @@ class VentasController extends Controller
             }
         }
         Yii::$app->session->setFlash('error','Ha ocurrido un error al guardar dirección');
+        $idUsuario = Yii::$app->session['idUsuario'];
+        $direcciones = Direccion::obtenerDireccionesPorUsuario($idUsuario);
         return $this->render('direccion',[
             'model' => $direccion,
+            'direcciones' => $direcciones
         ]);
     }
 
