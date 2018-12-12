@@ -38,7 +38,7 @@ class Direccion extends \yii\db\ActiveRecord{
 
     public  function guardarDireccion($direccion,$idUsuario){
         $direccion->setIdUsuario($idUsuario);
-        $direccion->save(false);
+        $direccion->save();
         return $direccion;
     }
 
