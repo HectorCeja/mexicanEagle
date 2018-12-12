@@ -23,13 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered table-striped table-hover text-center">
         <thead>
         <tr>
-            <th class="text-center">Imagen</th>
-            <th class="text-center">Nombre</th>
-            <th class="text-center">Tipo de Prenda</th>
-            <th class="text-center">Cantidad</th>
-            <th class="text-center">Talla</th>
-            <th class="text-center">Color</th>
-            <th class="text-center">Precio Unitario</th>
+            <th class="tableCell baseWidth">Imagen</th>
+            <th class="tableCell baseWidth">Nombre</th>
+            <th class="tableCell baseWidth">Tipo de Prenda</th>
+            <th class="tableCell baseWidth">Cantidad</th>
+            <th class="tableCell baseWidth">Talla</th>
+            <th class="tableCell baseWidth">Color</th>
+            <th class="tableCell baseWidth">Precio Unitario</th>
             <th></th>
         </tr>
         </thead>
@@ -39,14 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 $urlfinal = $urlbase.$prenda->urlImagen;
         ?>
                 <tr> 
-                    <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
-                    <td><?= $prenda->nombre  ?></td>
-                    <td><?= $prenda->tipoPrenda ?> </td>
-                    <td><?= $carrito[$prenda->id]->cantidad ?> </td>
-                    <td><?= $carrito[$prenda->id]->talla ?> </td>
-                    <td><?= $carrito[$prenda->id]->color ?> </td>
-                    <td>$<?= $prenda->precio ?></td>
-                    <td>
+                    <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
+                    <td class="tableCell"><?= $prenda->nombre  ?></td>
+                    <td class="tableCell"><?= $prenda->tipoPrenda ?> </td>
+                    <td class="tableCell"><?= $carrito[$prenda->id]->cantidad ?> </td>
+                    <td class="tableCell"><?= $carrito[$prenda->id]->talla ?> </td>
+                    <td class="tableCell"><?= $carrito[$prenda->id]->color ?> </td>
+                    <td class="tableCell">$<?= $prenda->precio ?></td>
+                    <td class="tableCell">
                     <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
                             <div class="modal-dialog">

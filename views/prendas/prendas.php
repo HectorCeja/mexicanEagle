@@ -18,24 +18,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <h4><?= $msg ?></h4>
     </div>
 <?php endif; ?>
-<table class="table table-bordered table-striped table-hover text-center">
+<table class="table table-bordered table-striped table-hover">
     <tr>
-        <th class="text-center">Imagen</th>
-        <th class="text-center">Nombre</th>
-        <th class="text-center">Tipo de Prenda</th>
-        <th class="text-center">Precio</th>
-        <th class="text-center">Descripcion</th>
+        <th class="tableCell baseWidth">Imagen</th>
+        <th class="tableCell baseWidth">Nombre</th>
+        <th class="tableCell baseWidth">Tipo de Prenda</th>
+        <th class="tableCell baseWidth">Precio</th>
+        <th class="tableCell description">Descripcion</th>
         <th></th>
     </tr>
     <?php foreach($model as $row): ?>
     <?php $urlfinal = $urlbase.$row->urlImagen; ?>
     <tr> 
-        <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
-        <td><?= $row->nombre  ?></td>
-        <td><?= $row->tipoPrenda ?> </td>
-        <td><?= $row->precio ?></td>
-        <td><?= $row->descripcion ?></td>
-        <td><a href="<?= Url::toRoute(["prendas/mostrardetalle", "id" => $row->id]) ?>" class ="btn btn-primary">Mostrar Detalle</a></td>
+        <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></td>
+        <td class="tableCell"><?= $row->nombre  ?></td>
+        <td class="tableCell"><?= $row->tipoPrenda ?> </td>
+        <td class="tableCell">$<?= $row->precio ?></td>
+        <td class="tableCell"><?= $row->descripcion ?></td>
+        <td class="tableCell"><a href="<?= Url::toRoute(["prendas/mostrardetalle", "id" => $row->id]) ?>" class ="btn btn-primary">Mostrar Detalle</a></td>
     </tr>
     <?php endforeach ?>
 </table>
