@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $prenda->nombre  ?></td>
                     <td><?= $prenda->tipoPrenda ?> </td>
                     <td><?= $carrito[$prenda->id]->cantidad ?> </td>
-                    <td>$<?= $prenda->precio * $carrito[$prenda->id]->cantidad ?></td>
+                    <td>$<?= $prenda->precio ?></td>
                     <td>
                     <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
