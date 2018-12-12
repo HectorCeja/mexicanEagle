@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
                     <td><?= $prenda->nombre  ?></td>
                     <td><?= $prenda->tipoPrenda ?> </td>
-                    <td><?= $carrito[$prenda->id] ?> </td>
-                    <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
+                    <td><?= $carrito[$prenda->id]->cantidad ?> </td>
+                    <td>$<?= $prenda->precio * $carrito[$prenda->id]->cantidad ?></td>
                     <td>
                     <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
