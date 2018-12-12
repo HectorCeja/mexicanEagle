@@ -207,3 +207,12 @@ img {
     grid-gap: 3px;
   }
 }
+
+.logoAbout {
+    width: 210px;
+    height: 180px;
+}
+
+.aboutTitle {
+    font-size: 32px;
+}

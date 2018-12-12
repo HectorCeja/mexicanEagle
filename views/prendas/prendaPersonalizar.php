@@ -62,12 +62,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<div class="botones">
+<div class="buttonsContainer buttonEnd">
     <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['ventas/agregarcarrito'],]); ?>
     <div class="prendaContainer">
         <input type="hidden" name="idprenda" value="<?= $model->id ?>">
-    </div> 
-    <button type="submit" style="margin-top:0px;" class="btn btn-primary botonagregarcomponente">Agregar al Carrito</button>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
 </div>
 
 <?php if (count($componentes)>0): ?>
@@ -75,22 +75,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <table class="table table-bordered table-striped table-hover">
         <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Descripcion</th>
-            <th>Agregar</th>
+            <th class="tableCell baseWidth">Imagen</th>
+            <th class="tableCell baseWidth">Nombre</th>
+            <th class="tableCell baseWidth">Precio</th>
+            <th class="tableCell descripcion">Descripcion</th>
+            <th class="tableCell baseWidth">Agregar</th>
         </tr>
         <?php $listaids = array(); ?>
         <?php foreach($componentes as $row): ?>
             <tr>
                 <?php $urlfinal = Url::base(true).$row->urlImagenMiniatura ?>
-                <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
-                <td><?= $row->nombre ?> </td>
-                <td><?= $row->precio ?></td>
-                <td><?= $row->descripcion?></td>
+                <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" /></td>
+                <td class="tableCell"><?= $row->nombre ?> </td>
+                <td class="tableCell"><?= $row->precio ?></td>
+                <td class="tableCell"><?= $row->descripcion?></td>
                 <?php array_push($listaids,  $row->id); ?>
-                <td><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
+                <td class="tableCell"><input type="checkbox" name="idcomponente" value="<?= implode("|",$listaids); ?>"></td>
             </tr>
         <?php endforeach ?>
     </table>

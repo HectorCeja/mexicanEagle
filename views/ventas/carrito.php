@@ -23,12 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Tipo de Prenda</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th></th>
+            <th class="tableCell baseWidth">Imagen</th>
+            <th class="tableCell baseWidth">Nombre</th>
+            <th class="tableCell baseWidth">Tipo de Prenda</th>
+            <th class="tableCell baseWidth">Cantidad</th>
+            <th class="tableCell baseWidth">Precio</th>
+            <th class="tableCell baseWidth"></th>
         </tr>
         </thead>
         <tbody>
@@ -37,12 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 $urlfinal = $urlbase.$prenda->urlImagen;
         ?>
                 <tr> 
-                    <td><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
-                    <td><?= $prenda->nombre  ?></td>
-                    <td><?= $prenda->tipoPrenda ?> </td>
-                    <td><?= $carrito[$prenda->id] ?> </td>
-                    <td>$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
-                    <td>
+                    <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:75px;height:75px;" ></td>
+                    <td class="tableCell"><?= $prenda->nombre  ?></td>
+                    <td class="tableCell"><?= $prenda->tipoPrenda ?> </td>
+                    <td class="tableCell"><?= $carrito[$prenda->id] ?> </td>
+                    <td class="tableCell">$<?= $prenda->precio * $carrito[$prenda->id] ?></td>
+                    <td class="tableCell">
                     <a href="#" data-toggle="modal" data-target="#id_username_<?= $prenda->id ?>" class="btn btn-danger">Eliminar</a>
                     <div class="modal fade" role="dialog" aria-hidden="true" id="id_username_<?= $prenda->id ?>">
                             <div class="modal-dialog">

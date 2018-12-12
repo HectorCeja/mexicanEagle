@@ -55,12 +55,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<div class="botones">
+<div class="buttonsContainer">
     <?= Html::beginForm(Url::toRoute(['prendas/prendas'])) ?>
-       <button type="submit" class="btn btn-primary botonprendas">Ir a Prendas</button>
+       <button type="submit" class="btn btn-primary">Ir a Prendas</button>
     <?= Html::endForm() ?>
     <?= Html::beginForm(Url::toRoute(['prendas/agregarcomponente','id' => $model->id])) ?>
-       <button type="submit" class="btn btn-primary botonagregarcomponente">Agregar Componente</button>
+       <button type="submit" class="btn btn-primary">Agregar Componente</button>
     <?= Html::endForm() ?>
 </div>
 <?php if (count($componentes)>0): ?>
@@ -68,18 +68,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
    <table class="table table-bordered table-striped table-hover">
     <tr>
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Descripcion</th>
+        <th class="tableCell baseWidth">Imagen</th>
+        <th class="tableCell baseWidth">Nombre</th>
+        <th class="tableCell baseWidth">Precio</th>
+        <th class="tableCell description">Descripcion</th>
     </tr>
     <?php foreach($componentes as $row): ?>
     <tr>
         <?php $urlfinal = Url::base(true).$row->urlImagen ?>
-        <td><br/><p><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" ></p></td>
-        <td><?= $row->nombre ?> </td>
-        <td><?= $row->precio ?></td>
-        <td><?= $row->descripcion?></td>
+        <td class="tableCell"><img src=<?=$urlfinal ?> alt="Imagen de la Prenda" style="width:100px;height:100px;" /></td>
+        <td class="tableCell"><?= $row->nombre ?> </td>
+        <td class="tableCell">$<?= $row->precio ?></td>
+        <td class="tableCell"><?= $row->descripcion?></td>
     </tr>
     <?php endforeach ?>
 </table>
