@@ -32,7 +32,7 @@ class Email extends Model
         $message .= 'Su pedido:'."\n"."\n";
         
         foreach($prendasCarrito as $prendaCarrito) {
-            $message .= ' - '.$carrito[$prendaCarrito->id]->cantidad;
+            $message .= ' - '.$carrito[$prendaCarrito->id];
             $message .= ' '.$prendaCarrito->descripcion;
             $message .= ' -> $'.$prendaCarrito->precio."\n";
         }

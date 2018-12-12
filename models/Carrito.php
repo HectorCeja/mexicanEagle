@@ -26,7 +26,7 @@ class Carrito extends \yii\db\ActiveRecord{
     public static function obtenerCarritoPorUsuario($idUsuario)
     {
         $prendasCarrito = static::find()->where(['idUsuario' => $idUsuario])->all();
-        return ArrayHelper::index($prendasCarrito, 'idPrenda');
+        return ArrayHelper::map($prendasCarrito,'idPrenda','cantidad');
     }
 
     public static function limpiarCarritoPorIdUsuario($idUsuario)
@@ -48,7 +48,7 @@ class Carrito extends \yii\db\ActiveRecord{
         $prendas = Carrito::obtenerPrendasPorUsuario($idUsuario);
 
         foreach($prendas as $prenda){
-            $total += $prenda->precio * $carrito[$prenda->id]->cantidad;
+            $total += $prenda->precio * $carrito[$prenda->id];
         }
         return $total;
     }
