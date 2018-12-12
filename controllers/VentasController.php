@@ -73,10 +73,11 @@ class VentasController extends Controller
     }
 
     public function actionAgregarpago(){
+        ini_set('max_execution_time', 300);
         $venta = new Venta();
         if ($venta->load(Yii::$app->request->post())){
             $total = Carrito::totalCarrito(Yii::$app->session['idUsuario']);
-          //  $folio = Venta::obtenerFolio();
+           //  $folio = Venta::obtenerFolio();
             $idTipoPago = (int) Yii::$app->request->post()['Venta']['idTipoPago'];
             $idDireccion=Yii::$app->session['idDireccion'];
             $idUsuario=Yii::$app->session['idUsuario'];
@@ -109,7 +110,7 @@ class VentasController extends Controller
             */
            
             if ($idTipoPago == 1) {
-                Pago::guardarPago($folio,$total);
+                Pago::guardarPago($venta->folio,$total);
                 
             }
 
@@ -125,8 +126,13 @@ class VentasController extends Controller
 
             Yii::$app->session->setFlash('success','El pago se realizó con exito. Un correo de confirmación fue enviado a su correo.');
             
+            $prendasTemporada = Prenda::obtenerPrendasPorTemporadas();
+            $prendas = Prenda::obtenerPrendasSite();
+
             return $this->render('//site/index',[
-                'model' => $venta
+                'model' => $venta,
+                'prendas'=>$prendas,
+                'prendasTemporada'=>$prendasTemporada
             ]);
 
         }

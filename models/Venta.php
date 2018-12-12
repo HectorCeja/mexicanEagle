@@ -71,7 +71,7 @@ class Venta extends \yii\db\ActiveRecord{
 
     public static function obtenerFolio()
     {
-        $result = \Yii::$app->db->createCommand("CALL aumentar_folio(@folio);") 
+        $result = \Yii::$app->db->createCommand("CALL aumentar_folio('ventas', @folio);") 
                       ->execute();
         return \Yii::$app->db->createCommand("select @folio;")->queryScalar();
     }
@@ -88,7 +88,7 @@ class Venta extends \yii\db\ActiveRecord{
         date_default_timezone_set('America/Mazatlan');
         $fechaActual = date("Y-m-d");
         $status = ($idTipoPago == 1) ? 'SALDADA' : 'NO SALDADA';
-        $venta->setFolio(obtenerFolio());
+        $venta->setFolio(static::obtenerFolio());
         $venta->setTotal($total);
         $venta->setSubtotal($total * 0.84);
         $venta->setIva($total * 0.16);
